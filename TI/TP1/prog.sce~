@@ -1,0 +1,32 @@
+
+n=2;
+
+// Définition des échantillons sur un axe
+axe = [0:99] / 100 + 5e-3;
+// Définition des éléments de surface
+x = ones (1:100)' * axe;
+y = axe' * ones (1:100);
+// Position de la source
+xs = 0.5;
+ys = 0.5;
+// Calcul de la distance
+d = sqrt ((x - xs).^2 + (y - ys).^2);
+
+i0=100/(2 * %pi);
+h=0.5;
+e0=i0/(h*h);
+
+//ponctuelle
+//v1=e0*h^3*(h^2 +d.^2).^(-3/2)
+
+// lamber
+v2=e0*h^4*(h^2+d.^2).^(-2)
+
+v3=[v2,v2;v2,v2];
+
+v3(50,50)=
+
+
+plot3d1 ([0:199] / 200 + 5e-3, [0:199] / 200 + 5e-3, v2);
+f=gcf();
+f.color_map=hotcolormap(64);

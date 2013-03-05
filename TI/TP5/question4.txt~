@@ -1,0 +1,55 @@
+// Macros exemple de modification de  la LUT
+
+// Recherche du minimum de l'image pour les étudiants
+
+// M1 IVI
+
+// Version: 0.1
+// Date: 11/02/2010
+// Author: L. Macaire
+ 
+macro "modif_LUT" {
+
+// Ouverture d'une image
+// open ("C:\\lagis-pc-serv2\\enseignement\\enseigne.0910\\master ivi\\seance 1 cours ludo fft\\omega_zero_sept_x.jpg");
+// récupération du ID de l'image
+image = getImageID();
+
+
+// récupération de la taille du plan de fourier
+W = getWidth();
+H = getHeight();
+
+// recherche du min 
+
+
+
+// déclaration des LUTs
+
+    t = newArray(256); 
+
+// Récupération des LUTS
+
+getHistogram(values, counts, 256);
+
+for (i=0; i<255;i++)
+	{
+		res=0
+		for(j=0;j<i;j++)
+			{
+				res=res+counts[j];
+			}
+		t[i]=(255/(H*W))*res;
+	}
+
+for (j=0; j<H; j++) 
+	{
+   	for (i=0; i<W; i++) 
+		{
+		p = getPixel(i,j);
+		setPixel(i,j,t[p]);
+      		}
+   	}
+
+} // fin macro
+
