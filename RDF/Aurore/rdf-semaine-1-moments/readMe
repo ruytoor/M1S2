@@ -1,0 +1,811 @@
+binome : Benjamin Ruytoor et Aurore Allart
+date : 20 janvier 2013
+TP RdF: TP1 : extraction d'attribut de forme
+
+------------------------------
+rectangle horizontal : 
+------------------------------
+// Calcul de la surface
+ surface  =    64.  
+
+-->// Calcul de la matrice d'inertie
+ inertie  =    1360.    0.   
+  		  0.       80.  
+
+-->// Determine les valeurs propres
+ val  =    80.    0.     
+   	    0.     1360.  
+-->// Determine l'axe principal d'inertie
+ vect  =    0.    1.  
+            1.    0.  
+-->// Calcul des moments principaux d'inertie
+ valModifie  =    80.    0.     
+   		   0.     1360.  
+-->// Calcul des moments normalises
+ InertieMomentOrdreDeux  =    20.923077    0.         
+   			       0.           1.2307692  
+
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+val2  = 1.2307692    0.         
+    	0.           20.923077  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+ vect2  =    0.    1.  
+    	     1.    0.  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+ valModifie2  =    1.2307692    0.         
+    		   0.           20.923077  
+-->// Calcul des moments invariants
+ invariant  =    22.153846    387.78698    0.    0.    0.  
+
+----------------------------
+rectangle vertical
+----------------------------
+
+// Calcul de la surface
+ surface  =    64.  
+
+// Calcul de la matrice d'inertie
+ inertie  =    80.    0.     
+    		0.     1360.  
+
+// Determine les valeurs propres
+ val  =    80.    0.     
+    	    0.     1360.  
+-->// Determine l'axe principal d'inertie
+ vect  =    1.    0.  
+    	    0.    1.  
+-->// Calcul des moments principaux d'inertie
+ valModifie  =    80.    0.     
+          	   0.     1360.  
+-->// Calcul des moments normalises
+ InertieMomentOrdreDeux  =    1.2307692    0.         
+    			      0.           20.923077  
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+ val2  =    1.2307692    0.         
+    	    0.           20.923077  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+ vect2  =    1.    0.  
+    	     0.    1.  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+ valModifie2  =    1.2307692    0.         
+    		   0.           20.923077  
+-->// Calcul des moments invariants
+ invariant  =    22.153846    387.78698    0.    0.    0.  
+
+--------------------------
+rectangle diagonale
+--------------------------
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    58.  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    678.5  - 619.5  
+  - 619.5    678.5  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    59.    0.     
+    0.     1298.  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.7071068  - 0.7071068  
+  - 0.7071068    0.7071068  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    59.    0.     
+    0.     1298.  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    11.5  - 10.5  
+  - 10.5    11.5  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    1.    0.   
+    0.    22.  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.7071068  - 0.7071068  
+  - 0.7071068    0.7071068  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    1.    0.   
+    0.    22.  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+    23.    441.    0.    0.    0.  
+
+------------------------------
+rectangle diagonale lisse
+------------------------------
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    64.498039  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    745.00804  - 647.0326   
+  - 647.0326     748.40768  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    99.673034    0.         
+    0.           1393.7427  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.7080350  - 0.7061774  
+  - 0.7061774    0.7080350  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    99.673034    1.705D-13  
+    1.137D-13    1393.7427  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    11.374509  - 9.878656   
+  - 9.878656     11.426414  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    1.5217713    0.         
+    0.           21.279151  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.7080350  - 0.7061774  
+  - 0.7061774    0.7080350  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    1.5217713    0.         
+    1.776D-15    21.279151  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    22.800923    390.35407    0.5716197    0.4592226    0.7790193 
+
+---------------------------
+carre de 6 cm de coté
+---------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    36.  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    105.    0.    
+    0.      105.  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    105.    0.    
+    0.      105.  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    105.    0.    
+    0.      105.  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    2.8378378    0.         
+    0.           2.8378378  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    2.8378378    0.         
+    0.           2.8378378  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    2.8378378    0.         
+    0.           2.8378378  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    5.6756757    0.    0.    0.    0. 
+
+------------------------------
+carre de 10 cm de coté
+------------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    100.  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    825.    0.    
+    0.      825.  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    825.    0.    
+    0.      825.  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    825.    0.    
+    0.      825.  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    8.1683168    0.         
+    0.           8.1683168  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    8.1683168    0.         
+    0.           8.1683168  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    8.1683168    0.         
+    0.           8.1683168  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    16.336634    0.    0.    0.    0. 
+
+-------------------------
+carre de 10 cm de coté et d'angle 30°
+-------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    100.12941  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    842.49652    0.2446836  
+    0.2446836    843.20521  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    842.42024    0.         
+    0.           843.28148  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.9546936    0.2975906  
+    0.2975906    0.9546936  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    842.42024    0.         
+    2.842D-14    843.28148  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    8.3308753    0.0024195  
+    0.0024195    8.3378831  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    8.3301211    0.         
+    0.           8.3386372  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.9546936    0.2975906  
+    0.2975906    0.9546936  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    8.3301211    4.441D-16  
+    0.           8.3386372  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    16.668758    0.0000725    0.0267883    0.0007796  - 0.0337746 
+
+-----------------------------
+carre de 10 cm de coté avec 45°
+-----------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    99.247059  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    840.33626    1.4580649  
+    1.4580649    839.71679  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    838.53593    0.         
+    0.           841.51713  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+    0.6293678  - 0.7771076  
+  - 0.7771076  - 0.6293678  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    838.53593  - 5.684D-14  
+    0.           841.51713  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    8.3826525    0.0145447  
+    0.0145447    8.3764731  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    8.3646936    0.         
+    0.           8.3944321  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+    0.6293678  - 0.7771076  
+  - 0.7771076  - 0.6293678  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    8.3646936    0.         
+  - 8.882D-16    8.3944321  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    16.759126    0.0008844    0.0268398    0.0041003  - 0.0188184  
+
+---------------------------------
+carre de 20 cm de coté
+---------------------------------
+
+/ Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    400.  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    13300.    0.      
+    0.        13300.  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    13300.    0.      
+    0.        13300.  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    13300.    0.      
+    0.        13300.  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    33.167082    0.         
+    0.           33.167082  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    33.167082    0.         
+    0.           33.167082  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+    1.    0.  
+    0.    1.  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    33.167082    0.         
+    0.           33.167082  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    66.334165    0.    0.    0.    0.  
+
+-------------------------------
+triangle de 10 cm de coté avec 15°
+-------------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    64.631373  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    401.14709  - 9.4956543  
+  - 9.4956543    414.12647  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    396.13533    0.         
+    0.           419.13824  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.8843781  - 0.4667712  
+  - 0.4667712    0.8843781  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    396.13533    2.842D-14  
+  - 2.842D-14    419.13824  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    6.1121241  - 0.1446816  
+  - 0.1446816    6.3098859  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    6.0357617    0.         
+    0.           6.3862483  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.8843781  - 0.4667712  
+  - 0.4667712    0.8843781  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    6.0357617  - 4.441D-16  
+    4.441D-16    6.3862483  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    12.42201    0.1228408    1179.7131    0.2306348    24.448644  
+
+-----------------------------
+triangle 10cm 45°
+-----------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    64.666667  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    412.53193  - 10.642908  
+  - 10.642908    405.68085  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    397.92579    0.         
+    0.           420.28699  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.5889047  - 0.8082025  
+  - 0.8082025    0.5889047  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    397.92579    2.842D-14  
+    0.           420.28699  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    6.2822122  - 0.1620747  
+  - 0.1620747    6.177881   
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    6.0597837    0.         
+    0.           6.4003096  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.5889047  - 0.8082025  
+  - 0.8082025    0.5889047  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    6.0597837    0.         
+    0.           6.4003096  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    12.460093    0.1159579    1191.9354    0.0380779  - 28.813803 
+
+----------------------------
+triangle 60°
+----------------------------
+
+// Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    69.427451  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    1052.6297    9.3079774  
+    9.3079774    756.55326  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    756.26092    0.        
+    0.           1052.922  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+    0.0313913  - 0.9995072  
+  - 0.9995072  - 0.0313913  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    756.26092  - 1.066D-14  
+    7.105D-15    1052.922   
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    14.946298    0.1321641  
+    0.1321641    10.742306  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    10.738156    0.         
+    0.           14.950449  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+    0.0313913  - 0.9995072  
+  - 0.9995072  - 0.0313913  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    10.738156  - 2.220D-16  
+    5.551D-17    14.950449  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    25.688604    17.743415    787.24395    19635.239    20806.453  
+
+--------------------------
+triangle de 10 cm de coté
+--------------------------
+
+/ Calcul de la surface
+-->surface = rdfSurface (image)
+ surface  =
+ 
+    64.619608  
+-->// Calcul de la matrice d'inertie
+-->inertie = [rdfMomentCentre(image,2,0) rdfMomentCentre(image,1,1); rdfMomentCentre(image,1,1) rdfMomentCentre(image,0,2)]
+ inertie  =
+ 
+    397.05325  - 4.9470538  
+  - 4.9470538    419.78214  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie
+-->[vect,val] = spec(inertie);
+-->// Determine les valeurs propres
+-->val
+ val  =
+ 
+    396.02318    0.         
+    0.           420.81221  
+-->// Determine l'axe principal d'inertie
+-->vect
+ vect  =
+ 
+  - 0.9790029  - 0.2038465  
+  - 0.2038465    0.9790029  
+-->// Calcul des moments principaux d'inertie
+-->valModifie = inv(vect)*inertie*vect
+ valModifie  =
+ 
+    396.02318  - 2.842D-14  
+  - 1.421D-14    420.81221  
+-->// Calcul des moments normalises
+-->InertieMomentOrdreDeux = [rdfMomentCentreNormalise(image,2,0) rdfMomentCentreNormalise(image,1,1); rdfMomentCentreNormalise(image,1,1) rdfMomentCentreNormalise(image,0,2)]
+ InertieMomentOrdreDeux  =
+ 
+    6.0508324  - 0.0753899  
+  - 0.0753899    6.3972058  
+-->// Calcul des valeurs propres et vecteurs propres de la matrice d'inertie calculee a partir des moments centres normalises
+-->[vect2,val2] = spec(InertieMomentOrdreDeux);
+-->//Determine les valeurs propres à partir d'inertie du moment d'ordre 2
+-->val2
+ val2  =
+ 
+    6.0351348    0.         
+    0.           6.4129034  
+-->//Determine les vecteurs propres à partir d'inertie du moment d'ordre 2
+-->vect2
+ vect2  =
+ 
+  - 0.9790029  - 0.2038465  
+  - 0.2038465    0.9790029  
+-->// Calcul des moments principaux d'inertie du moment d'ordre 2
+-->valModifie2 = inv(vect2)*InertieMomentOrdreDeux*vect2
+ valModifie2  =
+ 
+    6.0351348    2.220D-16  
+    0.           6.4129034  
+-->// Calcul des moments invariants
+-->invariant = rdfMomentsInvariants(image)
+ invariant  =
+ 
+    12.448038    0.1427091    1173.0528    0.1266688    34.202352  
+
+---
+fin
+---
