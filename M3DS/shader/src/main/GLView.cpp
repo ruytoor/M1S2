@@ -259,6 +259,15 @@ void GLView::drawSquare() {
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
     _shaderSimple.enable();
+    GLuint locationImage=glGetUniformLocation(_shaderSimple.id(),"briques"); // locationImage contient alors un "identifiant" pour la variable "image" du shader.
+    glUniform1i(locationImage,0); // on affecte à la variable image du shader la valeur 0 (i.e. l'unité de texture 0).
+
+    GLuint locationImage2=glGetUniformLocation(_shaderSimple.id(),"light"); // locationImage contient alors un "identifiant" pour la variable "image" du shader.
+    glUniform1i(locationImage2,1); // on affecte à la variable image du shader la valeur 0 (i.e. l'unité de texture 0).
+
+    GLuint locationImage3=glGetUniformLocation(_shaderSimple.id(),"lille1"); // locationImage contient alors un "identifiant" pour la variable "image" du shader.
+    glUniform1i(locationImage3,2); // on affecte à la variable image du shader la valeur 0 (i.e. l'unité de texture 0).
+
     _square.drawBuffer();
     _shaderSimple.disable();
 }

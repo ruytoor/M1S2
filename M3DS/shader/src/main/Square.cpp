@@ -17,7 +17,7 @@ void Square::initBuffer() {
     // TODO
     float color[]={0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0};
     float vertex[]={-1,-1,0,-1,1,0,1,-1,0,1,1,0};
-    float texture[]={0,0,0,1,1,0,1,1};
+    float texture[]={1,0,1,1,0,0,0,1};
 
 
     glGenBuffers(1,&_bufferVertex);
@@ -43,17 +43,41 @@ void Square::drawBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER,_bufferVertex);
     glVertexPointer(3,GL_FLOAT,0,0);
 
-    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);// coleur
     glBindBuffer(GL_ARRAY_BUFFER,_bufferColor);
     glColorPointer(4,GL_FLOAT,0,0);
 
-    glActiveTexture(GL_TEXTURE0);
+    glClientActiveTexture(GL_TEXTURE0);// coordonné de texture
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER,_bufferTexCoord[0]);
     glTexCoordPointer(2,GL_FLOAT,0,0);
 
+    glClientActiveTexture(GL_TEXTURE1);// coordonné de texture
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER,_bufferTexCoord[0]);
+    glTexCoordPointer(2,GL_FLOAT,0,0);
+
+    glClientActiveTexture(GL_TEXTURE2);// coordonné de texture
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER,_bufferTexCoord[0]);
+    glTexCoordPointer(2,GL_FLOAT,0,0);
+
+    glActiveTexture(GL_TEXTURE0);// la texture
+    glBindTexture(GL_TEXTURE_2D,_idTexture[0]);
+
+    glActiveTexture(GL_TEXTURE1);// la texture
+    glBindTexture(GL_TEXTURE_2D,_idTexture[1]);
+
+    glActiveTexture(GL_TEXTURE2);// la texture
+    glBindTexture(GL_TEXTURE_2D,_idTexture[2]);
+
     glDrawArrays(GL_TRIANGLE_STRIP,0,4);
 
+    glActiveTexture(GL_TEXTURE0);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glActiveTexture(GL_TEXTURE1);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glActiveTexture(GL_TEXTURE2);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
