@@ -1,3 +1,6 @@
+.project
+.classpath
+.cache
 *.class
 *.jar
 .metadata
