@@ -41,7 +41,7 @@ function tiAfficheObjet2D (nfigure, taille, points, segments)
     ha.box = "on";
     // Tracer les points
     plot2d (points(1,:), points(2,:), style = -4, ...
-    rect=[0,0,taille(2),taille(1)]);
+    rect=[taille(1),taille(2),taille(3),taille(4)]);
     // Tracer les segments
     sx = [points(1,segments(1,:));points(1,segments(2,:))];
     sy = [points(2,segments(1,:));points(2,segments(2,:))];

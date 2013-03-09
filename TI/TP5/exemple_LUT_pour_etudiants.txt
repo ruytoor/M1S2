@@ -38,7 +38,7 @@ for (j=0; j<H; j++)
 			{
 			max =p;
 			}
-      		}
+      	}
    	}
 
 print ("min =", min);
@@ -77,14 +77,14 @@ print ("max =", max);
     }
 
 
-for (j=0; j<H; j++) 
-	{
-   	for (i=0; i<W; i++) 
-		{
-		p = getPixel(i,j);
-		setPixel(i,j,reds[p]);
-      		}
-   	}
+// for (j=0; j<H; j++) 
+	// {
+   	// for (i=0; i<W; i++) 
+		// {
+		// p = getPixel(i,j);
+		// setPixel(i,j,reds[p]);
+      		// }
+   	// }
 
 
 

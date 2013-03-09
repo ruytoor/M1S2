@@ -12,29 +12,44 @@ listedeux = 1:6;
 grille_seg = [liste,liste+6,liste+12,liste+18,listedeux,listedeux+6,listedeux+12;liste+1,liste+7,liste+13,liste+19,listedeux+6,listedeux+12,listedeux+18];
 
 //matrice extrinsèque
-//premiere caméra
-camera1 = RotationX(90)*Translation(0,0,-5);
-camera2 = RotationX(45)*RotationY(45)*Translation(0,0,5);
+//position
+position1 = Translation(0,0,-5)*RotationX(90);
 
+position2 = Translation(0,0,5)*RotationY(35.26439)*RotationX(-45);
+//position2 = RotationX(45)*RotationY(35.264339)*Translation(0,0,5);
 //matrice intrinsèque
-camera3 = [20/800,0,6.6,0;0,20/600,0,8.8;0,0,1,0;0,0,0,1]*[1,0,0,0;0,1,0,0;0,0,1,0;0,0,0,1];
-trans = RotationZ(90)*RotationX(90);
-camera3 = camera3*trans;
+f = 20;
+Kc = 800/8.8;
+Kl = 600/6.6;
+Cc = 400;
+Cl = 300;
+camera = [Kc,0,Cc;0,Kl,Cl;0,0,1]*[f,0,0,0;0,f,0,0;0,0,1,0];
+
+taille = [-5,-5,700,600];
+taille2 = [-600,-200,1500,1100];
+//matriceCube
+//tiAfficheObjet2D(11,taille,matriceCube,matriceCube_seg);
+
+//grille
+//tiAfficheObjet2D(12,taille,grille,grille_seg);
+
 
 //Projection perspective
-//camera 1
-//projectionCamera1 = tiAfficheObjet2D(1,taille,matriceCube,matriceCube_seg);
-//projection2Camera1 = tiAfficheObjet2D(2,taille,grille,grille_seg);
 
-//camera 2
-//projectionCamera2 = tiAfficheObjet2D(1,taille,matriceCube,matriceCube_seg);
-//projection2Camera2 = tiAfficheObjet2D(2,taille,grille,grille_seg);
+// position 1
+m=camera*position2;
+m1=m*matriceCube;
 
+m2=m*grille;
 
-//camera 3
-taille = [10,10];
-grille1=camera1*grille;
-//projectionCamera3 = tiAfficheObjet2D(1,taille,matriceCube,matriceCube_seg);
-projection2Camera3 = tiAfficheObjet2D(2,taille,grille1,grille_seg);
+for i =1:size(m1,2)
+    m1(1,i) = m1(1,i)/m1(3,i);
+    m1(2,i) = m1(2,i)/m1(3,i);
+end
 
-
+for i =1:size(m2,2)
+    m2(1,i) = m2(1,i)/m2(3,i);
+    m2(2,i) = m2(2,i)/m2(3,i);
+end
+tiAfficheObjet2D(11,taille,m1,matriceCube_seg);
+//tiAfficheObjet2D(12,taille2,m2,grille_seg);
