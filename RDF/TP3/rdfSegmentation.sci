@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+                // -----------------------------------------------------------------------
 // Extraction d'attributs de pixels pour la classification,
 // Module RdF, reconnaissance de formes
 // Copyright (C) 2009  Universite Lille 1
@@ -52,7 +52,7 @@ function classe = rdfClassifieurLineaire1D (image, a, b)
             i = image (y, x);
             if a * i + b > 0 then
                 result (y, x) = 1;
-                else
+            else
                 result (y, x) = 0;
             end
         end
@@ -73,6 +73,9 @@ function moyenne = rdfMoyenneImage (image, taille)
 endfunction
 
 // Calcul de l'ecart type normalise des voisinages carres d'une image
+//calcul de la moyenne, puis stocke dans la variable clear
+carre(image) le calcul
+//enfin fait la racine de chaque valeur de carre par la taille
 function ect = rdfTextureEcartType (image, taille)
     moyenne = rdfMoyenneImage (image, taille);
     carre = (image - moyenne) .^ 2;
@@ -86,10 +89,15 @@ endfunction
 
 // Calcul de l'histogramme 2D (log + normalise) de deux images
 function hist = rdfCalculeHistogramme2D (image1, bins1, image2, bins2)
-    result = zeros (bins2, bins1);
-    for y = 1:size (image1, 1)
-        for x = 1:size (image1, 2)
-            //
+    result = zeros (bins1, bins2);
+    for y = 1:size(image1,1)
+        for x = 1:size(image1,2)
+       //rechercher les niveaux de gris identiques et la texture identique
+       //histo(x,y)= histo(x,y) +1;      pour  Card{ g(x,y)=x g2(x,y) = y}}
+            i = int (image1 (y, x) * (bins1 - 1)) + 1;
+            j = int (image2 (y, x) * (bins2 - 1)) + 1;
+
+            result(i,j)= result(i,j) +1;
         end
     end
     // Version logarithmique
@@ -107,10 +115,11 @@ function classe = rdfClassifieurLineaire2D (image1, image2, a, b, c)
             j = image2 (y, x);
             if a * i + b * j + c > 0 then
                 result (y, x) = 1;
-                else
+            else
                 result (y, x) = 0;
             end
         end
     end
     classe = result;
 endfunction
+
