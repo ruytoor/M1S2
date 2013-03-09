@@ -52,6 +52,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -70,7 +72,7 @@ public class HelloWorldResource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces("text/html")
+    @Produces(MediaType.TEXT_HTML)
     public String getXml() {
         return "<html><body><h1>Hello "+nameStorage.getName()+"!</h1>"
                 + "</body></html>";
@@ -82,8 +84,14 @@ public class HelloWorldResource {
      * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
-    @Consumes("text/plain")
+    @Consumes(MediaType.TEXT_HTML)
     public void putXml(String content) {
+        System.out.println(content);
+        nameStorage.setName(content);
+    }
+    @POST
+    @Consumes(MediaType.TEXT_HTML)
+    public void postXml(String content) {
         System.out.println(content);
         nameStorage.setName(content);
     }
