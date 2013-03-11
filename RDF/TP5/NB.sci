@@ -1,4 +1,4 @@
-function retour=NBtrain(x_train,y_train,x_test)
+function retour=NBtrain(x_train,y_train)
     mfrequence=zeros(10,256);
     for i=1:size(x_train,1)
         for y=1:size(x_train,2)
@@ -11,9 +11,32 @@ endfunction
 
 function retour=NBclassement(x_test,train)
     retour=zeros(size(x_test,1),1);
+
     for i=1:size(x_test,1)
-        
-        
+        tmp=tabul(x_test(i,:),'i');
+        valeur=zeros(1,10);
+        for t=1:10
+            for y=1:size(tmp,1)
+          //      printf("%d - %d - %d\n",y,t,(tmp(y,1)+1));
+            //    tmp2=tmp(y,1)+1;
+              //  printf("%d -- %d\n",tmp2,size(valeur,2));
+               // tmp3=train(t,tmp2);
+                valeur(t) = valeur(t) + log(train(t,(tmp(y,1)+1)) * (tmp(y,2)));
+            end
+        end
+      //  print(%io(2),valeur)
+        [k,ki]=gsort(valeur);
+        retour(i)=ki(1);
+        printf("%d/10000\n",i);
+    end
+endfunction
+
+function retour= compare (estim,y_test)
+    retour=zeros(size(estim,1),1);
+    for i= 1:size(estim,1)
+        if(estim(i)<>y_test(i)) then
+            retour(i)=1;
+        end 
     end
 endfunction
 
@@ -28,9 +51,10 @@ y_test = [ones(size(test0,1), 1); ones(size(test1,1),1)*2;ones(size(test2,1), 1)
 
 allFeatureVals=0:255;
 
-train=NBtrain(x_train,y_train,x_test);
+train=NBtrain(x_train,y_train);
 train=train./(size(x_train,2)*200);
-
+estim=NBclassement(x_test,train);
+t=compare(estim,y_test);
 
 //1. entrainer le model Naive Bayes: 
 //i.e. calculer les frequences conditionelles des chiffres manuscrits en utilisant la matrice x_train et y_train). 

@@ -34,10 +34,10 @@ void Entity::initBuffer() {
         pts[i+1]=this->vertex(i).y();
         pts[i+2]=this->vertex(i).z();
     }
-    for(int i=0;i<this->nbFace();i+=3){
-        indice[i]=this->indexVertex(i,0);
-        indice[i+1]=this->indexVertex(i,1);
-        indice[i+2]=this->indexVertex(i,2);
+    for(int i=0;i<this->nbFace();i++){
+        indice[3*i]=this->indexVertex(i,0);
+        indice[3*i+1]=this->indexVertex(i,1);
+        indice[3*i+2]=this->indexVertex(i,2);
     }
     // 2) créer les buffers openGL et recopier les tableaux pts et indice dans ces buffers
     glGenBuffers(1,&_vertexBuffer);
@@ -47,7 +47,7 @@ void Entity::initBuffer() {
 
     glGenBuffers(1,&_indiceBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_indiceBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,this->nbFace()*3*sizeof(GLfloat),indice,GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,this->nbFace()*3*sizeof(GLint),indice,GL_STATIC_DRAW);
 
     // on supprime les tableaux de la mémoire centrale (tout est maintenant dans la mémoire OpenGL)
     delete[] pts;
