@@ -74,7 +74,9 @@ public class HelloWorldResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getXml() {
-        return "<html><body><h1>Hello "+nameStorage.getName()+"!</h1>"
+        System.out.println("test 1");
+        return "<html><body><h1>Hello "+nameStorage.getName()+"!</h1>"+
+                "<form method=\"post\"><input type=\"text\" name=\"test\"></form>"
                 + "</body></html>";
     }
 
@@ -84,15 +86,19 @@ public class HelloWorldResource {
      * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
-    @Consumes(MediaType.TEXT_HTML)
-    public void putXml(String content) {
-        System.out.println(content);
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String putXml(String content) {
+        System.out.println("t1"+content);
         nameStorage.setName(content);
+        return this.getXml();
     }
     @POST
-    @Consumes(MediaType.TEXT_HTML)
-    public void postXml(String content) {
-        System.out.println(content);
-        nameStorage.setName(content);
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String postXml(String content) {
+        String []tmp=content.split("=");
+        nameStorage.setName(tmp[1]);
+        return this.getXml();
     }
 }

@@ -20,9 +20,6 @@ void Entity::initBuffer() {
     unsigned int *indice;
     indice=new unsigned int[this->nbFace()*3]; // *3 car on doit mettre les 3 indices constituant chacun des triangles.
 
-
-
-
     // A Compléter : mapping dans les tableaux + initialisation des buffers OpenGL
     // this->nbVertex() donne le nombre de sommets de l'objet
     // this->nbFace() donne le nombre de l'objet (CU : l'objet doit être uniquement constitué de triangles)
@@ -37,8 +34,7 @@ void Entity::initBuffer() {
         pts[i+1]=this->vertex(i).y();
         pts[i+2]=this->vertex(i).z();
     }
-
-    for(int i=0;i<this->nbFace()*3;i+=3){
+    for(int i=0;i<this->nbFace();i+=3){
         indice[i]=this->indexVertex(i,0);
         indice[i+1]=this->indexVertex(i,1);
         indice[i+2]=this->indexVertex(i,2);
@@ -62,8 +58,17 @@ void Entity::initBuffer() {
 
 void Entity::drawBuffer() {
     // TODO
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER,_vertexBuffer);
+    glVertexPointer(3,GL_FLOAT,0,0);
+
+    glEnableClientState(GL_ELEMENT_ARRAY_BUFFER);
 
 
+    glDrawElements(GL_TRIANGLE_STRIP,this->nbFace()*3,GL_UNSIGNED_INT,&_indiceBuffer);
+
+    glDisableClientState(GL_ELEMENT_ARRAY_BUFFER);
+    glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 /** ********************************************************************** */
