@@ -1,7 +1,7 @@
 //partie 0: Charger et visualiser les donnees
 loadmatfile('ex3data1.mat');
 stacksize('max'); 
-// données d'entrainement sont enregistrees dans X, y
+// données d'entrainement sont enregistrees dans X, Y
 [X_lignes,X_cols] = size(X);
 
 //Sélectionner 100 images a visualiser
