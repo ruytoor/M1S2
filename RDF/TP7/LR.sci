@@ -1,7 +1,7 @@
 //partie 0: Charger et visualiser les donnees
 loadmatfile('ex3data1.mat');
 stacksize('max'); 
-// données d'entrainement sont enregistrees dans X, y
+// données d'entrainement sont enregistrees dans X, Y
 [X_lignes,X_cols] = size(X);
 
 //Sélectionner 100 images a visualiser
@@ -47,8 +47,7 @@ for j = 1:display_rows
 end
 f=gcf();
 drawlater()
-cmap=graycolormap(32);
-f.color_map=cmap;
+f.color_map=graycolormap(32);
 display_array=(display_array+1)*16;
 Matplot(display_array);
 a=gca();
