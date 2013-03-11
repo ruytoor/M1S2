@@ -47,8 +47,7 @@ for j = 1:display_rows
 end
 f=gcf();
 drawlater()
-cmap=graycolormap(32);
-f.color_map=cmap;
+f.color_map=graycolormap(32);
 display_array=(display_array+1)*16;
 Matplot(display_array);
 a=gca();
