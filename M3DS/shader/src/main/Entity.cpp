@@ -29,15 +29,15 @@ void Entity::initBuffer() {
 
     // 1) initialiser les tableaux pts et indice
 
-    for(int i=0;i<this->nbVertex()*3;i+=3){
-        pts[i]=this->vertex(i).x();
-        pts[i+1]=this->vertex(i).y();
-        pts[i+2]=this->vertex(i).z();
+    for(int i=0;i<this->nbVertex();i++){
+        pts[3*i]=this->vertex(i).x();
+        pts[3*i+1]=this->vertex(i).y();
+        pts[3*i+2]=this->vertex(i).z();
     }
-    for(int i=0;i<this->nbFace();i+=3){
-        indice[i]=this->indexVertex(i,0);
-        indice[i+1]=this->indexVertex(i,1);
-        indice[i+2]=this->indexVertex(i,2);
+    for(int i=0;i<this->nbFace();i++){
+        indice[3*i]=this->indexVertex(i,0);
+        indice[3*i+1]=this->indexVertex(i,1);
+        indice[3*i+2]=this->indexVertex(i,2);
     }
     // 2) créer les buffers openGL et recopier les tableaux pts et indice dans ces buffers
     glGenBuffers(1,&_vertexBuffer);
@@ -63,9 +63,9 @@ void Entity::drawBuffer() {
     glVertexPointer(3,GL_FLOAT,0,0);
 
     glEnableClientState(GL_ELEMENT_ARRAY_BUFFER);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_indiceBuffer);
 
-
-    glDrawElements(GL_TRIANGLE_STRIP,this->nbFace()*3,GL_UNSIGNED_INT,&_indiceBuffer);
+    glDrawElements(GL_TRIANGLES,this->nbFace()*3,GL_UNSIGNED_INT,0);
 
     glDisableClientState(GL_ELEMENT_ARRAY_BUFFER);
     glDisableClientState(GL_VERTEX_ARRAY);
