@@ -1,34 +1,35 @@
 function retour=NBtrain(x_train,y_train)
     mfrequence=zeros(10,256);
+    printf("debut calcul fréquence\n");
+
     for i=1:size(x_train,1)
         for y=1:size(x_train,2)
             mfrequence(y_train(i),(x_train(i,y)+1))=mfrequence(y_train(i),(x_train(i,y)+1))+1;
         end
-        printf("%d/2000\n",i);
     end
+    printf("fin calcul fréquence\n");
     retour=mfrequence;
 endfunction
 
 function retour=NBclassement(x_test,train)
     retour=zeros(size(x_test,1),1);
-
+    printf("debut NBclassment\n");
     for i=1:size(x_test,1)
         tmp=tabul(x_test(i,:),'i');
         valeur=zeros(1,10);
         for t=1:10
             for y=1:size(tmp,1)
-          //      printf("%d - %d - %d\n",y,t,(tmp(y,1)+1));
-            //    tmp2=tmp(y,1)+1;
-              //  printf("%d -- %d\n",tmp2,size(valeur,2));
-               // tmp3=train(t,tmp2);
-                valeur(t) = valeur(t) + log(train(t,(tmp(y,1)+1)) * (tmp(y,2)));
+                valeur(t) = valeur(t) + log(train(t,(tmp(y,1)+1)))*tmp(y,2);
+                //valeur(t) = valeur(t)+ abs(train(t,(tmp(y,1)+1)) - ((tmp(y,2)/784))); 
             end
         end
-      //  print(%io(2),valeur)
+        //print(%io(2),valeur)
         [k,ki]=gsort(valeur);
+        //        print(%io(2),k)
+        //        print(%io(2),ki)
         retour(i)=ki(1);
-        printf("%d/10000\n",i);
     end
+    printf("fin NBclassment\n");
 endfunction
 
 function retour= compare (estim,y_test)
