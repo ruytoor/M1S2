@@ -100,7 +100,7 @@ void GLView::initializeGL() {
     UtilGL::materialFrontBack();
     UtilGL::initLight(GL_LIGHT0);
     float tf1[]={0,0,1,0};
-    float tf2[]={0,0.8,0,0};
+    float tf2[]={0.8,0,0,0};
     float tf3[]={0,0.2,0.8,0};
     glLightfv(GL_LIGHT0,GL_POSITION,tf1); // vecteur d'éclairement L. Dans le vertex/fragment shader récupéré par gl_LightSource[0].position.xyz qui sera (0,0,1).
     glMaterialfv(GL_FRONT,GL_DIFFUSE,tf2); // coefficient Kd du diffus. (rouge,vert,bleu,alpha) = (0,0.8,0,0). Récupéré dans le vertex/fragment shader par gl_FrontMaterial.diffuse
@@ -293,7 +293,7 @@ void GLView::drawCowOutline() {
 void GLView::drawCowLight() {
     glColor3f(0,0.6,0.5);
 
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
     UtilGL::drawText("Lighting shader",Vector2(0,0));
     _shaderLight.enable();

@@ -20,6 +20,10 @@ void Entity::initBuffer() {
     unsigned int *indice;
     indice=new unsigned int[this->nbFace()*3]; // *3 car on doit mettre les 3 indices constituant chacun des triangles.
 
+    float *nor;
+    nor=new float[this->nbVertex()*3];
+
+
     // A Compléter : mapping dans les tableaux + initialisation des buffers OpenGL
     // this->nbVertex() donne le nombre de sommets de l'objet
     // this->nbFace() donne le nombre de l'objet (CU : l'objet doit être uniquement constitué de triangles)
@@ -39,6 +43,13 @@ void Entity::initBuffer() {
         indice[3*i+1]=this->indexVertex(i,1);
         indice[3*i+2]=this->indexVertex(i,2);
     }
+    for(int i=0;i<this->nbVertex();i++){
+        nor[i*3]=this->normalVertex(i).x();
+        nor[3*i+1]=this->normalVertex(i).y();
+        nor[3*i+2]=this->normalVertex(i).z();
+    }
+
+
     // 2) créer les buffers openGL et recopier les tableaux pts et indice dans ces buffers
     glGenBuffers(1,&_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER,_vertexBuffer);
@@ -49,9 +60,15 @@ void Entity::initBuffer() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_indiceBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,this->nbFace()*3*sizeof(GLint),indice,GL_STATIC_DRAW);
 
+    glGenBuffers(1,&_normalBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER,_normalBuffer);
+    glBufferData(GL_ARRAY_BUFFER,this->nbVertex()*3*sizeof(GLfloat),nor,GL_STATIC_DRAW);
+
+
     // on supprime les tableaux de la mémoire centrale (tout est maintenant dans la mémoire OpenGL)
     delete[] pts;
     delete[] indice;
+    delete[] nor;
 
 }
 
@@ -62,12 +79,17 @@ void Entity::drawBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER,_vertexBuffer);
     glVertexPointer(3,GL_FLOAT,0,0);
 
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER,_normalBuffer);
+    glNormalPointer(GL_FLOAT,0,0);
+
     glEnableClientState(GL_ELEMENT_ARRAY_BUFFER);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_indiceBuffer);
 
     glDrawElements(GL_TRIANGLES,this->nbFace()*3,GL_UNSIGNED_INT,0);
 
     glDisableClientState(GL_ELEMENT_ARRAY_BUFFER);
+    glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 

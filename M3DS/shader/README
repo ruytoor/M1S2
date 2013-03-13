@@ -1,0 +1,14 @@
+Aurore Allart et Benjamin Ruytoor
+
+Bonjour tout marche.
+
+Le probleme de la V.1 était dû à la normalisation des vecteurs N,L,V éffectuée dans le shader vertex.
+
+//ancienne version V.1
+Bonjour je ne sais pas pourquoi l'éclairage spéculaire ne veux pas s'interpoler.
+
+sinon à part ça, on s'est des fois emmêlées les pinceaux
+comme
+glBindBuffer(GL_NORMAL_BUFFER,_normalBuffer);
+à la place de
+glBindBuffer(GL_ARRAY_BUFFER,_normalBuffer);
