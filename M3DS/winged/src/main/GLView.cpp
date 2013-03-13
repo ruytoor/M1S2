@@ -52,7 +52,8 @@ void GLView::initializeGL() {
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
   UtilGL::materialFrontBack();
-  glLightfv(GL_LIGHT0,GL_AMBIENT,(float []){0.8,0.8,0.8,0.0});
+  float f1[]={0.8,0.8,0.8,0.0};
+  glLightfv(GL_LIGHT0,GL_AMBIENT,f1);
   glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
   glEnable(GL_NORMALIZE);
   //glEnable(GL_COLOR_MATERIAL);
@@ -74,10 +75,12 @@ void GLView::initializeGL() {
 
   UtilGL::materialFrontBack();
   UtilGL::initLight(GL_LIGHT0);
-
-  glLightfv(GL_LIGHT0,GL_POSITION,(float []){0,0,1,0}); // vecteur d'éclairement L. Dans le vertex/fragment shader récupéré par gl_LightSource[0].position.xyz qui sera (0,0,1).
-  glMaterialfv(GL_FRONT,GL_DIFFUSE,(float []){0,0.8,0,0}); // coefficient Kd du diffus. (rouge,vert,bleu,alpha) = (0,0.8,0,0). Récupéré dans le vertex/fragment shader par gl_FrontMaterial.diffuse
-  glMaterialfv(GL_FRONT,GL_SPECULAR,(float []){0,0.2,0.8,0}); // coefficient Ks du spéculaire. (rouge,vert,bleu,alpha) = (0,0.2,0.8,0). Récupéré dans le vertex/fragment shader par gl_FrontMaterial.specular
+float f2[]={0,0,1,0};
+float f3[]={0,0.8,0,0};
+float f4[]={0,0.2,0.8,0};
+  glLightfv(GL_LIGHT0,GL_POSITION,f2); // vecteur d'éclairement L. Dans le vertex/fragment shader récupéré par gl_LightSource[0].position.xyz qui sera (0,0,1).
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,f3); // coefficient Kd du diffus. (rouge,vert,bleu,alpha) = (0,0.8,0,0). Récupéré dans le vertex/fragment shader par gl_FrontMaterial.diffuse
+  glMaterialfv(GL_FRONT,GL_SPECULAR,f4); // coefficient Ks du spéculaire. (rouge,vert,bleu,alpha) = (0,0.2,0.8,0). Récupéré dans le vertex/fragment shader par gl_FrontMaterial.specular
   glMateriali(GL_FRONT,GL_SHININESS,50); // Brillance = 50. Récupéré dans le vertex/fragment shader par gl_FrontMaterial.shininess
 
   initData();
