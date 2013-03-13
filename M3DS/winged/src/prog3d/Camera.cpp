@@ -17,14 +17,14 @@ Camera::~Camera() {
 }
 
 
-void Camera::frustum(double left,double right,double down,double top,double near,double far) {
+void Camera::frustum(double left,double right,double down,double top,double near2,double far2) {
 
   _frustum[0]=left;
   _frustum[1]=right;
   _frustum[2]=down;
   _frustum[3]=top;
-  _frustum[4]=near;
-  _frustum[5]=far;
+  _frustum[4]=near2;
+  _frustum[5]=far2;
 }
 
 void Camera::viewport(unsigned int x,unsigned int y,unsigned int width,unsigned int height) {
