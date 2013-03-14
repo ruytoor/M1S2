@@ -37,38 +37,39 @@ void WVertex::computeNormal() {
     fin=e=this->edge();
 
 
-    do{
+    do{//parcour à gauche
         if(e->begin()==this){
             if(e->predLeft()!=NULL){//cas d'un bord
                 moyenne=moyenne+e->left()->normal();
                 e=e->predLeft();
-            }else{// parcour à gauche
-                i=0;
-                fin=e;// on marque cette arrete comme cas de fin
-                while(e->predRight()&&e->succLeft()){//on remonte jusqu'à l'autre bord
+                ++i;
+            }else{
+                WEdge *stop;
+                stop=e;
+                do{
                     if(e->begin()==this)
-                        e=e->succLeft();
+                        e=e->succRight();
                     else
-                        e=e->predRight();
-                }
+                        e=e->succLeft();
+                }while(e->succRight()&&e->succLeft()&&stop!=e);//on remonte jusqu'à l'autre bord
             }
         }else{
-            if(e->succRight()!=NULL){//cas d'un bord
+            if(e->predRight()!=NULL){//cas d'un bord
                 moyenne=moyenne+e->right()->normal();
-                e=e->succRight();
-            }else{// parcour à gauche
-                i=0;
-                fin=e;// on marque cette arrete comme cas de fin
-                while(e->predRight()&&e->succLeft()){//on remonte jusqu'à l'autre bord
+                e=e->predRight();
+                ++i;
+            }else{
+                WEdge *stop;
+                stop=e;
+                do{
                     if(e->begin()==this)
-                        e=e->succLeft();
+                        e=e->succRight();
                     else
-                        e=e->predRight();
-                }
+                        e=e->succLeft();
+                }while(e->succRight()&&e->succLeft()&&stop!=e);//on remonte jusqu'à l'autre bord
             }
         }
-        ++i;
-    }while(e==fin);
+    }while(e!=fin);
     moyenne/i;
     moyenne.normalize();
     //cout<<moyenne.x()<<endl;

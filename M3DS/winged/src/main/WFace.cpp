@@ -35,7 +35,7 @@ void WFace::draw() {
     Sinit = Scourant;
 
     glNormal3f(SsommentCourant->normal().x(),SsommentCourant->normal().y(),SsommentCourant->normal().z());
-    //glNormal3dv(_normal.dv());
+    //glNormal3dv(_normal.dv()); Sans N
     glVertex3dv(SsommentCourant->point().dv());
     do{
         if (Scourant->left()==this){
