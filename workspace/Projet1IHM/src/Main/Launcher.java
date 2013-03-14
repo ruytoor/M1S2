@@ -23,7 +23,7 @@ public class Launcher {
 		f.setPreferredSize(new Dimension(350, 150));
 		f.setLayout(new GridLayout(3, 1, 10, 10));
 		c.add(new JLabel("Combien de couleur ?"));
-		final JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 20, 1));
+		final JSpinner spinner = new JSpinner(new SpinnerNumberModel(2, 2, 20, 1));
 		((DefaultEditor)spinner.getEditor()).getTextField().setEditable(false);
 		JButton b= new JButton("ok");
 		b.addActionListener(new ActionListener() {
