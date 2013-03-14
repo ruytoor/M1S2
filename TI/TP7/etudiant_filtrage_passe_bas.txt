@@ -32,7 +32,7 @@ fill();
 
 
 // disque binaire
-rayon = 50;
+rayon = 105;      /////////////////////////////////////////////// ICI de base =50 à 100 on voit une petite cible à 105 en revoit l'image d'origine
 
 print ( "rayon =", rayon);
 setColor(255);

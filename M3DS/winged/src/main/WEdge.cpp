@@ -144,7 +144,7 @@ WFace *WEdge::left() const {
 }
 
 WFace *WEdge::right() const {
-  return _right;
+    return _right;
 }
 
 void WEdge::left(WFace *f) {

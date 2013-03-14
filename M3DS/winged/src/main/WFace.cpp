@@ -33,16 +33,20 @@ void WFace::draw() {
     SsommentCourant = Scourant->begin();
     Ssommetinit = SsommentCourant;
     Sinit = Scourant;
-    glNormal3dv(_normal.dv());
+
+    glNormal3f(SsommentCourant->normal().x(),SsommentCourant->normal().y(),SsommentCourant->normal().z());
+    //glNormal3dv(_normal.dv());
     glVertex3dv(SsommentCourant->point().dv());
     do{
         if (Scourant->left()==this){
-            glNormal3dv(_normal.dv());
+            glNormal3f(Scourant->end()->normal().x(),Scourant->end()->normal().y(),Scourant->end()->normal().z());
+          //  glNormal3dv(_normal.dv());
             glVertex3dv(Scourant->end()->point().dv());
             Scourant = Scourant->succLeft();
             SsommentCourant = Scourant->begin();
         }else{
-            glNormal3dv(_normal.dv());
+            glNormal3f(Scourant->begin()->normal().x(),Scourant->begin()->normal().y(),Scourant->begin()->normal().z());
+         //   glNormal3dv(_normal.dv());
             glVertex3dv(Scourant->begin()->point().dv());
             Scourant = Scourant->succRight();
             SsommentCourant = Scourant->end();

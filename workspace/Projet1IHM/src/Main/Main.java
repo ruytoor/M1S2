@@ -14,7 +14,6 @@ public class Main {
 	}
 	
 	public static void start(int nbCouleur) {
-		System.out.println(nbCouleur);
-		MasterVue vue=new MasterVue("Projet 1 IHM",nbCouleur,new MasterModel(nbCouleur));
+		new MasterVue("Projet 1 IHM",nbCouleur,new MasterModel(nbCouleur));
 	}
 }
