@@ -29,10 +29,12 @@ fill();
 
 // calcul de la fréquence de coupure en cycle/pixel
 // aidez vous des calculs du TP1
+fréquence_coupure = 0.1;
 
+taille_reference = 256;
 
 // disque binaire
-rayon = 105;      // ICI de base =50. à 100 on voit une petite cible à 105 en revoit l'image d'origine
+rayon = 50;
 
 print ( "rayon =", rayon);
 setColor(255);

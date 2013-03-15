@@ -6,9 +6,10 @@ mat=zeros(35,n);
 for i=1:n
     c = str2code(noms(i));
     mat(c,i) = 1;
-end// code les lettres sous forme d'indice, mat 283 col pour 283 mot et 38 ligne pour 38 lettre (on en prend que 26 pour notre exemple)
+end// code les lettres sous forme d'indice, mat 283 colonnes pour 283 mots et 38 lignes pour 35 lettres (on en prend que 26 pour notre exemple)
 // a= 10
 // z= 35
+
 //Q4
 mat=mat(10:$,:);
 matsum=zeros(size(mat,1),1);
