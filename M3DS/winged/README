@@ -1,0 +1,8 @@
+Aurore Allart et Benjamin Ruytoor
+
+
+Tout est OK
+
+Question 4)
+le bug était dû au fait que le bonhomme a des bords (voir avec la touche 'b')
+ajout d'un test + un petit saut d'arète, règle le problème.
