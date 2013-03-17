@@ -18,7 +18,6 @@ max_iter=10;
 I = grand(1,'prm',(1:X_ligne)');
 Y = zeros(X_ligne,1);
 clusters = X(I(1:16),:);
-for k=1:10
 
     for i = 1:X_ligne
         T=repmat([X(i,1),X(i,2),X(i,3)],K,1);
@@ -29,14 +28,14 @@ for k=1:10
     end
     for j =1:16
         m = size(find(Y==1),2);
-        clusters(j,1) = sum(X(find(Y==j),1))/m;
-        clusters(j,2) = sum(X(find(Y==j),2))/m;
-        clusters(j,3) = sum(X(find(Y==j),3))/m;
+        clusters(j,1) = mean(X(find(Y==j),1),'r');
+        clusters(j,2) = mean(X(find(Y==j),2),'r');
+        clusters(j,3) = mean(X(find(Y==j),3),'r');
     end
-end
+
 X_comp = zeros(X_ligne,3);
-X_comp(1:X_ligne,:) = clusters(Y(1:X_ligne),:)*256;
-X_compressed = matrix(X_comp, img_size(1)*img_size(2),3);
+X_comp(1:X_ligne,:) = clusters(Y(1:X_ligne),:);
+X_compressed = matrix(X_comp, img_size(1),img_size(2),3);
 imshow(X_compressed);
 //imagesc(X_compressed);
 //Remplacer chaque pixel dans l'image original par le centre de son cluster
