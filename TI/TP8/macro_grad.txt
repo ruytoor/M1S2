@@ -1,5 +1,5 @@
 //macro TP8
-//Aurore Allart et Ruytoor Benjamin
+//Aurore Allart et Benjamin Ruytoor
 
 run("Conversions...", " ");// set convrsions
 
