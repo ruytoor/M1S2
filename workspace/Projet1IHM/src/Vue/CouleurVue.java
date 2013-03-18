@@ -34,6 +34,7 @@ public class CouleurVue extends JPanel implements Observer{
 		add(couleur);
 		add(vueGris);
 		this.setVisible(true);
+		System.out.println("test");
 	}
 	
 	@Override
