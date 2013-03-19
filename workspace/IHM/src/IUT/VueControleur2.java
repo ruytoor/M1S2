@@ -22,6 +22,8 @@ public class VueControleur2 extends JPanel implements Observer{
 		bleu=new JSlider(0, 100, model.getB());
 		rouge=new JSlider(0, 100, model.getR());
 		vert=new JSlider(0,100,model.getV());
+		
+		
 		Label rougeLab=new Label("Rouge");
 		Label bleuLab=new Label("Bleu");
 		Label vertLab=new Label("Vert");
@@ -32,6 +34,7 @@ public class VueControleur2 extends JPanel implements Observer{
 		this.add(vert);
 		this.add(bleuLab);
 		this.add(bleu);
+		
 		
 		bleu.addChangeListener(new ChangeListener() {
 			

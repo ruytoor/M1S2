@@ -32,7 +32,7 @@ public class monMain {
 	 */
 	public static void main(String[] args){
 		r=v=b=0;
-		JFrame f =new JFrame();
+		JFrame f =new JFrame("test");
 		Container c = f.getContentPane();
 		JPanel p1=new JPanel();
 		JPanel p2=new JPanel();

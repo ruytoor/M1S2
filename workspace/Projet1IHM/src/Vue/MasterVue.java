@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneLayout;
 
+import Controleur.ColorControleur;
 import Model.MasterModel;
 
 public class MasterVue extends JFrame{
@@ -26,9 +27,10 @@ public class MasterVue extends JFrame{
 		p.setLayout(new GridLayout(nbCouleur, 1));
 
 		for(int i=0;i<nbCouleur;++i){
-			CouleurVue c=new CouleurVue(i+1,i*255/(nbCouleur-1));
-			p.add(c);
-			masterM.setModel(c, i);
+			ColorControleur c=new ColorControleur(masterM.getModel(i));
+			CouleurVue v=new CouleurVue(i+1,i*255/(nbCouleur-1),c);
+			p.add(v);
+			masterM.setModel(v,c,i);
 		}
 
 		if(this.nbCouleur<4){
