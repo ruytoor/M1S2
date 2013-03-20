@@ -6,6 +6,11 @@ import Controleur.ColorControleur;
 import Controleur.ColorControleurHSV;
 import Vue.CouleurVue;
 
+/*cette classe fontione avec la classe Model et non ModelPreCalule
+ * n'est pas utilliser
+ */
+
+@Deprecated
 public class MasterModel {
 	
 	private ArrayList<Model> listModel;
@@ -20,6 +25,8 @@ public class MasterModel {
 	public Model getModel(int i){
 		return listModel.get(i);
 	}
+
+	@Deprecated
 	public void setModel(CouleurVue v,ColorControleurHSV c,int i){
 		listModel.get(i).addObserver(v);
 		listModel.get(i).addObserver(c);

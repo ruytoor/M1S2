@@ -15,6 +15,15 @@ import javax.swing.event.ChangeListener;
 
 import Model.Model;
 
+
+/*
+ * cette classe n'est pas utiliser et ne sera pas commenté
+ * elle est uniquement présente pour représenté le temps qu'on a mit sur le projet
+ * 
+ * 
+ * fonctione mais peu mieux faire
+ */
+@Deprecated
 public class ColorControleurHSV  extends JPanel implements Observer{
 
 	Model m;

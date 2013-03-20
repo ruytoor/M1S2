@@ -3,6 +3,13 @@ package Model;
 import java.awt.Color;
 import java.util.Observable;
 
+
+/* fonctionel mais n'est pas utiliser
+ * 
+ * ce model garde en mémoire une couleur et ces valeurs rgb
+ * comparé au ModelPreCalculé qui garde en mémoire tout les couleur possible
+ */
+@Deprecated
 public class Model extends Observable{
 
 	private int nivGris;

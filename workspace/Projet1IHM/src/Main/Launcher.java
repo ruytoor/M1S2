@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 
@@ -23,8 +24,14 @@ public class Launcher {
 		f.setPreferredSize(new Dimension(350, 150));
 		f.setLayout(new GridLayout(3, 1, 10, 10));
 		c.add(new JLabel("Combien de couleur ?"));
-		final JSpinner spinner = new JSpinner(new SpinnerNumberModel(2, 2, 20, 1));
+		//spinner de 2 à 10 par pas de 1 (commence à 2)
+		final JSpinner spinner = new JSpinner(new SpinnerNumberModel(2, 2, 10, 1));
+		
+		//style du spinner 
 		((DefaultEditor)spinner.getEditor()).getTextField().setEditable(false);
+		((DefaultEditor)spinner.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
+		((DefaultEditor)spinner.getEditor()).getTextField().setFont(((DefaultEditor)spinner.getEditor()).getTextField().getFont().deriveFont(30.0f));
+
 		JButton b= new JButton("ok");
 		b.addActionListener(new ActionListener() {
 			@Override
@@ -33,6 +40,7 @@ public class Launcher {
 				Main.start((Integer)(spinner.getModel().getValue()));
 			}
 		});
+		
 		c.add(spinner);		
 		c.add(b);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
