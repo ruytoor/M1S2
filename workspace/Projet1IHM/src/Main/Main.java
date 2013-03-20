@@ -14,6 +14,6 @@ public class Main {
 	}
 	
 	public static void start(int nbCouleur) {
-		new MasterVue("Projet 1 IHM",nbCouleur,new MasterModel(nbCouleur));
+		new MasterVue("Projet 1 IHM",nbCouleur+2,new MasterModel(nbCouleur+2));
 	}
 }

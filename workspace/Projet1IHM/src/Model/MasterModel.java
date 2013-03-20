@@ -2,6 +2,8 @@ package Model;
 
 import java.util.ArrayList;
 
+import Controleur.ColorControleur;
+import Controleur.ColorControleurHSV;
 import Vue.CouleurVue;
 
 public class MasterModel {
@@ -13,6 +15,20 @@ public class MasterModel {
 		for(int i=0;i<nombreCouleur;++i){
 			listModel.add(new Model(i,nombreCouleur));
 		}
+	}
+	
+	public Model getModel(int i){
+		return listModel.get(i);
+	}
+	public void setModel(CouleurVue v,ColorControleurHSV c,int i){
+		listModel.get(i).addObserver(v);
+		listModel.get(i).addObserver(c);
+	}
+	
+	@Deprecated
+	public void setModel(CouleurVue v,ColorControleur c,int i){
+		listModel.get(i).addObserver(v);
+		listModel.get(i).addObserver(c);
 	}
 	
 	public void setModel(CouleurVue v,int i){

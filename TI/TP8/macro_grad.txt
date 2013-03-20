@@ -1,1 +1,45 @@
 //macro TP8
+//Aurore Allart et Benjamin Ruytoor
+
+run("Conversions...", " ");// set convrsions
+
+open("/home/benjamin/M1S2/TI/TP8/128_x.bmp");  // ouvre l'image
+run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
+run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
+//run("Convolve...", "text1=-101\n-202\n-101\n normalize");
+sobelX=getImageID();
+
+open("/home/benjamin/M1S2/TI/TP8/128_x.bmp");  // ouvre l'image
+run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
+run("Convolve...", "text1=-1-10\n-101\n011\n normalize");
+//run("Convolve...", "text1=-1-2-1\n000\n121\n normalize");
+sobelY=getImageID();
+
+W = getWidth();
+H = getHeight();
+
+newImage("atan", "32-bit", W, H, 1);
+atanImage=getImageID();
+px=0;
+py=0;
+tmp=0;
+norme=0;
+setBatchMode(true);
+
+for (j=0; j<H; j++) {
+	for (i=0; i<W; i++) 
+{
+		selectImage(sobelX);
+		py=getPixel(i,j);
+		selectImage(sobelY);
+		py=getPixel(i,j);
+		selectImage(atanImage);
+		norme=sqrt(py*py+px*px);
+		tmp=atan2(py,px)*180/PI;
+		setPixel(i,j,tmp);
+	}
+}
+
+
+setBatchMode(false);
+
