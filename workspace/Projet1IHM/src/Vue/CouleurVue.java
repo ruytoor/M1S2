@@ -18,7 +18,7 @@ public class CouleurVue extends JPanel implements Observer{
 	private int nivGris;
 	
 	public CouleurVue(int i,int nivGris,JPanel chooser){
-		System.out.println(nivGris);
+	//	System.out.println(nivGris);
 		this.setPreferredSize(new Dimension(600, 100));
 		this.setLayout(new GridLayout(1, 4, 2, 2));
 		JLabel label=new JLabel("couleur n°"+i);
@@ -27,7 +27,7 @@ public class CouleurVue extends JPanel implements Observer{
 		this.chooser=chooser;
 		this.chooser.setPreferredSize(new Dimension(300, 100));
 		add(this.chooser);
-		this.nivGris=nivGris;
+		this.nivGris=nivGris;// faire du random couleur
 		couleur=new JPanel();
 		couleur.setPreferredSize(new Dimension(100, 100));
 		JPanel vueGris=new JPanel();

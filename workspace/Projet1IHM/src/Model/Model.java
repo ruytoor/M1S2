@@ -8,7 +8,7 @@ public class Model extends Observable{
 	private int nivGris;
 	private int r,g,b;
 	private Color couleur;
-	
+
 
 	public Model(int numero,int nbMax){
 		r=g=b=numero*255/(nbMax-1);
@@ -37,10 +37,36 @@ public class Model extends Observable{
 		setChanged();
 		notifyObservers(couleur);
 	}
-	
+
 	public int getnivGris(){
 		return nivGris;
 	}
+
+
+	public void setTSV(float teinte,float saturation){
+		Color c=Color.getHSBColor(teinte, saturation, 0.5f);
+		float b=0.5f;
+		while(((c.getGreen()*0.59)+(c.getBlue()*0.11)+(c.getRed()*0.3))>nivGris+2 || ((c.getGreen()*0.59)+(c.getBlue()*0.11)+(c.getRed()*0.3))<nivGris-2){
+			System.out.println(((c.getGreen()*0.59)+(c.getBlue()*0.11)+(c.getRed()*0.3))/255+"  "+b+"::"+saturation+"::"+teinte+"              R"+c.getRed()+"G"+c.getGreen()+"B"+c.getBlue());
+			if(((c.getGreen()*0.59)+(c.getBlue()*0.11)+(c.getRed()*0.3))<nivGris){
+				if(b<=0.996)
+					b+=0.005;
+				else
+					saturation-=0.005;
+			}else{
+				if(b>=0.004)
+					b-=0.005;
+				else
+					saturation+=0.005;
+			}
+			c=Color.getHSBColor(teinte, saturation, b);
+		}
+		setCouleur(c);
+	}
+
+
+
+	@Deprecated
 	public void setRouge(int value) {
 		//NiveauGris = 0.3   Rouge + 0.59   Vert + 0.11   Bleu
 		if(nivGris!=0){
@@ -57,6 +83,8 @@ public class Model extends Observable{
 			}
 		}
 	}
+
+	@Deprecated
 	public void setVert(int value) {
 		//NiveauGris = 0.3   Rouge + 0.59   Vert + 0.11   Bleu
 		if(nivGris!=0){
@@ -73,6 +101,8 @@ public class Model extends Observable{
 			}
 		}
 	}
+
+	@Deprecated
 	public void setBleu(int value) {
 		//NiveauGris = 0.3   Rouge + 0.59   Vert + 0.11   Bleu
 		if(nivGris!=0){
