@@ -21,7 +21,7 @@ public class MyColor extends Color implements Comparable<MyColor>{
 		float t2[]=new float[3];
 		Color.RGBtoHSB(this.getRed(), this.getGreen(), this.getBlue(), t);
 		Color.RGBtoHSB(o.getRed(), o.getGreen(), o.getBlue(), t2);
-		return (int) ((t[0]*3600)-(t2[0]*3600));
+		return (int) ((t[0]*3600+t[1]*100)-(t2[0]*3600+t2[1]*100));
 		//return (this.getRed()+this.getGreen()*100000+this.getBlue()*1000)-(o.getRed()+o.getGreen()*100000+o.getBlue()*1000);
 	}
 
