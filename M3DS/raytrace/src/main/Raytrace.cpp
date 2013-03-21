@@ -91,6 +91,7 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
 
     Color result=Color(1,1,1); // =m.ambient(); // remarque : le type Color est similaire à Vector3 : vous pouvez utilisez +,-,*,+= etc pour manipuler les couleurs
 
+    }
 
     return result;
 }
