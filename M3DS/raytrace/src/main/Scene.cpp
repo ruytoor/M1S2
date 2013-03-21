@@ -96,7 +96,7 @@ CsgTree *Scene::readNode(TiXmlElement *elem,Material currentMat) {
   if (strcmp(elem->Value(),"node")==0) {
     attribute=elem->Attribute("operation");
     if (strcmp(attribute,"difference")==0) {
-      res->operation(CsgTree::DIFFERENCE);
+      res->operation(CsgTree::DIFFERENCES);
     }
     else if (strcmp(attribute,"union")==0) {
       res->operation(CsgTree::UNION);

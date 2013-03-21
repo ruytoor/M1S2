@@ -27,15 +27,15 @@ class Primitive;
 class CsgTree {
 
 public:
-  typedef enum {INTERSECTION,UNION,DIFFERENCE,LEAF} EOperation;
+    typedef enum {INTERSECTION,UNION,DIFFERENCES,LEAF} EOperation;
     /// constructeur par défaut
-  CsgTree();
-  /// destructeur
-  ~CsgTree();
+    CsgTree();
+    /// destructeur
+    ~CsgTree();
 
     /// constructeur par champ pour un noeud interne
-  CsgTree(const prog3d::Matrix4 &trans,CsgTree *left,CsgTree *right,EOperation op);
-  /// constructeur par champ pour une feuille
+    CsgTree(const prog3d::Matrix4 &trans,CsgTree *left,CsgTree *right,EOperation op);
+    /// constructeur par champ pour une feuille
     CsgTree(const prog3d::Matrix4 &trans,Primitive *p);
 
     /// Calcul de la normale au point P d'une feuille

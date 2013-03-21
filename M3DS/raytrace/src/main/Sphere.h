@@ -6,7 +6,7 @@ class IntersectionArray;
 #include "Primitive.h"
 
 class Sphere:public Primitive {
-    public:
+public:
     Sphere();
     virtual prog3d::Vector3 computeNormal(const prog3d::Vector3 &p);
     virtual void drawGL();

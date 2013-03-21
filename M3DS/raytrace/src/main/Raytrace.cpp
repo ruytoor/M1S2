@@ -29,34 +29,34 @@ Calcul de la couleur pour un rayon donné : la fonction sera récursive lors de 
 */
 Color Raytrace::computeRayColor(const Ray &ray,int profondeur,double contrib) {
 
-  /**
+    /**
   * Remarques :
   - inter->material().reflexionCoefficient() donnera le coefficient de contribution à la réflexion (i.e. 1=réflexion totale, 0=réflexion nulle)
   - inter->computeReflectRay() : permet de calculer le rayon réfléchi
   */
 
 
-  Color color=Color(0,0,0);
+    Color color=Color(0,0,0);
 
 
 
-  // Intersection de la scène avec le rayon (donne uniquement l'intersection la "plus proche").
-  Intersection *inter=_scene->intersection(ray,0.1); // 0.1 pour prendre une intersection qui se trouve un peu devant le "point de départ" (origine) du rayon
+    // Intersection de la scène avec le rayon (donne uniquement l'intersection la "plus proche").
+    Intersection *inter=_scene->intersection(ray,0.1); // 0.1 pour prendre une intersection qui se trouve un peu devant le "point de départ" (origine) du rayon
 
-  if (inter!=NULL) { // existe-t-il une intersection avec la scène ?
-    color=computePhongColor(*inter); // calcul de la couleur par Phong
-
-
-
-
-    // libération mémoire de inter
-    delete inter;
-  }
+    if (inter!=NULL) { // existe-t-il une intersection avec la scène ?
+        color=computePhongColor(*inter); // calcul de la couleur par Phong
 
 
 
 
-  return color;
+        // libération mémoire de inter
+        delete inter;
+    }
+
+
+
+
+    return color;
 }
 
 
@@ -66,7 +66,7 @@ Color Raytrace::computeRayColor(const Ray &ray,int profondeur,double contrib) {
   - les données de la scène (sources lumineuses) sont accessibles par scene()->...
 */
 Color Raytrace::computePhongColor(const Intersection &intersection) {
-  /**
+    /**
   * P est le point d'intersection (Vector3)
   * L est le vecteur d'éclairement (Vector3)
   * N est la normale au point d'intersection (Vector3)
@@ -79,21 +79,20 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
   * Remarque : il faut faire la somme des couleurs obtenues pour chacune des sources (risque de saturation si plusieurs sources lumineuses).
   */
 
-  Vector3 P;
-  Vector3 L;
-  Vector3 N;
-  Vector3 V;
-  N=intersection.normal();
-  P=intersection.point();
-  // V= ?, L=?
-  Material m=intersection.node()->primitive()->material();
+    Vector3 P;
+    Vector3 L;
+    Vector3 N;
+    Vector3 V;
+    N=intersection.normal();
+    P=intersection.point();
+    // V= ?, L=?
+    Material m=intersection.node()->primitive()->material();
 
 
-  Color result=Color(1,1,1); // =m.ambient(); // remarque : le type Color est similaire à Vector3 : vous pouvez utilisez +,-,*,+= etc pour manipuler les couleurs
+    Color result=Color(1,1,1); // =m.ambient(); // remarque : le type Color est similaire à Vector3 : vous pouvez utilisez +,-,*,+= etc pour manipuler les couleurs
 
 
-
-  return result;
+    return result;
 }
 
 
@@ -105,8 +104,8 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
 /** *************************************************************** **/
 /** *************************************************************** **/
 void Raytrace::run() {
-  _stopRequest=false;
-  computeImage();
+    _stopRequest=false;
+    computeImage();
 }
 
 
@@ -115,32 +114,32 @@ Boucle principale du lancer de rayon
 
 */
 void Raytrace::computeImage() {
-  Vector3 eye(0.0,0.0,0.0);
-  Vector3 pixel_eye; // pixel dans le repère observateur
-  _image->fill(Qt::black);
+    Vector3 eye(0.0,0.0,0.0);
+    Vector3 pixel_eye; // pixel dans le repère observateur
+    _image->fill(Qt::black);
 
-  clock_t clockStart=clock();
+    clock_t clockStart=clock();
 
-  Matrix4 csg2Camera=Matrix4::fromQuaternion(_scene->trackball()).inverse();
-  csg2Camera.mul(_scene->camera().matrix());
+    Matrix4 csg2Camera=Matrix4::fromQuaternion(_scene->trackball()).inverse();
+    csg2Camera.mul(_scene->camera().matrix());
 
-  for(unsigned int y=0; y<_height; y++) {
-    for(unsigned int x=0; x<_width; x++) {
-      if (_stopRequest) goto fin;
-      pixel_eye=applyEyeWindow(x,y,60.0); // exprime le rayon dans le repère de l'observateur. 60 = angle d'ouverture sur l'écran
+    for(unsigned int y=0; y<_height; y++) {
+        for(unsigned int x=0; x<_width; x++) {
+            if (_stopRequest) goto fin;
+            pixel_eye=applyEyeWindow(x,y,60.0); // exprime le rayon dans le repère de l'observateur. 60 = angle d'ouverture sur l'écran
 
-      Ray rayon=Ray(eye,pixel_eye);  // rayon primaire
-      rayon.transform(csg2Camera);
+            Ray rayon=Ray(eye,pixel_eye);  // rayon primaire
+            rayon.transform(csg2Camera);
 
-      Color c=computeRayColor(rayon,4,1.0); // calcule la couleur du pixel; 10=profondeur max de récursion, 1.0=attenuation; tous les calculs sont entendus dans le repère G
-      // mise à jour de la couleur du pixel dans l'image résultante
-      QRgb color=qRgb(c.getByteR(),c.getByteG(),c.getByteB());
-      _image->setPixel(x,y,color); // affecte à l'image la couleur calculée
+            Color c=computeRayColor(rayon,4,1.0); // calcule la couleur du pixel; 10=profondeur max de récursion, 1.0=attenuation; tous les calculs sont entendus dans le repère G
+            // mise à jour de la couleur du pixel dans l'image résultante
+            QRgb color=qRgb(c.getByteR(),c.getByteG(),c.getByteB());
+            _image->setPixel(x,y,color); // affecte à l'image la couleur calculée
+        }
     }
-  }
 fin:
-  clock_t clockElapsed=clock()-clockStart;
-  cout << "Raytracing finished in " << double(clockElapsed)/CLOCKS_PER_SEC << " seconds" << endl;
+    clock_t clockElapsed=clock()-clockStart;
+    cout << "Raytracing finished in " << double(clockElapsed)/CLOCKS_PER_SEC << " seconds" << endl;
 }
 
 
@@ -163,25 +162,25 @@ Raytrace::~Raytrace() {
 
 
 Vector3 Raytrace::applyEyeWindow(int x,int y,float fovy) {
-  Vector3 res;
-  float d=1.0/tan(M_PI*fovy/360.0); // fovy=2* angle [0,1]
-  res.set((2.0*(float)x/(float)_width-1.0)*(float)_width/(float)_height,
-          (2.0*(-(float)y/(float)_height)+1.0), // attention : suppose un écran carré (pas de ratio)
-          -d);
-  res=res+Vector3(1.0/float(_width),-1.0/float(_height),0.0);
-  return res;
+    Vector3 res;
+    float d=1.0/tan(M_PI*fovy/360.0); // fovy=2* angle [0,1]
+    res.set((2.0*(float)x/(float)_width-1.0)*(float)_width/(float)_height,
+            (2.0*(-(float)y/(float)_height)+1.0), // attention : suppose un écran carré (pas de ratio)
+            -d);
+    res=res+Vector3(1.0/float(_width),-1.0/float(_height),0.0);
+    return res;
 }
 
 
 
 void Raytrace::close() {
-  if (isRunning()) {
-    _stopRequest=true;
-    while (isRunning()) {
-      cout << "Im waiting" << endl;
-      usleep(100);
+    if (isRunning()) {
+        _stopRequest=true;
+        while (isRunning()) {
+            cout << "Im waiting" << endl;
+            usleep(100);
+        }
     }
-  }
 }
 
 
