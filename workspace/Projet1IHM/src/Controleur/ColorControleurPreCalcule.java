@@ -19,7 +19,6 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
 import Model.ModelPreCalcule;
-import UndoRedo.MyUndoableEdit;
 
 public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 
@@ -27,7 +26,6 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 	JSlider slide;
 	static Random r=new Random();
 	private int nbMax;
-	private int oldValue;
 	private UndoManager uManager;
 
 	//aidé par http://hci.uwaterloo.ca/courses/cs349/s11/resources/java/UndoDemo.java
