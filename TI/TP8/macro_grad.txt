@@ -1,19 +1,20 @@
 //macro TP8
 //Aurore Allart et Benjamin Ruytoor
 
-run("Conversions...", " ");// set convrsions
-
-open("/home/benjamin/M1S2/TI/TP8/128_x.bmp");  // ouvre l'image
+//run("Conversions...", " ");// set convrsions
+macro "gradient"{
+//open("128_x.bmp");  // ouvre l'image
+image = getImageID();
 run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
 run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
 //run("Convolve...", "text1=-101\n-202\n-101\n normalize");
 sobelX=getImageID();
 
-open("/home/benjamin/M1S2/TI/TP8/128_x.bmp");  // ouvre l'image
-run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
-run("Convolve...", "text1=-1-10\n-101\n011\n normalize");
+//open("/home/benjamin/M1S2/TI/TP8/128_x.bmp");  // ouvre l'image
+//run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
+//run("Convolve...", "text1=-1-10\n-101\n011\n normalize");
 //run("Convolve...", "text1=-1-2-1\n000\n121\n normalize");
-sobelY=getImageID();
+//sobelY=getImageID();
 
 W = getWidth();
 H = getHeight();
@@ -43,3 +44,4 @@ for (j=0; j<H; j++) {
 
 setBatchMode(false);
 
+}
