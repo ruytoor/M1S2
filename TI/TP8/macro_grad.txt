@@ -1,19 +1,19 @@
 //macro TP8
 //Aurore Allart et Benjamin Ruytoor
 
-run("Conversions...", " ");// set convrsions
+run("Conversions...", " ");// set conversions
 macro "gradient"{
 open("128_x.bmp");  // ouvre l'image
 image = getImageID();
 run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
 //run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
-run("Convolve...", "text1=-101\n-202\n-101\n normalize");
+run("Convolve...", "text1=[-1 0 1\n-2 0 2\n-1 0 1\n] normalize");
 sobelX=getImageID();
 
 open("128_x.bmp");  // ouvre l'image
 run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
 //run("Convolve...", "text1=-1-10\n-101\n011\n normalize");
-run("Convolve...", "text1=-1-2-1\n000\n121\n normalize");
+run("Convolve...", "text1=[-1 -2 -1\n0 0 0\n1 2 1\n] normalize");
 sobelY=getImageID();
 
 W = getWidth();
@@ -31,12 +31,12 @@ for (j=0; j<H; j++) {
 	for (i=0; i<W; i++) 
 {
 		selectImage(sobelX);
-		py=getPixel(i,j);
+		px=getPixel(i,j);
 		selectImage(sobelY);
 		py=getPixel(i,j);
 		selectImage(atanImage);
 		norme=sqrt(py*py+px*px);
-		tmp=atan2(py,px)*180/PI;
+		tmp=atan2(px,py)*180/PI;
 		setPixel(i,j,tmp);
 	}
 }

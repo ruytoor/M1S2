@@ -34,10 +34,10 @@
    macro "AutoRun" {
       //run("My Plugin");
 	setTool("zoom");	// by lo
-	run("Create Shortcut... ", "command=[To Selection] shortcut=W"); //by lo
+	//run("Create Shortcut... ", "command=[To Selection] shortcut=W"); //by lo
     }
 
-// lo : commande ajoutée pour fermer toutes les fenêtres
+// lo : commande ajoutï¿½e pour fermer toutes les fenï¿½tres
 
 // "Close All Windows"
 // This macro closes all image windows.
