@@ -4,7 +4,7 @@
 // Calcul de la norme du gradient par masque de Sobel
 //
 requires("1.41i");	// cause substring(string, index)
-setBatchMode(true);
+setBatchMode(false);
 
 filename = getTitle();
 filenameWithoutExt = substring(filename, 0, lastIndexOf(filename, "."));
@@ -12,14 +12,14 @@ extension = substring(filename, lastIndexOf(filename, "."));
 filenameGradX = filenameWithoutExt+"_grad_x"+extension;
 filenameGradY = filenameWithoutExt+"_grad_y"+extension;
 run("Duplicate...", "title="+filenameGradX);
-run("32-bit");	// Conversion en Float avant calcul des dérivées !!
-... // à compléter
-run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
-//run("Convolve...", "text1=-101\n-202\n-101\n normalize");
+run("32-bit");	// Conversion en Float avant calcul des derivees !!
+
+//run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
+run("Convolve...", "text1=-101\n-202\n-101\n normalize");
 /****** Calcul de la norme du gradient ******/
-// récupération de la taille de l'image
+// rï¿½cupï¿½ration de la taille de l'image
 w = getWidth();
 h = getHeight();
 // Calculs pour chaque pixel
-... // à compléter
+// ï¿½ complï¿½ter
 setBatchMode("exit and display");
