@@ -44,16 +44,23 @@
 
 package mainPackage;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import org.apache.commons.net.ftp.FTPClient;
 
 /**
  * REST Web Service
@@ -62,43 +69,75 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Stateless
-@Path("/helloWorld")
+@Path("/")
 public class HelloWorldResource {
 
     @EJB
-    private NameStorageBean nameStorage;
+
     /**
      * Retrieves representation of an instance of helloworld.HelloWorldResource
      * @return an instance of java.lang.String
      */
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getXml() {
-        System.out.println("test 1");
-        return "<html><body><h1>Hello "+nameStorage.getName()+"!</h1>"+
-                "<form method=\"post\"><input type=\"text\" name=\"test\"></form>"
-                + "</body></html>";
+    public String getXml(@Context HttpServletRequest req) {
+            // récupération de session de session
+            HttpSession s= req.getSession(false);
+            
+            if(s==null||s.getAttribute("ftp")==null)
+                
+                return "<html><body><h1>Hello, Welcome to My FTP Web Client.</h1>"+
+                    "<form method=\"post\">Name :<input type=\"text\" name=\"name\">" 
+                    + "<br>PassWord :<input type=\"password\" name=\"pwd\">"
+                    + "<input type=\"submit\" value=\"OK\">"
+                    + "</form>"
+                    + "</body></html>";
+            
+            FTPClient f;
+            f=(FTPClient)s.getAttribute("ftp");
+      try { 
+            f.disconnect();
+            s.removeAttribute("ftp");
+                    } catch (IOException ex) {
+            Logger.getLogger(HelloWorldResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                   return "<html><body><h1>Hello in my ftp Client Web!</h1>" 
+                           +"Deconnextion"
+                     +"</body></html>";
+
     }
 
     /**
      * PUT method for updating an instance of HelloWorldResource
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
-     */
+     
     @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
     public String putXml(String content) {
         System.out.println("t1"+content);
-        nameStorage.setName(content);
         return this.getXml();
     }
+     * */
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
-    public String postXml(String content) {
-        String []tmp=content.split("=");
-        nameStorage.setName(tmp[1]);
-        return this.getXml();
+    public String postXml(String content,@Context HttpServletRequest req) {
+        //création de session
+     HttpSession s= req.getSession(true);
+            String []tmp=content.split("&");            
+            String name=tmp[0].split("=")[1];
+                   String pwd=tmp[1].split("=")[1];
+            FTPClient f=Clientftp.getFTPClient(name, pwd);
+            if(f==null)
+                      return "<html><body><h1> Erreur de connection login fail "+content+"</h1></body></html>";
+            s.setAttribute("ftp", f);
+            String retour="Error";
+            retour=Clientftp.getFileInHTLM(f);
+         return "<html><body>"
+                 + "<h1>Fichier</h1><br>"
+                 + retour
+                 + "</body></html>";
     }
 }
