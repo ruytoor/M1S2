@@ -42,18 +42,17 @@ function joue()
 endfunction
 
 //Q10
-function toto = arbre(I,str,p,toto)
+function maximum = arbre(I,str,p)
     if (sum(I)>1) then
         [A,B,i]=partage(I);
-        arbre(A,str+'| ',p+1,toto);
-        if p>=toto then
-            toto =p;
-        end
-        printf("%i\n",toto);
+        maxi1 = arbre(A,str+'| ',p+1);
+        //printf("%i\n",toto);
         //printf("%s%c (%i,%i)\n",str,code2str(i),sum(A),sum(B));
-        arbre(B,str+'| ',p+1,toto);
+        maxi2 = arbre(B,str+'| ',p+1);
+        maximum = 1 + max(maxi1,maxi2);
     else
         printf("%s -> %s\n",str,noms(I));
+        maximum = 0;
     end
 endfunction
 
@@ -111,5 +110,5 @@ joue()
 
 //Q10
 I=([1:n]>0);
-profondeur = arbre(I,' ',1,1)
+profondeur = arbre(I,' ',1)
 

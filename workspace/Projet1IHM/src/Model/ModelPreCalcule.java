@@ -6,10 +6,11 @@ import java.util.Observable;
 
 import tool.MyColor;
 
-
-/*
- * Model utilisé par le programme il garde en mémoire tout les couleurs et l'indice de la couleur selectionné
- * les couleur sont trié par leur "hue" en anglais la teinte (0° - 360°) de la représentation HSB 
+/**
+ * classe qui contient toutes les couleurs et l'indice de la couleur selectionne.
+ * Les couleurs sont triees par leur teinte de la repr�sentation HSB
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 21 mars 2013
  */
 public class ModelPreCalcule extends Observable{
 
@@ -21,9 +22,18 @@ public class ModelPreCalcule extends Observable{
 		this.couleurs=couleurs;
 	}
 	
+	/**
+	 * retourne la couleur de la couleur de l'indice (this)
+	 * @return la couleur 
+	 */
 	public Color getCouleur() {
 		return couleurs.get(indice);
 	}
+	
+	/**
+	 * modifie l'indice (this)
+	 * @param i le nouvel indice
+	 */
 	public void setCouleur(int i) {
 		this.indice = i;
 		setChanged();

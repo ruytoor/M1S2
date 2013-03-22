@@ -14,39 +14,33 @@ import javax.swing.JScrollPane;
 
 import tool.MyColor;
 
-import Controleur.ColorControleur;
-import Controleur.ColorControleurHSV;
 import Controleur.ColorControleurPreCalcule;
-import Model.MasterModel;
 import Model.ModelPreCalcule;
 
-/*
- * Cette classe est la vue gÃ©nÃ©rale  exemple : si on doit ajouter un menu ou ce sera ici
+/**
+ * classe Vue générale. La vue est composée de n sous-vue de type CouleurVue
+ * Création des couleurs et création des models.
  * 
- * la vue est composer de n sous-vue de classe CouleurVue
- * 
- * c'est ici qu'on intencie les models et qu'on crÃ©e les couleurs
-*/
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 21 mars 2013
+ */
 public class MasterVue extends JFrame{
 
-	ArrayList<CouleurVue> listVue;
-//	MasterModel masterM;
 	int nbCouleur;
-	public MasterVue(String titre,int nbCouleur,MasterModel m){
+
+	public MasterVue(String titre,int nbCouleur){
 		super(titre);
-		//masterM=m;
 		this.nbCouleur=nbCouleur;
-		listVue=new ArrayList<CouleurVue>();
 		JPanel p=new JPanel();
 		p.setLayout(new GridLayout(nbCouleur-2, 1));
 
-		
-		// CrÃ©ation des Listes de couleurs -> une liste par niveau de gris
+
+		// Création des Listes de couleurs -> une liste par niveau de gris
 		ArrayList<ArrayList<MyColor>> tab=new ArrayList<ArrayList<MyColor>>();
 		for(int i=0;i<nbCouleur-1;++i){
 			tab.add(new ArrayList<MyColor>());
 		}
-		// CrÃ©ation des couleurs et association Ã  leurs liste
+		// Création des couleurs et association à leur liste
 		for(int r=0;r<256;r+=8){
 			for(int g=0;g<256;g+=8){
 				for(int b=0;b<256;b+=8){
@@ -59,34 +53,28 @@ public class MasterVue extends JFrame{
 					}
 				}
 			}
-		//System.out.println(r+"/255");
 		}
-		
-		// Trie des couleur selon leurs teintes
+
+		// Trie des couleurs selon leur teinte
 		for(int i=0;i<nbCouleur-1;++i){
 			List<MyColor> l=tab.get(i).subList(0, tab.get(i).size());
-			//System.out.println("sort");
 			Collections.sort(l);
 			tab.add(i,new ArrayList<MyColor>(l));
 			tab.remove(i+1);
-			//System.out.println(tab.get(i).size());
-			
+
 		}
 
-		// associe les CouleurVue avec les ModelPreCalculÃ© et leur liste de couleurs
+		// associe les CouleurVue avec les ModelPreCalcule et leur liste de couleurs
 		for(int i=1;i<nbCouleur-1;++i){
 			ModelPreCalcule m2=new ModelPreCalcule( tab.get(i));
 			ColorControleurPreCalcule c=new ColorControleurPreCalcule(tab.get(i).size()-1, m2);
-			//ColorControleurHSV c=new ColorControleurHSV(masterM.getModel(i));
 			CouleurVue v=new CouleurVue(i+1,i*255/(nbCouleur-1),c);
 			p.add(v);
 			m2.addObserver(v);
 			c.setRandom();
-			//masterM.setModel(v,c,i);
-			//c.randomColor();
 		}
 
-		//affichage dans la JFreme 
+		//affichage dans la JFrame
 		if((this.nbCouleur-2)<4){
 			setPreferredSize(new Dimension(600, (nbCouleur-2)*100));
 			getContentPane().add(p);
@@ -97,12 +85,15 @@ public class MasterVue extends JFrame{
 		}
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	//	masterM.notifyObserversAll();
 		pack();
 		setVisible(true);
 	}
-	
-	//MÃ©thode pour calculer le niveau de gris
+
+	/**
+	 * Calcul du niveau de gris de la couleur passee en parametre
+	 * @param c couleur
+	 * @return le niveau de gris
+	 */
 	public static int calculeGreyLvl(Color c) {
 		return (int) ((c.getGreen()*0.59)+(c.getBlue()*0.11)+(c.getRed()*0.3));
 	}

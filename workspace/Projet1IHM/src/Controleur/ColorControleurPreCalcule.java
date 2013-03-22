@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -20,7 +18,13 @@ import javax.swing.undo.UndoableEdit;
 
 import Model.ModelPreCalcule;
 
-public class ColorControleurPreCalcule extends JPanel {//implements Observer{
+/**
+ * mise en place d'undo/redo pour les couleurs
+ * 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 21 mars 2013
+ */
+public class ColorControleurPreCalcule extends JPanel {
 
 	ModelPreCalcule colorModel;
 	JSlider slide;
@@ -28,7 +32,7 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 	private int nbMax;
 	private UndoManager uManager;
 
-	//aidé par http://hci.uwaterloo.ca/courses/cs349/s11/resources/java/UndoDemo.java
+	//aide par http://hci.uwaterloo.ca/courses/cs349/s11/resources/java/UndoDemo.java
 	int lastSliderValue = 0;
 	boolean undoRedoInProgress=false;
 
@@ -38,25 +42,12 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 		uManager=new UndoManager();
 
 
-		slide=new JSlider(JSlider.HORIZONTAL, 0, nbMax, 0);//m.getCouleur().getRed());
+		slide=new JSlider(JSlider.HORIZONTAL, 0, nbMax, 0);
 		JPanel undoRedo=new JPanel();
 		undoRedo.setLayout(new GridLayout(1, 2));
 
 		final JButton bUndo=new JButton("undo");
 		final JButton bRedo=new JButton("redo");
-		/*
-		slide.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				// TODO Auto-generated method stub
-				uManager.addEdit(new MyUndoableEdit(slide, oldValue, slide.getValue()));
-				colorModel.setCouleur(slide.getValue());
-				oldValue=slide.getValue();
-				bUndo.setEnabled(uManager.canUndo());
-			}
-		});
-		 */
 
 		// aidée avec http://hci.uwaterloo.ca/courses/cs349/s11/resources/java/UndoDemo.java
 		slide.addChangeListener(new ChangeListener()
@@ -103,16 +94,10 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 			}
 		});
 
-
-
-
-
-
 		bUndo.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				uManager.undo();
 
 
@@ -126,7 +111,6 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				uManager.redo();
 
 				bUndo.setEnabled(uManager.canUndo());
@@ -144,6 +128,11 @@ public class ColorControleurPreCalcule extends JPanel {//implements Observer{
 
 
 	}
+	
+	/**
+	 * couleur al�atoire
+	 * 
+	 */
 	public void setRandom(){
 		slide.setValue(r.nextInt(nbMax));
 		colorModel.setCouleur(slide.getValue());

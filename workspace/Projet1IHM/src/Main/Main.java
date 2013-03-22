@@ -1,12 +1,11 @@
 package Main;
 
-import java.text.ParseException;
-
-import javax.swing.JFrame;
-
-import Model.MasterModel;
 import Vue.MasterVue;
-
+/**
+ * classe Main qui lance le Launcher
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 21 mars 2013
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -14,6 +13,6 @@ public class Main {
 	}
 	
 	public static void start(int nbCouleur) {
-		new MasterVue("Projet 1 IHM",nbCouleur+2,new MasterModel(nbCouleur+2));
+		new MasterVue("Projet 1 IHM",nbCouleur+2);
 	}
 }

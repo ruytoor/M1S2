@@ -15,7 +15,12 @@ import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-
+/**
+ * Premiere fenetre IHM : choix du nombre de couleurs
+ * 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 21 mars 2013
+ */
 public class Launcher {
 	private JFrame f;
 	public Launcher(){
@@ -23,8 +28,8 @@ public class Launcher {
 		Container c=f.getContentPane();
 		f.setPreferredSize(new Dimension(350, 150));
 		f.setLayout(new GridLayout(3, 1, 10, 10));
-		c.add(new JLabel("Combien de couleur ?"));
-		//spinner de 2 à 10 par pas de 1 (commence à 2)
+		c.add(new JLabel("Combien de couleurs ?"));
+		//choix de 2 a 10 couleurs par pas de 1 (commencant a 2)
 		final JSpinner spinner = new JSpinner(new SpinnerNumberModel(2, 2, 10, 1));
 		
 		//style du spinner 
