@@ -1,46 +1,100 @@
 //macro TP8
 //Aurore Allart et Benjamin Ruytoor
 
-run("Conversions...", " ");// set conversions
-macro "gradient"{
-open("128_x.bmp");  // ouvre l'image
-image = getImageID();
-run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
-//run("Convolve...", "text1=0-1-1\n10-1\n110\n normalize");
-run("Convolve...", "text1=[-1 0 1\n-2 0 2\n-1 0 1\n] normalize");
-sobelX=getImageID();
+macro "derivation"{
+run("Conversions...", " ");      // set conversions
+setBatchMode(true);
 
-open("128_x.bmp");  // ouvre l'image
-run("32-bit");// la met sur 32 bit pour avoir des valeurs négatifs
-//run("Convolve...", "text1=-1-10\n-101\n011\n normalize");
+imageDeBase = getImageID();
+filename = getTitle();
+filenameWithoutExt = substring(filename, 0, lastIndexOf(filename, "."));
+extension = substring(filename, lastIndexOf(filename, "."));
+filenameGradX = filenameWithoutExt+"_grad_x"+extension;
+filenameGradY = filenameWithoutExt+"_grad_y"+extension;
+run("32-bit");                     // la met sur 32 bit pour avoir des valeurs n�gatives
+
+//duplication de l'image de depart et convolution sur x
+run("Duplicate...", "title="+filenameGradX);
+run("Convolve...", "text1=[-1 0 1\n-2 0 2\n-1 0 1\n] normalize");
+//run("Convolve...", "text1=[0 -1 -1\n1 0 -1\n1 1 0\n] normalize");
+imageGradX = getImageID();
+
+//duplication de l'image de depart et convolution sur x
+selectImage(imageDeBase);
+run("Duplicate...", "title="+filenameGradY);
+//run("Convolve...", "text1=[-1 -1 0\n-1 0 1\n0 1 1\n] normalize");
 run("Convolve...", "text1=[-1 -2 -1\n0 0 0\n1 2 1\n] normalize");
-sobelY=getImageID();
+imageGradY = getImageID();
 
 W = getWidth();
 H = getHeight();
 
-newImage("atan", "32-bit", W, H, 1);
-atanImage=getImageID();
+//nouvelle image qui receptionnera les directions de chaque pixel
+newImage("imageDirection", "32-bit", W, H, 1);
+imageDirection=getImageID();
+
 px=0;
 py=0;
 tmp=0;
 norme=0;
-setBatchMode(true);
 
+//calcul de la direction pour chaque pixel en degres et affectation sur les pixels 
+//de l'imageDirection
 for (j=0; j<H; j++) {
 	for (i=0; i<W; i++) 
 {
-		selectImage(sobelX);
+		selectImage(imageGradX);
 		px=getPixel(i,j);
-		selectImage(sobelY);
+		selectImage(imageGradY);
 		py=getPixel(i,j);
-		selectImage(atanImage);
-		norme=sqrt(py*py+px*px);
-		tmp=atan2(px,py)*180/PI;
-		setPixel(i,j,tmp);
+		selectImage(imageDirection);
+		direction = atan2(px,py)*180/PI;
+		setPixel(i,j,direction);
 	}
 }
 
+selectImage(imageDirection);
+getHistogram(values, counts, 256);
+
+
+//calcul des 2 points qui permettent de determiner la direction du gradient
+//je n ai pas utilise la fonction getRawStatistics, car je trouvais que cette fonction n etaient
+//pas appropriee pour determiner la direction du gradient
+
+max1 = 0;
+max2  = 0;
+i_max1 = 0;
+i_max2 = 0;
+
+//parcours du tableau de valeur de l histogramme
+for (i = 0; i< lengthOf(values);i++){
+
+	//recuperation des 2 counts max
+	if (max1<counts[i]){
+		max2 = max1;
+		i_max2 = i_max1;
+		max1 = counts[i];
+		i_max1 = values[i];
+	} else if (max2<counts[i]){
+		max2 = counts[i];
+		i_max2 = values[i];
+	}
+}
+
+//affichage des indices des maximums
+print(" i max1 ", i_max1);
+print(" i max2 ", i_max2);
+
+//test sur les valeurs de i_max1 et i_max2 avec une marge de + ou - 7
+if ((i_max1<=7)&&(i_max2>=173)){
+	print("horizontale");
+}else if ((i_max1 <=-83)&&(i_max1>=-97)&&(i_max2>=83)&&(i_max2<=97)){
+	print("verticale");
+}else if ((i_max1 <=-40)&&(i_max1>=-53)&&(i_max2>=126)&&(i_max2<=140)){
+	print("diagonale1");
+}else{
+	print("diagonale2");
+}
 
 setBatchMode(false);
 
