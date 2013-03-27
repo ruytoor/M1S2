@@ -16,14 +16,16 @@ L'opération op peut prendre les valeurs CsgTree::INTERSECTION, CsgTree::UNION o
 */
 void IntersectionArray::fusion(IntersectionArray &gauche,IntersectionArray &droite,CsgTree::EOperation op) {
 
-  bool eG,eD,eN,ePN;
-  eG=false;
-  eD=false;
-  eN=false;
-  ePN=false;
+    bool eG,eD,eN,ePN;
+    eG=false;
+    eD=false;
+    eN=false;
+    ePN=false;
 
-  unsigned int iG=0;
-  unsigned int iD=0;
+    unsigned int iG=0;
+    unsigned int iD=0;
+
+    Intersection *tmp;
 
     /**
     * il faut ajouter à this (liste d'intersections initialement vide) les intersections résultantes de la fusion (algo vu en cours) :
@@ -37,13 +39,47 @@ void IntersectionArray::fusion(IntersectionArray &gauche,IntersectionArray &droi
     *
     * Attention !!!!!! Faire un delete sur une intersection qui n'est pas retenue dans le résultat : par exemple delete gauche[iG]
     */
-  this->clear(); // initialisation de la fusion
-  // while(....)
+    this->clear(); // initialisation de la fusion
+    while((iG<gauche.size())&&(iD<droite.size())){
+        if(gauche[iG]->lambda()<droite[iD]->lambda()){
+            tmp=gauche[iG];
+            iG++;
+            eG=(!eG);
+        }else{
+            tmp=droite[iD];
+            iD++;
+            eD=(!eD);
+        }
 
+        if(CsgTree::DIFFERENCES==op)
+            ePN=eG&&!eD;
+        else if(op==CsgTree::INTERSECTION)
+            ePN=eG&&eD;
+        else if(op==CsgTree::UNION)
+            ePN=eG||eD;
 
+        if(ePN!=eN){
+            this->push_back(tmp);
+            eN=ePN;
+        }
+    }
+    if(gauche.size()!=0||droite.size()!=0){
+        cout<<"[->"<<gauche.size()<<":"<<droite.size();
+        cout<<"-->"<<iG<<":"<<iD;
 
+    }
 
+    if(iG==0)
+        while(iG<gauche.size())
+            this->push_back(gauche[iG++]);
 
+    if(iD==0)
+        while(iD<droite.size())
+            this->push_back(droite[iD++]);
+
+    if(gauche.size()!=0||droite.size()!=0){
+        cout<<"--->"<<iG<<":"<<iD<<"]";
+    }
 }
 
 
@@ -54,24 +90,24 @@ void IntersectionArray::fusion(IntersectionArray &gauche,IntersectionArray &droi
 /** *********************************************************************************************** */
 
 void IntersectionArray::addIntersection(double lambda) {
-  this->push_back(new Intersection(lambda));
+    this->push_back(new Intersection(lambda));
 }
 
 void IntersectionArray::deleteAll() {
-  for(IntersectionArray::iterator i=begin(); i!=end(); i++) {
-    if (*i) delete (*i);
-  }
-  clear();
+    for(IntersectionArray::iterator i=begin(); i!=end(); i++) {
+        //if (*i) delete (*i);
+    }
+    clear();
 }
 
 
 IntersectionArray::IntersectionArray() {
-  //ctor
-  this->clear();
+    //ctor
+    this->clear();
 }
 
 IntersectionArray::~IntersectionArray() {
-  //dtor
+    //dtor
 }
 
 

@@ -83,22 +83,26 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
     Vector3 L;
     Vector3 N;
     Vector3 V;
+
     N=intersection.normal();
     P=intersection.point();
-    // V= ?, L=?
-    V = intersection.incident().direction();
+    V = -intersection.incident().direction();
+
+    N.normalize();
+    V.normalize();
+    //  P.normalize();
     Material m=intersection.node()->primitive()->material();
 
-
-    Color result=Color(1,1,1); // =m.ambient(); // remarque : le type Color est similaire à Vector3 : vous pouvez utilisez +,-,*,+= etc pour manipuler les couleurs
+    Color result=m.ambient();//Color(0,0,0); // =m.ambient(); // remarque : le type Color est similaire à Vector3 : vous pouvez utilisez +,-,*,+= etc pour manipuler les couleurs
     for (int i=0; i<_scene->nbLight();i++){
-        L = _scene->lightPosition(i);
-        float shi = pow(max(V.dot(2*(N,L)*N - L),0.0),m.shininess());
+
+        L = _scene->lightPosition(i)-P;
+        L.normalize();
+
         float intensite = max(L.dot(N),0.0);
-        result = result +intensite*(m.diffuse())*0.2;
+        result.add(intensite*(m.diffuse()));
+
     }
-
-
     return result;
 }
 
