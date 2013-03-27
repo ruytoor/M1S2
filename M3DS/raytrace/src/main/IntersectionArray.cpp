@@ -40,8 +40,19 @@ void IntersectionArray::fusion(IntersectionArray &gauche,IntersectionArray &droi
     * Attention !!!!!! Faire un delete sur une intersection qui n'est pas retenue dans le résultat : par exemple delete gauche[iG]
     */
     this->clear(); // initialisation de la fusion
-    while((iG<gauche.size())&&(iD<droite.size())){
-        if(gauche[iG]->lambda()<droite[iD]->lambda()){
+    while((iG<gauche.size())||(iD<droite.size())){
+
+        if(iG==gauche.size()){
+            tmp=droite[iD];
+            iD++;
+            eD=(!eD);
+        }else if(iD==droite.size()){
+            tmp=gauche[iG];
+            iG++;
+            eG=(!eG);
+        }
+
+        else if(gauche[iG]->lambda()<droite[iD]->lambda()){
             tmp=gauche[iG];
             iG++;
             eG=(!eG);
@@ -63,23 +74,6 @@ void IntersectionArray::fusion(IntersectionArray &gauche,IntersectionArray &droi
             eN=ePN;
         }
     }
-    if(gauche.size()!=0||droite.size()!=0){
-        cout<<"[->"<<gauche.size()<<":"<<droite.size();
-        cout<<"-->"<<iG<<":"<<iD;
-
-    }
-
-    if(iG==0)
-        while(iG<gauche.size())
-            this->push_back(gauche[iG++]);
-
-    if(iD==0)
-        while(iD<droite.size())
-            this->push_back(droite[iD++]);
-
-    if(gauche.size()!=0||droite.size()!=0){
-        cout<<"--->"<<iG<<":"<<iD<<"]";
-    }
 }
 
 
@@ -95,7 +89,7 @@ void IntersectionArray::addIntersection(double lambda) {
 
 void IntersectionArray::deleteAll() {
     for(IntersectionArray::iterator i=begin(); i!=end(); i++) {
-        //if (*i) delete (*i);
+        if (*i) delete (*i);
     }
     clear();
 }

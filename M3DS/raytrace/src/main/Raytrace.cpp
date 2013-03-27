@@ -97,11 +97,15 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
     for (int i=0; i<_scene->nbLight();i++){
 
         L = _scene->lightPosition(i)-P;
-        L.normalize();
+        Ray shadow(P,L);
+        Intersection *inter=_scene->intersection(shadow,0.01);
+        if(inter==NULL){
+            L.normalize();
+            if(V.dot(N)<0)N=-N;
 
-        float intensite = max(L.dot(N),0.0);
-        result.add(intensite*(m.diffuse()));
-
+            float intensite = max(L.dot(N),0.0);
+            result.add(intensite*(m.diffuse()));
+        }
     }
     return result;
 }
