@@ -37,8 +37,6 @@ public class HTML {
     }
     
     static public String getParent(String path,String name,String pwd) {
-        
-        System.out.println(path);
         String path2=null;
         if(path.lastIndexOf("/")!=-1)
             path2="/RESTcar/FTP/"+path.substring(0, path.lastIndexOf("/"));
@@ -53,4 +51,15 @@ public class HTML {
                             +"<input type=\"submit\" value=\"Retour\" >"
                             +"</form>";
       }
+    
+    
+    static public String getOptionNouveauDossier(String path,String name,String pwd){
+        
+        return "<form method=\"post\"  action=\""+path+"\">"
+                +"<input type=\"hidden\" name=\"name\" value=\""+name+"\"/>"
+                +"<input type=\"hidden\" name=\"pwd\" value=\""+pwd+"\"/>"
+                +"<input type=\"text\" name=\"nom\" value=\"Nouveau Dossier\"/>"
+                +"<input type=\"submit\" name=\"new\" value=\"new\" >"
+                +"</form>";
+    }
 }

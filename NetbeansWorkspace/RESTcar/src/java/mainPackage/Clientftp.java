@@ -4,25 +4,19 @@
  */
 package mainPackage;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import javax.ejb.Singleton;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+
 /**
  *
  * @author benjamin
  */
 public class Clientftp {
-    
     static public FTPClient getFTPClient(String name,String pwd){
         FTPClient f=new FTPClient();
         try {
@@ -40,12 +34,14 @@ public class Clientftp {
         return f;
     }
     
+    static public void newFolder(FTPClient f,String path) throws IOException{
+        f.makeDirectory(path);
+    }
     
-    static public String getFileInHTLM(FTPClient f,String path,String name,String pwd){
+    static public String getFileInHTLM(FTPClient f,String path,String name,String pwd) throws IOException{
         if(!f.isConnected())
             return "";
         String retour="";
-        try {
             if(path!=null){
                 String path1 = "/"+path;
                 f.changeWorkingDirectory(path1);
@@ -58,40 +54,27 @@ public class Clientftp {
                         +"<form method=\"post\"  action=\""+path+file.getName()+"\">"
                         +"<input type=\"hidden\" name=\"name\" value=\""+name+"\"/>"
                         +"<input type=\"hidden\" name=\"pwd\" value=\""+pwd+"\"/>"
-                        +"<input type=\"hidden\" name=\"path\" value=\""+(path==null?file.getName():"/"+file.getName())+file.getName()+"\"/>"
+                        +"<input type=\"hidden\" name=\"path\" value=\""+file.getName()+"\"/>"
                         +"<input type=\"submit\" "+(file.isFile()?"name=\"d\" value=\"download":"name=\"o\" value=\"ouvrir")+"\" >"
+                        +"<input type=\"submit\" "+(file.isFile()?"name=\"sf\" value=\"Supprimer":"name=\"sd\" value=\"Supprimer")+"\" >"
                         +"</form>"
                         );
                 //retour+=("<br><a href=\""+file.getName()+"?name="+name+"&pwd="+pwd+" \">"+file.getName())+"</a>";
             }
-        } catch (IOException ex) {
-            retour+="Error";
-            Logger.getLogger(Clientftp.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return retour;
     }
     
-   static public InputStream getFile(final FTPClient f,final String path){
+   static public InputStream getFile(final FTPClient f,final String path) throws IOException{
        InputStream in; 
-       try {
-           new StreamingOutput() {
-
-                public void write(OutputStream output) throws IOException, WebApplicationException {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                    boolean retrieveFile = f.retrieveFile(path, null);
-                }
-            };
            in=f.retrieveFileStream(path);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Clientftp.class.getName()).log(Level.SEVERE, null, ex);
-            in=null;
-        }
+         //   out=new ByteArrayOutputStream(256);
+         //  Util.copyStream(in, out, 256, 256, null, true);
        return in;
    } 
     
     static public void disconnect(FTPClient f){
         try {
+            f.logout();
             f.disconnect();
         } catch (IOException ex) {
             Logger.getLogger(Clientftp.class.getName()).log(Level.SEVERE, null, ex);
