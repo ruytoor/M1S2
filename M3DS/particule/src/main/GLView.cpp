@@ -120,7 +120,7 @@ void GLView::initData() {
   _texture.setAlpha(Color(0,0,0),0,1.1);
 
 
-  _particleList.birthRate(50);
+  _particleList.birthRate(5);
 
   _particleList.texture(&_texture);
   _particleList.maxi(2000);
@@ -133,12 +133,12 @@ void GLView::initData() {
 
   // des "murs" (non visibles)
 
-  /*
+
   _engine.addPlane(new Plane(Vector3(-4,0,0),Vector3(1,0,0)));
   _engine.addPlane(new Plane(Vector3(4,0,0),Vector3(-1,0,0)));
   _engine.addPlane(new Plane(Vector3(0,0,-4),Vector3(0,0,1)));
   _engine.addPlane(new Plane(Vector3(0,0,4),Vector3(0,0,-1)));
-  */
+
 
 
 
