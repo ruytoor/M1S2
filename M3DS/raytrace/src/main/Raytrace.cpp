@@ -95,7 +95,7 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
         L = _scene->lightPosition(i);
         float shi = pow(max(V.dot(2*(N,L)*N - L),0.0),m.shininess());
         float intensite = max(L.dot(N),0.0);
-        result = result + intensite*(m.diffuse()+shi);
+        result = result +intensite*(m.diffuse())*0.2;
     }
 
 

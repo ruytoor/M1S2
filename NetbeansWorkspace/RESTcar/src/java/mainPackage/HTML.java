@@ -29,16 +29,6 @@ public class HTML {
         String tmpPassWord[]=tmp[1].split("=");
         if(tmpPassWord[0].compareTo("pwd")!=0)
             return null;
-        if(tmp.length==3){
-            String tmpPath[]=tmp[0].split("=");
-            if(tmpPath[0].compareTo("path")!=0)
-                return null;
-            retour=new String[3];
-            retour[0]=tmpName[1];
-            retour[1]=tmpPassWord[1];
-            retour[2]=tmpPath[1];
-            return retour;
-        }
         
         retour=new String[2];
         retour[0]=tmpName[1];
@@ -46,17 +36,21 @@ public class HTML {
         return retour;
     }
     
-    static public String getParent(String path) {
+    static public String getParent(String path,String name,String pwd) {
+        
+        System.out.println(path);
+        String path2=null;
+        if(path.lastIndexOf("/")!=-1)
+            path2="/RESTcar/FTP/"+path.substring(0, path.lastIndexOf("/"));
+        else
+            path2="/RESTcar/FTP/";
         if(path==null)
             return "";
         else
-            return "<br><a href=\"..\">..</a>";
-        /*
-         * String tmp[]=path.split("/");
-         * String cummule=new String();
-         * for(int i=0;i<tmp.length-2;++i){
-         * cummule+="/"+tmp[i];
-         * }
-         * return cummule;*/
-    }
+            return "<form method=\"post\"  action=\""+path2+"\">"
+                            +"<input type=\"hidden\" name=\"name\" value=\""+name+"\"/>"
+                            +"<input type=\"hidden\" name=\"pwd\" value=\""+pwd+"\"/>"
+                            +"<input type=\"submit\" value=\"Retour\" >"
+                            +"</form>";
+      }
 }

@@ -1,6 +1,6 @@
 //TP9
 //binome : Benjamin Ruytoor et Aurore Allart
-
+macro "toto"{
 run("Conversions...", " ");// set conversions
 // Calcul de la norme du gradient par masque de Sobel
 //
@@ -54,7 +54,7 @@ for (j=0; j<h; j++)
 		px=getPixel(i,j);
 		selectImage(imageGradY);
 		py=getPixel(i,j);
-		norme=sqrt(px*px+py*py);
+		norme=sqrt(px*px+py*py); 
 		selectImage(imageNorme);
 		setPixel(i,j,norme);
 		selectImage(imageDirection);
@@ -64,24 +64,157 @@ for (j=0; j<h; j++)
 }
 
 selectImage(imageNorme);
-run("Duplicate...", "title="+"final_"+filenameResultat);
+run("Duplicate...", "title="+"final");
 imageFinal = getImageID();
-
-
-// 225 67.5 112.5 157.5
-for(i=0;i<h;i++){
-	for(j=0;j<w;j++){
+w = getWidth();
+h = getHeight();
+//x2 x3 x4
+//x1	CC x1
+//x4	x3 x2
+// xi -> valeurs possibles pour les pixels autours
+// x1<22.5<x2<67.5<x3<112.5<x4<157.5<x1 
+for(y=0;y<h;y++){
+	for(x=0;x<w;x++){
 		selectImage(imageDirection);
-		direction=getPixel(i,j);
-		if(direction>90){
-
-		if(direction>135)
-
+		direction=getPixel(x,y);
+		direction=abs(direction);
+		selectImage(imageNorme);
+		if(direction>112.5){
+			if(direction<157.5){
+				//x4
+				if(getPixel(x,y)<getPixel(x-1,y+1)){
+					selectImage(imageFinal);
+					setPixel(x,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x-1,y+1)<getPixel(x+1,y-1)){
+						selectImage(imageFinal);
+						setPixel(x-1,y+1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x+1,y-1,0);
+					}
+				}else{
+					selectImage(imageFinal);
+					setPixel(x-1,y+1,0);
+					selectImage(imageNorme);
+					if(getPixel(x+1,y-1)<getPixel(x,y)){
+						selectImage(imageFinal);
+						setPixel(x+1,y-1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y,0);
+					}
+				}
+				//fin x4
+			}else{
+				//x1
+				if(getPixel(x,y)<getPixel(x+1,y)){
+					selectImage(imageFinal);
+					setPixel(x,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x+1,y)<getPixel(x-1,y)){
+						selectImage(imageFinal);
+						setPixel(x+1,y,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x-1,y,0);
+					}
+				}else{
+					selectImage(imageFinal);
+					setPixel(x+1,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x-1,y)<getPixel(x,y)){
+						selectImage(imageFinal);
+						setPixel(x-1,y,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y,0);
+					}
+				}
+				//fin x1
+			}
 		}else{
-
-		if(direction>45)
-
+			if(direction>67.5){
+				//x3
+				if(getPixel(x,y)<getPixel(x,y+1)){
+					selectImage(imageFinal);
+					setPixel(x,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x,y+1)<getPixel(x,y-1)){
+						selectImage(imageFinal);
+						setPixel(x,y+1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y-1,0);
+					}
+				}else{
+					selectImage(imageFinal);
+					setPixel(x,y+1,0);
+					selectImage(imageNorme);
+					if(getPixel(x,y-1)<getPixel(x,y)){
+						selectImage(imageFinal);
+						setPixel(x,y-1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y,0);
+					}
+				}
+				//fin x3
+			}else if(direction<22.5){
+				//x1
+				if(getPixel(x,y)<getPixel(x+1,y)){
+					selectImage(imageFinal);
+					setPixel(x,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x+1,y)<getPixel(x-1,y)){
+						selectImage(imageFinal);
+						setPixel(x+1,y,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x-1,y,0);
+					}
+				}else{
+					selectImage(imageFinal);
+					setPixel(x+1,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x-1,y)<getPixel(x,y)){
+						selectImage(imageFinal);
+						setPixel(x-1,y,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y,0);
+					}
+				}
+				//fin x1
+			}else{
+				//x2
+				if(getPixel(x,y)<getPixel(x+1,y+1)){
+					selectImage(imageFinal);
+					setPixel(x,y,0);
+					selectImage(imageNorme);
+					if(getPixel(x+1,y+1)<getPixel(x-1,y-1)){
+						selectImage(imageFinal);
+						setPixel(x+1,y+1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x-1,y-1,0);
+					}
+				}else{
+					selectImage(imageFinal);
+					setPixel(x+1,y+1,0);
+					selectImage(imageNorme);
+					if(getPixel(x-1,y-1)<getPixel(x,y)){
+						selectImage(imageFinal);
+						setPixel(x-1,y-1,0);
+					}else{
+						selectImage(imageFinal);
+						setPixel(x,y,0);
+					}
+				}
+				//fin x2
+			}
 		 }
 	}
 }
 setBatchMode("exit and display");
+}

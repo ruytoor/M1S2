@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 /**
- * classe qui crée chaque JPanel de la fenetre IHM. Permet la copie de la valeur hexadecimale de la couleur
+ * classe qui crï¿½e chaque JPanel de la fenetre IHM. Permet la copie de la valeur hexadecimale de la couleur
  * 
  * @author Benjamin Ruytoor et Aurore Allart
  * @version 21 mars 2013
@@ -33,7 +33,7 @@ public class CouleurVue extends JPanel implements Observer{
 		this.setLayout(new GridLayout(1, 4, 2, 2));
 		JPanel jp=new JPanel();
 		jp.setLayout(new GridLayout(3, 1));
-		JLabel label2=new JLabel("choix n°"+(i-1));
+		JLabel label2=new JLabel("choix n "+(i-1));
 		label2.setPreferredSize(new Dimension(100, 100));
 		label=new JLabel();
 		jp.add(label2);
@@ -73,7 +73,7 @@ public class CouleurVue extends JPanel implements Observer{
 
 	@Override
 	/**
-	 * mise à jour de l'observable avec l'objet arg
+	 * mise ï¿½ jour de l'observable avec l'objet arg
 	 * @param o Observable
 	 * @param arg l'objet
 	 * 
