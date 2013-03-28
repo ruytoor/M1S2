@@ -34,21 +34,19 @@ Color Raytrace::computeRayColor(const Ray &ray,int profondeur,double contrib) {
   - inter->material().reflexionCoefficient() donnera le coefficient de contribution à la réflexion (i.e. 1=réflexion totale, 0=réflexion nulle)
   - inter->computeReflectRay() : permet de calculer le rayon réfléchi
   */
-
-
     Color color=Color(0,0,0);
-
-
-
     // Intersection de la scène avec le rayon (donne uniquement l'intersection la "plus proche").
     Intersection *inter=_scene->intersection(ray,0.1); // 0.1 pour prendre une intersection qui se trouve un peu devant le "point de départ" (origine) du rayon
 
-    if (inter!=NULL) { // existe-t-il une intersection avec la scène ?
+    if (inter!=NULL&&profondeur>0&&contrib>0.001) { // existe-t-il une intersection avec la scène ?
         color=computePhongColor(*inter); // calcul de la couleur par Phong
+        double coefReflect=inter->material().reflectionCoefficient();
+        if(coefReflect>0){
+         Ray r=inter->computeReflectRay();
+         Color creflect=computeRayColor(r,profondeur-1,coefReflect*contrib);
 
-
-
-
+         color=(1-coefReflect)*color + coefReflect*creflect;
+        }
         // libération mémoire de inter
         delete inter;
     }
@@ -98,14 +96,14 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
 
         L = _scene->lightPosition(i)-P;
         Ray shadow(P,L);
-        Intersection *inter=_scene->intersection(shadow,0.01);
-        if(inter==NULL){
+        Intersection *inter=_scene->intersection(shadow,0.1);
+        if(inter==NULL||inter->point().distance2(P)-L.length2()>0){
             L.normalize();
             if(V.dot(N)<0)N=-N;
-
             float intensite = max(L.dot(N),0.0);
             result.add(intensite*(m.diffuse()));
         }
+        delete inter;
     }
     return result;
 }
