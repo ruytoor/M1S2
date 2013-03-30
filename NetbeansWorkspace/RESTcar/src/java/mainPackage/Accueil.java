@@ -1,4 +1,3 @@
-
 package mainPackage;
 
 import javax.ejb.EJB;
@@ -15,16 +14,18 @@ import javax.ws.rs.core.MediaType;
 /**
  * REST Web Service
  *
- * @author mkuchtiak
+ * @author Benjamin Ruytoor et Aurore Allart
  */
 
 @Stateless
 @Path("/")
 public class Accueil {
     @EJB
+    
+    
     /**
-     * Retrieves representation of an instance of helloworld.HelloWorldResource
-     * @return an instance of java.lang.String
+     * page d'accueil pour se connecter la premiere fois
+     * @return le formulaire pour se connecter
      */
     @GET
     @Produces(MediaType.TEXT_HTML)

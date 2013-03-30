@@ -1,23 +1,32 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainPackage;
 
 /**
- *
- * @author benjamin
+ * création de la page HTML
+ * @author Benjamin Ruytoor et Aurore Allart
  */
 public class HTML {
     
+    /**
+     * ouverture des balises pour l'entete de page
+     * @return balise d'entete de page
+     */
     public static String getHead(){
         return "<html><body>";
     }
+    
+    /**
+     * fermeture des balises pour le pied de page
+     * @return les balises de pied de page
+     */
     public static String getfoot(){
         return "</html></body>";
     }
     
-    
+    /**
+     * découpe les parametres
+     * @param content le lien du site
+     * @return un tableau contenant les parametres
+     */
     public static String[] splitParametre(String content){
         String tmp[]=content.split("&");
         String retour[];
@@ -36,6 +45,13 @@ public class HTML {
         return retour;
     }
     
+    /**
+     * retourne le dossier parent pour la navigation
+     * @param path le chemin absolu du dossier 
+     * @param name le nom de l'utilisateur
+     * @param pwd le mot de passe de l'utilisateur
+     * @return le nom du dossier parent
+     */
     static public String getParent(String path,String name,String pwd) {
         String path2=null;
         if(path.lastIndexOf("/")!=-1)
@@ -52,7 +68,30 @@ public class HTML {
                             +"</form>";
       }
     
+    /**
+     * genere le formulaire pour le telechargement
+     * @param path le chemin absolu du dossier
+     * @param name le nom de l'utilisateur
+     * @param pwd le mot de passe de l'utilisateur
+     * @return le formulaire du telechargement
+     */
+    static public String getOptionUpload(String path,String name,String pwd){
+        return "<form method=\"post\" action=\""+path+"\" enctype=\"multipart/form-data\">"
+                +"<input type=\"hidden\" name=\"name\" value=\""+name+"\"/>"
+                +"<input type=\"hidden\" name=\"pwd\" value=\""+pwd+"\"/>"
+                + "<input type=\"file\" name=\"file\" />"
+                +" Nom :<input type=\"text\" name=\"nomf\" value=\"Nouveau fichier\"/>"
+                +"<input type=\"submit\" name=\"up\" value=\"upload\" >"
+                + "</form>";
+    }
     
+    /**
+     * génere le formulaire pour créer un nouveau dossier
+     * @param path le chemin absolu du dossier
+     * @param name le nom de l'utilisateur
+     * @param pwd le mot de passe de l'utilisateur
+     * @return le formulaire du nouveau dossier
+     */
     static public String getOptionNouveauDossier(String path,String name,String pwd){
         
         return "<form method=\"post\"  action=\""+path+"\">"
