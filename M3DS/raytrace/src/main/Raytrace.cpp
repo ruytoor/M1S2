@@ -100,8 +100,16 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
         if(inter==NULL||inter->point().distance2(P)-L.length2()>0){
             L.normalize();
             if(V.dot(N)<0)N=-N;
+            //    shininessTmp=pow(max(dot(V2,2*(N2*L2)*N2-L2),0.0),gl_FrontMaterial.shininess);
+            float shininess=pow(max(V.dot((2*(N*L)*N-L)),0.0),m.shininess());
             float intensite = max(L.dot(N),0.0);
-            result.add(intensite*(m.diffuse()));
+            result.add(intensite*(m.diffuse())+m.specular()*shininess);
+        }else if(inter->lambda()<0||inter->lambda()>1){
+            if(V.dot(N)<0)N=-N;
+            //    shininessTmp=pow(max(dot(V2,2*(N2*L2)*N2-L2),0.0),gl_FrontMaterial.shininess);
+            float shininess=pow(max(V.dot((2*(N*L)*N-L)),0.0),m.shininess());
+            float intensite = max(L.dot(N),0.0);
+            result.add(intensite*(m.diffuse())+m.specular()*shininess);
         }
         delete inter;
     }
