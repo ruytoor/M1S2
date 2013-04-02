@@ -13,18 +13,19 @@ import java.util.ArrayList;
  */
 public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
-	private ArrayList<SiteImpl> fils; 
+	private ArrayList<SiteItf> fils; 
 	private int nom; // aide pour les tests
 	
 	
-	public SiteImpl(int nom, ArrayList<SiteImpl> fils) throws RemoteException{
+	public SiteImpl(int nom, ArrayList<SiteItf> fils) throws RemoteException{
 		super();
 		this.nom = nom;
 		this.fils = fils;
 	}
 	
+	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		for (SiteImpl f : fils){
+		for (SiteItf f : fils){
 			System.out.println(this.nom+" : "+donnees);
 			f.propage(donnees);
 			
