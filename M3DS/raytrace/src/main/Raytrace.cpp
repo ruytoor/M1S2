@@ -41,11 +41,14 @@ Color Raytrace::computeRayColor(const Ray &ray,int profondeur,double contrib) {
     if (inter!=NULL&&profondeur>0&&contrib>0.001) { // existe-t-il une intersection avec la scène ?
         color=computePhongColor(*inter); // calcul de la couleur par Phong
         double coefReflect=inter->material().reflectionCoefficient();
+        double coefRefract=inter->material().refractionCoefficient();
         if(coefReflect>0){
-         Ray r=inter->computeReflectRay();
-         Color colorReflect=computeRayColor(r,profondeur-1,coefReflect*contrib);
+            Ray r=inter->computeReflectRay();
+            Ray refract=inter->computeRefractRay();
+            Color colorReflect=computeRayColor(r,profondeur-1,coefReflect*contrib);
+            Color colorRefract=computeRayColor(refract,profondeur-1,coefRefract*contrib);
 
-         color=(1-coefReflect)*color + coefReflect*colorReflect;
+            color=(1-coefReflect-coefRefract)*color + coefReflect*colorReflect + coefRefract*colorRefract;
         }
         // libération mémoire de inter
         delete inter;
@@ -101,11 +104,9 @@ Color Raytrace::computePhongColor(const Intersection &intersection) {
             L.normalize();
             if(V.dot(N)<0)
                 N=-N;
-            N.normalize();
-            //    shininessTmp=pow(max(dot(V2,2*(N2*L2)*N2-L2),0.0),gl_FrontMaterial.shininess);
-            float shininess=pow(max(V.dot((2*(N*L)*N-L)),0.0),m.shininess());
+            float shininess=pow(max(V.dot((2*(N.dot(L))*N-L)),0.0),m.shininess());
             float intensite = max(L.dot(N),0.0);
-            result.add(intensite*(m.diffuse()+m.specular()*shininess));
+            result.add(intensite*m.diffuse()+m.specular()*shininess);
         }
         delete inter;
     }

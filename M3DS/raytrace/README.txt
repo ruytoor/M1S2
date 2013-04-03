@@ -1,5 +1,8 @@
 Allart Ruytoor
 
-TP pas fini erreur : la boule blue a de gros refelt orange
+TP fini
 
-à faire : ajouter spéculaire et la suite.
+le tp fut très long et un peu dur
+
+difficulter : au début et au intersection CSG (même avec le fusion pris en TD)
+
