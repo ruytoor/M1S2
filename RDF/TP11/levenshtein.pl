@@ -64,4 +64,11 @@ charAt(A, N, C) :- P is N - 1, sub_atom(A, P, 1, _, C).
 % M:          The minimum over the values
 min(I1, I2, M) :- integer(I1), integer(I2), ( I1 =< I2 -> M is I1; M is I2).
 min(I1, I2, I3, M) :- min(I1, I2, A), min(I2, I3, B), min(A, B, M).
- 
+
+
+palin('').
+palin(S) :- atom_length(S,L), L==1,!.
+
+palin(S) :- sub_atom(S,0,1,_,PRE),atom_length(S,L),L2 is L-1,sub_atom(S,L2,1,_,SU),PRE==SU,sub_atom(S,1,_,1,S2),palin(S2).
+
+

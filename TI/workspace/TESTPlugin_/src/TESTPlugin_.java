@@ -66,12 +66,30 @@ public class TESTPlugin_ implements PlugInFilter, DialogListener {
 
 		// Calcul et repr�sentation du Laplacien (exercice 1, puis � modifier dans le 3) 
 		FloatProcessor fpLaplacian = (FloatProcessor)(ip.duplicate().convertToFloat());
+		FloatProcessor fpLaplacian2 = (FloatProcessor)(ip.duplicate().convertToFloat());
 		/* � compl�ter */
 		fpLaplacian.convolve(MASQUES_LAPLACIENS3x3[filtre], 3, 3);
 		ImagePlus im=new ImagePlus("f1", fpLaplacian);
 		im.show();
 		ImagePlus im2=new ImagePlus("f2",laplacienZero(fpLaplacian, seuilZeroCross));
 		im2.show();
+		//int taille=Math.round(7*sigma);
+		int taille=(int)(7*sigma);
+		if(taille%2==0)
+			taille++;
+		System.out.println(taille);
+		float []mas=masqueLoG(taille,sigma);
+		Convolver conv =new Convolver();
+		conv.setNormalize(false);
+		if(!conv.convolve(fpLaplacian2, mas, taille,taille)){
+			System.out.println("Erreur");
+			return;
+		}
+		ImagePlus im3=new ImagePlus("f3",fpLaplacian);
+		im3.show();
+		ImagePlus im4=new ImagePlus("f4",laplacienZero(fpLaplacian2, seuilZeroCross));
+		im4.show();
+	
 		// D�tection et affichage des passages par 0 du Laplacien par seuillage du Laplacien (exercice 2)
 		if (seuillageZeroCross) {
 			/* � compl�ter */
