@@ -15,6 +15,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	private ArrayList<SiteItf> fils; 
 	private int nom; // aide pour les tests
+	public SiteItf pere;
 	
 	
 	public SiteImpl(int nom, ArrayList<SiteItf> fils) throws RemoteException{
