@@ -27,13 +27,13 @@ public class TESTPlugin_ implements PlugInFilter, DialogListener {
 		{1,2,1, 2,-12,2, 1,2,1},
 		{1,4,1, 4,-20,4, 1,4,1}
 	};
+
 	private static float sigma=0.0f;
 	private static boolean seuillageZeroCross=false;
 	private static boolean seuilZeroCrossAuto=true;
-	private static float seuilZeroCross=10f;
+	private static float seuilZeroCross=12f;
 
 	private ImagePlus imp;
-
 	// ---------------------------------------------------------------------------------
 	// Mï¿½thodes de l'interface PlugInFilter
 
@@ -85,11 +85,11 @@ public class TESTPlugin_ implements PlugInFilter, DialogListener {
 			System.out.println("Erreur");
 			return;
 		}
-		ImagePlus im3=new ImagePlus("f3",fpLaplacian);
+		ImagePlus im3=new ImagePlus("f3",fpLaplacian2);
 		im3.show();
-		ImagePlus im4=new ImagePlus("f4",laplacienZero(fpLaplacian2, seuilZeroCross));
+		ImagePlus im4=new ImagePlus("f4",laplacienZero(fpLaplacian2, 0.1f));
 		im4.show();
-	
+
 		// Dï¿½tection et affichage des passages par 0 du Laplacien par seuillage du Laplacien (exercice 2)
 		if (seuillageZeroCross) {
 			/* ï¿½ complï¿½ter */
@@ -173,29 +173,56 @@ public class TESTPlugin_ implements PlugInFilter, DialogListener {
 
 		int width = imLaplacien.getWidth();
 		int height = imLaplacien.getHeight();
-		
+
 		// Image binaire rï¿½sultat des points contours aprï¿½s seuillage
 		ByteProcessor imZeros = new ByteProcessor(width,height);
-		for(int x=1;x<width;++x){
-			for(int y=1;y<height;++y){
-				float min=Float.MAX_VALUE;
-				float max=Float.MIN_VALUE;
-				for(int i=-1;i<2;++i){
-					for(int j=-1;j<2;++j){
-						if(imLaplacien.getPixel(x+i, y+j)>max)
-							max=imLaplacien.getPixelValue(x+i, y+j);
-						if(imLaplacien.getPixel(x+i, y+j)<min)
-							min=imLaplacien.getPixelValue(x+i, y+j);
-					}
-				}
-				if((max-min)>seuil)
-					imZeros.set(x, y, 255);
-				else
-					imZeros.set(x, y, 0);
+//		for(int x=1;x<width;++x){
+//			for(int y=1;y<height;++y){
+//				float min=Float.MAX_VALUE;
+//				float max=Float.MIN_VALUE;
+//				for(int i=-1;i<2;++i){
+//					for(int j=-1;j<2;++j){
+//						if(imLaplacien.getPixel(x+i, y+j)>max)
+//							max=imLaplacien.getPixelValue(x+i, y+j);
+//						if(imLaplacien.getPixel(x+i, y+j)<min)
+//							min=imLaplacien.getPixelValue(x+i, y+j);
+//					}
+//				}
+//				if((max-min)>seuil)
+//					imZeros.set(x, y, 255);
+//				else
+//					imZeros.set(x, y, 0);
+//			}
+//
+//		}
+//		return imZeros;
+		// Pour chaque pixel (x,y),
+		for(int x=1;x<width;x++){
+			for(int y = 1;y< height;y++){
+				float pixelC = imLaplacien.getPixelValue(x,y);		// Pixel central
+				float pixelD = imLaplacien.getPixelValue(x+1,y);	// Pixel droit
+				float pixelB = imLaplacien.getPixelValue(x,y+1);	// Pixel bas
+				float pixelBD = imLaplacien.getPixelValue(x+1,y+1);	// Pixel bas droit
+				// Détection des transitions Horizontales
+				if (pixelC<-seuil && pixelD>seuil) { // Transition horizontale -|+
+					imZeros.set(x,y,255); }
+				if (pixelC>seuil && pixelD<-seuil) { // Transition horizontale +|-
+					imZeros.set(x+1,y,255);}
+				// Détection des transitions Verticales
+				if (pixelC<-seuil && pixelB>seuil) { // Transition verticale -|+
+					imZeros.set(x,y,255);}
+				if (pixelC>seuil && pixelB<-seuil) { // Transition verticale +|-
+					imZeros.set(x,y+1,255);}
+				// Détection des transitions Diagonales
+				if (pixelC<-seuil && pixelBD>seuil) { // Transition diagonale -|+
+					imZeros.set(x,y,255);}
+				if (pixelC>seuil && pixelBD<-seuil) { // Transition diagonale +|-
+					imZeros.set(x+1,y+1,255);
+				}				
 			}
-
 		}
 		return imZeros;
+
 	}
 
 	// ---------------------------------------------------------------------------------

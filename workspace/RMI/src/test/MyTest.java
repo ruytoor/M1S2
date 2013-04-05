@@ -28,8 +28,7 @@ public class MyTest {
 		ArrayList<Process> list=new ArrayList<Process>();
 		Runtime r = Runtime.getRuntime();
 		try {
-		//	LocateRegistry.createRegistry(1099);
-			String[] argCpapa = {"serveur.RunServeur","1","2","3","4","5","6"};
+			String[] argCpapa = {"serveur.RunServeur","1","2 3 4 5 6"};
 			Process papa=r.exec("java",argCpapa);
 
 			for(int i=2;i<7;i++){

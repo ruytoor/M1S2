@@ -8,6 +8,7 @@ import java.rmi.registry.Registry;
 public class PropageMessageNode {
 
 	/**
+	 * demarre le client
 	 * @param args
 	 */
 	public static void main(String[] args) {
