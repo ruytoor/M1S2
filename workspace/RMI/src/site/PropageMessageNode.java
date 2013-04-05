@@ -1,10 +1,9 @@
-package client;
+package site;
 
 import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import site.SiteImpl;
 
 public class PropageMessageNode {
 
@@ -13,10 +12,10 @@ public class PropageMessageNode {
 	 */
 	public static void main(String[] args) {
 		try{
-			String name = "1";
+			String name = args[0];
 			Registry registry = LocateRegistry.getRegistry();
-			SiteImpl site = (SiteImpl) registry.lookup(name);
-			site.propage("coucou".getBytes());
+			SiteItf site = (SiteItf) registry.lookup(name);
+			site.propage(args[1].getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

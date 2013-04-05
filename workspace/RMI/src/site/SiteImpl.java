@@ -1,6 +1,7 @@
 package site;
 
 
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -29,7 +30,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		System.out.println(this.nom+" : "+donnees);
+		System.out.println(this.nom+" : "+new String(donnees));
 		Registry registry = LocateRegistry.getRegistry("localhost");
 		for (String f : fils){
 			try {
