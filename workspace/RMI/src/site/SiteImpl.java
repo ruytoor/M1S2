@@ -14,14 +14,14 @@ import java.util.ArrayList;
  * @author Aurore Allart et Benjamin Ruytoor
  *
  */
-public class SiteImpl /*extends UnicastRemoteObject*/ implements SiteItf{
+public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
-	private ArrayList<Integer> fils; 
-	private int nom; // aide pour les tests
+	private ArrayList<String> fils; 
+	private String nom; // aide pour les tests
 	public SiteItf pere;
 
 
-	public SiteImpl(int nom, ArrayList<Integer> fils) throws RemoteException{
+	public SiteImpl(String nom, ArrayList<String> fils) throws RemoteException{
 		super();
 		this.nom = nom;
 		this.fils = fils;
@@ -29,17 +29,15 @@ public class SiteImpl /*extends UnicastRemoteObject*/ implements SiteItf{
 
 	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		for (Integer f : fils){
-			System.out.println(this.nom+" : "+donnees);
+		System.out.println(this.nom+" : "+donnees);
+		Registry registry = LocateRegistry.getRegistry("localhost");
+		for (String f : fils){
 			try {
-				String name = "1";
-				Registry registry = LocateRegistry.getRegistry("localhost");
-				SiteImpl site;
-				site = (SiteImpl) registry.lookup(name);
-				site.propage("Salut".getBytes());
+				SiteImpl site= (SiteImpl) registry.lookup(f);
+				site.propage(donnees);
 			} catch (NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Erreur le systeme a planté");
+				System.exit(666);
 			}
 
 		} 
