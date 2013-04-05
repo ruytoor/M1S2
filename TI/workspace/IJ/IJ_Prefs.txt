@@ -1,5 +1,5 @@
 #ImageJ 1.46f Preferences
-#Fri Mar 29 17:26:40 CET 2013
+#Fri Apr 05 13:28:15 CEST 2013
 fps=7.000007000007
 new.slices=1
 plugin01=h,"*Pixel Inspector[q]",ij.plugin.Hotkeys("Pixel Inspector")
@@ -29,8 +29,8 @@ mark.width=0
 raw.n=1
 raw.type=2
 .Animated_PNG_Writer.red=255
-ij.y=36
-ij.x=625
+ij.y=46
+ij.x=627
 jpeg=100
 .ISP3D.min=0
 raw.height=1536
@@ -65,7 +65,7 @@ bcolor=\#000000
 menu.size=14
 .pixelinspector.display.rgb=0
 dir.image=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP10\\
-.b&c.loc=977,190
+.b&c.loc=826,66
 .ISP3D.max=100
 .threshold.dark=true
 recent14=Z\:\\bo\\public\\Macro_Boukar\\Attribut_MAC55&ECAPAN021.txt

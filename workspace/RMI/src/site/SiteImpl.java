@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Aurore Allart et Benjamin Ruytoor
  *
  */
-public class SiteImpl /*extends UnicastRemoteObject*/ implements SiteItf{
+public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	private ArrayList<Integer> fils; 
 	private int nom; // aide pour les tests
@@ -32,7 +32,7 @@ public class SiteImpl /*extends UnicastRemoteObject*/ implements SiteItf{
 		for (Integer f : fils){
 			System.out.println(this.nom+" : "+donnees);
 			try {
-				String name = "1";
+				String name = f.toString();
 				Registry registry = LocateRegistry.getRegistry("localhost");
 				SiteImpl site;
 				site = (SiteImpl) registry.lookup(name);

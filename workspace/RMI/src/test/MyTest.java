@@ -53,7 +53,7 @@ public class MyTest {
 		System.setSecurityManager(new RMISecurityManager());
 		try{
 		//	SiteItf sI = (SiteItf)Naming.lookup("//localhost/SiteImpl");
-			//ArrayList<SiteItf> fils = new ArrayList<SiteItf>();
+			//int fils = new ArrayList<SiteItf>();
 			//SiteImpl sI = new SiteImpl(1, fils);
 			//Naming.rebind("//localhost/SiteImpl", sI);
 			//Runtime r = Runtime.getRuntime();
