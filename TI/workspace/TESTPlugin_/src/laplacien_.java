@@ -16,7 +16,7 @@ import java.awt.*;		//pour classes AWTEvent, CheckBox, TextField
 import java.util.Vector;	// pour classe Vector
 
 
-public class TESTPlugin_ implements PlugInFilter, DialogListener {
+public class laplacien_ implements PlugInFilter, DialogListener {
 
 	private static int filtre=0;
 	private final static String[] FILTRES_LAPLACIENS3x3 = {"Laplacien1", "Laplacien2", "Laplacien3","Laplacien4","Laplacien5"};

@@ -8,7 +8,8 @@ public class sampleCFA_ implements PlugInFilter {
 	ImagePlus imp;	// Fenêtre contenant l'image de référence
 	int width;		// Largeur de la fenêtre
 	int height;		// Hauteur de la fenêtre
-
+	private final static float[] MASQUE_R_and_B = {0.25f,0.5f,0.25f, 0.5f,1.0f,0.5f, 0.25f,0.5f,0.25f};// RED and BLUE
+	private final static float[] MASQUE_G =	{0.0f,0.25f,0.0f, 0.25f,1.0f,0.25f,0.0f,0.25f,0.0f	}; // GREEN
 
 	public int setup(String arg, ImagePlus imp) {
 		/* à compléter*/
@@ -33,27 +34,38 @@ public class sampleCFA_ implements PlugInFilter {
 		// Lecture de la réponse de l'utilisateur
 		if (dia.wasCanceled()) return;
 		int order = dia.getNextChoiceIndex();
-		System.out.println(order);
 		// Génération de l'image CFA
 		/* à compléter */
 		ImagePlus impCFA=new ImagePlus("CFA", cfa(order));
 		impCFA.show();
-		// Calcul des échantillons de chaque composante de l'image CFA
-		ImageStack samples_stack = imp.createEmptyStack();
-		ImageProcessor red;
-		ImageProcessor green;
-		ImageProcessor blue;
-		
-		samples_stack.addSlice("rouge", red=cfa_samples(impCFA.getProcessor(),0));	// Composante R
-		samples_stack.addSlice("vert", green=cfa_samples(impCFA.getProcessor(),1));// Composante G
-		samples_stack.addSlice("bleu", blue=cfa_samples(impCFA.getProcessor(),2));	// Composante B
-		Convolver con=new Convolver();
-		con.setNormalize(false);
-		
-		// Création de l'image résultat
-		ImagePlus cfa_samples_imp = imp.createImagePlus();
-		cfa_samples_imp.setStack("Échantillons couleur CFA", samples_stack);
-		cfa_samples_imp.show();
+		if(order==0){// la suite se fait en B-G-B
+			// Calcul des échantillons de chaque composante de l'image CFA
+			ImageStack samples_stack = imp.createEmptyStack();
+			ImageProcessor red;
+			ImageProcessor green;
+			ImageProcessor blue;
+			red=cfa_samples(impCFA.getProcessor(),0);
+			green=cfa_samples(impCFA.getProcessor(),1);
+			blue=cfa_samples(impCFA.getProcessor(),2);
+
+			Convolver con=new Convolver();
+			con.setNormalize(false);
+
+			con.convolve(red, MASQUE_R_and_B, 3, 3);
+			con.convolve(blue, MASQUE_R_and_B, 3, 3);
+			con.convolve(green, MASQUE_G, 3, 3);
+
+
+			samples_stack.addSlice("rouge", red);	// Composante R
+			samples_stack.addSlice("vert",green );// Composante G
+			samples_stack.addSlice("bleu",blue );	// Composante B
+
+
+			// Création de l'image résultat
+			ImagePlus cfa_samples_imp = imp.createImagePlus();
+			cfa_samples_imp.setStack("Échantillons couleur CFA", samples_stack);
+			cfa_samples_imp.show();
+		}
 	}
 	/*
 	 * Sur du B-G-B
@@ -66,14 +78,13 @@ public class sampleCFA_ implements PlugInFilter {
 		if(i==1){ // vert
 			startX=0;
 			startY=0;
-			
 			for (int y=1; y<height; y+=2) {
 				for (int x=1; x<width; x+=2) {
 					int pixel_value = ip.getPixel(x,y);
 					one_c_ip.putPixel(x,y,pixel_value);
 				}
 			}
-			
+
 		}else if(i==2){ // blue
 			startX=0;
 			startY=1;
@@ -81,7 +92,7 @@ public class sampleCFA_ implements PlugInFilter {
 			startX=1;
 			startY=0;
 		}
-		
+
 		for (int y=startY; y<height; y+=2) {
 			for (int x=startX; x<width; x+=2) {
 				int pixel_value = ip.getPixel(x,y);
