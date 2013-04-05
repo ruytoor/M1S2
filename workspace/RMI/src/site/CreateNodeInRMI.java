@@ -1,4 +1,4 @@
-package serveur;
+package site;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -6,7 +6,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-import site.SiteImpl;
 
 public class CreateNodeInRMI {
 
@@ -14,7 +13,7 @@ public class CreateNodeInRMI {
 	 * @param args [0] =son nom    [1 et +] = ses fils
 	 */
 	public static void main(String[] args) {
-		SiteImpl site1;
+		SiteItf site1;
 		try {
 			ArrayList<String> fils =new ArrayList<String>();
 			if(args.length>1){
