@@ -1,4 +1,4 @@
-package site;
+package rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -12,7 +12,7 @@ public class RMIregistery {
 			while(true){
 				Thread.sleep(10000);
 				for(String s :l.list())
-				System.out.println("->"+s);
+				System.err.println("->"+s);
 			}
 		
 	}

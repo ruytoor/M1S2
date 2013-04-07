@@ -30,11 +30,11 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		System.out.println(this.nom+" : "+new String(donnees));
+		System.err.println(this.nom+" : "+new String(donnees));
 		Registry registry = LocateRegistry.getRegistry("localhost");
 		for (String f : fils){
 			try {
-				SiteImpl site= (SiteImpl) registry.lookup(f);
+				SiteItf site= (SiteItf) registry.lookup(f);
 				site.propage(donnees);
 			} catch (NotBoundException e) {
 				System.err.println("Erreur le systeme a planté");

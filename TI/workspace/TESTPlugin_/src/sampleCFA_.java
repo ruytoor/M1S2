@@ -40,10 +40,12 @@ public class sampleCFA_ implements PlugInFilter {
 		impCFA.show();
 		if(order==0){// la suite se fait en B-G-B
 			// Calcul des échantillons de chaque composante de l'image CFA
+			
 			ImageStack samples_stack = imp.createEmptyStack();
 			ImageProcessor red;
 			ImageProcessor green;
 			ImageProcessor blue;
+			
 			red=cfa_samples(impCFA.getProcessor(),0);
 			green=cfa_samples(impCFA.getProcessor(),1);
 			blue=cfa_samples(impCFA.getProcessor(),2);
@@ -65,6 +67,29 @@ public class sampleCFA_ implements PlugInFilter {
 			ImagePlus cfa_samples_imp = imp.createImagePlus();
 			cfa_samples_imp.setStack("Échantillons couleur CFA", samples_stack);
 			cfa_samples_imp.show();
+			
+			ImageStack samples_stack_ex3 = imp.createEmptyStack();
+			ImageProcessor red_ex3;
+			ImageProcessor green_ex3;
+			ImageProcessor blue_ex3;
+
+			red_ex3=cfa_samples(impCFA.getProcessor(),0);
+			green_ex3=cfa_samples(impCFA.getProcessor(),1);
+			blue_ex3=cfa_samples(impCFA.getProcessor(),2);
+
+			con.convolve(red_ex3, MASQUE_R_and_B, 3, 3);
+			con.convolve(blue_ex3, MASQUE_R_and_B, 3, 3);
+			green_ex3=est_G_hamilton(green_ex3);
+						
+			samples_stack_ex3.addSlice("rouge", red_ex3);	// Composante R
+			samples_stack_ex3.addSlice("vert",green_ex3 );// Composante G
+			samples_stack_ex3.addSlice("bleu",blue_ex3 );	// Composante B
+
+			// Création de l'image résultat
+			ImagePlus cfa_samples_imp_ex3 = imp.createImagePlus();
+			cfa_samples_imp_ex3.setStack("Échantillons couleur CFA", samples_stack_ex3);
+			cfa_samples_imp_ex3.show();
+			
 		}
 	}
 	/*
@@ -186,4 +211,37 @@ public class sampleCFA_ implements PlugInFilter {
 
 		return cfa_ip;
 	}	
+	
+	ImageProcessor est_G_hamilton(ImageProcessor cfa_ip) {
+		ImageProcessor est_ip = cfa_ip.duplicate();
+		//les rouges
+		for (int y=0; y<height; y+=2) {
+			for (int x=1; x<width; x+=2) {
+				int delX=Math.abs(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y));
+				int delY=Math.abs(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2));
+				if(delX<delY){
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/2+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y))/4);
+				}else if(delX>delY){
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)/2)+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/4);
+				}else{// delX==delY
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)+cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/4+(4*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/8);
+				}
+			}
+		}
+		//les bleus
+		for (int y=1; y<height; y+=2) {
+			for (int x=0; x<width; x+=2) {
+				int delX=Math.abs(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y));
+				int delY=Math.abs(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2));
+				if(delX<delY){
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/2+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y))/4);
+				}else if(delX>delY){
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)/2)+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/4);
+				}else{// delX==delY
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)+cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/4+(4*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/8);
+				}
+			}
+		}
+	    return (est_ip);
+	}
 }

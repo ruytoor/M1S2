@@ -1,10 +1,13 @@
-package site;
+package node;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+
+import site.SiteImpl;
+import site.SiteItf;
 
 
 public class CreateNodeInRMI {
@@ -13,23 +16,24 @@ public class CreateNodeInRMI {
 	 * @param args [0] =son nom    [1 et +] = ses fils
 	 */
 	public static void main(String[] args) {
-		SiteItf site1;
-		try {
+		try {	
 			ArrayList<String> fils =new ArrayList<String>();
 			if(args.length>1){
-				for(int i=2;i<args.length;++i)
+				for(int i=1;i<args.length;++i)
 					fils.add(args[i]);
 			}
-			site1 = new SiteImpl(args[0],fils);
+			SiteItf site = new SiteImpl(args[0],fils);
 			Registry registry = LocateRegistry.getRegistry();
-			registry.bind(args[0], site1);
+			registry.bind(args[0], site);
+			//System.out.println("site -> "+args[0]+" ok.");
 		} catch (RemoteException e) {
-			System.err.println("Err 1");
 			e.printStackTrace();
+			System.exit(2);
 		} catch (AlreadyBoundException e) {
-			System.err.println("Err 2");
 			e.printStackTrace();
+			System.exit(3);
 		}
+		return ;
 	}
 
 }

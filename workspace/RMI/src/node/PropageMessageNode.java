@@ -1,8 +1,10 @@
-package site;
+package node;
 
 import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import site.SiteItf;
 
 
 public class PropageMessageNode {
@@ -19,7 +21,9 @@ public class PropageMessageNode {
 			site.propage(args[1].getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(4);
 		}
+		return ;
 	}
 
 }
