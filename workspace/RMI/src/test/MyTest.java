@@ -3,9 +3,7 @@ package test;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -13,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,6 +33,8 @@ public class MyTest {
 		try {
 			if(r==null)
 				r=LocateRegistry.createRegistry(1099);
+			else
+				r=LocateRegistry.getRegistry();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
@@ -43,10 +44,10 @@ public class MyTest {
 	@After
 	public void stopRmiRegistery(){
 		try {
-
-			for (String s:r.list())
+			r=LocateRegistry.getRegistry();
+			for (String s:r.list()){
 				r.unbind(s);
-
+			}
 		} catch (AccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,23 +61,36 @@ public class MyTest {
 	}
 
 	@Test
-	public void coucouTest()  {
+	public void testArbre()  {
+		//     1
+		//  /  |  \
+		// 2   3   6
+		// |       |
+		// 4       5
+		// 1 -> coucou
+		
 		ArrayList<Process> list=new ArrayList<Process>();
-		File directory= new File("/home/benjamin/M1S2/workspace/RMI/bin");
 		Runtime runtime=Runtime.getRuntime();
 		try {
 
-			Process papa=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 1 2 3 4 5 6");
-			String tmpS;
-
-			for(int i=2;i<7;i++){
-				Process p=runtime.exec("java -classpath bin/ node.CreateNodeInRMI "+i);
-				list.add(p);
-			}
+			Process papa=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 1 2 3 6");
+			list.add(papa);
+			Process proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 2 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 3");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 5");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 6 5");
+			list.add(proc);
 			Process propage=runtime.exec("java -classpath bin/ node.PropageMessageNode 1 coucou");
+
 			int codeRetour;
 			try {
-				if((codeRetour=propage.waitFor())!=0){		
+				if((codeRetour=propage.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
 					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
 					while((tmpS=bufferRegistre.readLine())!=null)
 						System.out.println(tmpS);
@@ -91,21 +105,171 @@ public class MyTest {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			String sTMP="";
-			BufferedReader bufferPapa=new BufferedReader(new InputStreamReader(papa.getInputStream()));
-			sTMP=bufferPapa.readLine();
-			System.out.println(sTMP);
-			//assertTrue(String.valueOf(sTMP).contains("coucou"));
 
+			String sTmp="";
+			int i=0;
 			for(Process p:list){
 				BufferedReader bufferP=new BufferedReader(new InputStreamReader(p.getInputStream()));
-				sTMP=bufferP.readLine();
-				System.out.println(sTMP);
-				assertTrue(String.valueOf(sTMP).contains("coucou"));
+				i++;
+				if(bufferP.ready()){
+					sTmp=bufferP.readLine();
+				}
+				assertTrue(sTmp.contains("coucou"));
+
 				p.destroy();
 			}
-			papa.destroy();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+	@Test
+	public void testArbre2()  {
+		//     1
+		//  /  |  \
+		// 2   3   6
+		// |       |
+		// 4       5
+		// 6 -> coucou
+		ArrayList<Process> list=new ArrayList<Process>();
+		Runtime runtime=Runtime.getRuntime();
+		try {
+
+			Process papa=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 1 2 3 6");
+			list.add(papa);
+			Process proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 2 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 3");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 5");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 6 5");
+			list.add(proc);
+			Process propage=runtime.exec("java -classpath bin/ node.PropageMessageNode 6 coucou");
+
+			int codeRetour;
+			try {
+				if((codeRetour=propage.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					while((tmpS=bufferRegistre.readLine())!=null)
+						System.out.println(tmpS);
+					System.out.println(codeRetour);
+					papa.destroy();
+					for(Process p : list)
+						p.destroy();
+					assertTrue(false);
+					return;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			String sTmp="";
+			int i=0;
+			for(Process p:list){
+				BufferedReader bufferP=new BufferedReader(new InputStreamReader(p.getInputStream()));
+				i++;
+				if(bufferP.ready()){
+					sTmp=bufferP.readLine();
+				}
+
+				if(i==6||i==5)
+					assertTrue(sTmp.contains("coucou"));
+
+				p.destroy();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testArbre3()  {
+		//     1 
+		//  /  |  \
+		// 2   3   6
+		// |       |
+		// 4       5
+		// 1 > coucou
+		// 2 > beuh
+
+		ArrayList<Process> list=new ArrayList<Process>();
+		Runtime runtime=Runtime.getRuntime();
+		try {
+
+			Process papa=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 1 2 3 6");
+			list.add(papa);
+			Process proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 2 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 3");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 4");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 5");
+			list.add(proc);
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 6 5");
+			list.add(proc);
+			Process propage=runtime.exec("java -classpath bin/ node.PropageMessageNode 1 coucou");
+			Process propage2=runtime.exec("java -classpath bin/ node.PropageMessageNode 2 beuh");
+
+			int codeRetour;
+			try {
+				if((codeRetour=propage.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					while((tmpS=bufferRegistre.readLine())!=null)
+						System.out.println(tmpS);
+					System.out.println(codeRetour);
+					papa.destroy();
+					for(Process p : list)
+						p.destroy();
+					assertTrue(false);
+					return;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				if((codeRetour=propage2.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					while((tmpS=bufferRegistre.readLine())!=null)
+						System.out.println(tmpS);
+					System.out.println(codeRetour);
+					papa.destroy();
+					for(Process p : list)
+						p.destroy();
+					assertTrue(false);
+					return;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			String sTmp="";
+			int i=0;
+			for(Process p:list){
+				BufferedReader bufferP=new BufferedReader(new InputStreamReader(p.getInputStream()));
+				i++;
+				if(bufferP.ready()){
+					sTmp=bufferP.readLine();
+				}
+				if(i==2||i==4)
+					assertTrue(sTmp.contains("beuh")||sTmp.contains("coucou"));
+				else
+					assertTrue(sTmp.contains("coucou"));
+
+				p.destroy();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,16 +278,10 @@ public class MyTest {
 
 	/*
 	@Test
-	public void testCreation(){
-		System.setSecurityManager(new RMISecurityManager());
+	public void testGraph(){
 		try{
-			//	SiteItf sI = (SiteItf)Naming.lookup("//localhost/SiteImpl");
-			//ArrayList<SiteItf> fils = new ArrayList<SiteItf>();
-			//SiteImpl sI = new SiteImpl(1, fils);
-			//Naming.rebind("//localhost/SiteImpl", sI);
-			//Runtime r = Runtime.getRuntime();
-			//String[] argP = {"main.MyTest","1","coucou"};
-			//Process p = r.exec("java", argP);
+
+
 		}catch (Exception e){
 			e.printStackTrace();
 		}

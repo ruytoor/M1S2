@@ -19,18 +19,20 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	private ArrayList<String> fils; 
 	private String nom; // aide pour les tests
-	public SiteItf pere;
+	private String lastMessage;
 
 
 	public SiteImpl(String nom, ArrayList<String> fils) throws RemoteException{
 		super();
 		this.nom = nom;
 		this.fils = fils;
+		this.lastMessage="";
 	}
 
 	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		System.out.println(this.nom+" : "+new String(donnees));
+		String mes;
+		System.out.println(this.nom+" : "+(mes=new String(donnees)));
 		Registry registry = LocateRegistry.getRegistry("localhost");
 		for (String f : fils){
 			try {
