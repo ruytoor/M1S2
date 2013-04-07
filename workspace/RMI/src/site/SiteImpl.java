@@ -30,7 +30,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
 	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
-		System.err.println(this.nom+" : "+new String(donnees));
+		System.out.println(this.nom+" : "+new String(donnees));
 		Registry registry = LocateRegistry.getRegistry("localhost");
 		for (String f : fils){
 			try {

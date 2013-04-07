@@ -8,12 +8,12 @@ public class RMIregistery {
 
 	public static void main(String args[]) throws RemoteException, InterruptedException  {
 
-			Registry l =LocateRegistry.createRegistry(1099);
-			while(true){
-				Thread.sleep(10000);
-				for(String s :l.list())
-				System.err.println("->"+s);
-			}
-		
+		Registry l =LocateRegistry.createRegistry(1099);
+		while(true){
+			Thread.sleep(100);
+		//	for(String s :l.list())
+		//		System.out.println("->"+s);
+		}
+
 	}
 }
