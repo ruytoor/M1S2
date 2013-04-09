@@ -135,6 +135,7 @@ EngineBox::EngineBox() {
     _boxList=NULL;
     _cursorActive=false;
     _planeList.clear();
+    _start=clock();
 }
 
 EngineBox::~EngineBox() {
@@ -235,6 +236,7 @@ void EngineBox::update() {
     double elapsed;
     do {
         elapsed=double(clock()-_start)/CLOCKS_PER_SEC;
+      //  cout<<elapsed<<"  :  "<<_start<<"  :  "<<clock()<<"  :  "<<double(clock()-_start)<<endl;
     } while (elapsed<_dt);
     _start=clock();
 

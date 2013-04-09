@@ -19,7 +19,7 @@ public class PropageMessageNode {
 			
 			Registry registry = LocateRegistry.getRegistry();
 			while(registry.list().length==0){
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 				registry = LocateRegistry.getRegistry();
 			}
 			SiteItf site = (SiteItf) registry.lookup(name);
