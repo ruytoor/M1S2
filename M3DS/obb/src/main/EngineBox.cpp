@@ -32,12 +32,11 @@ void EngineBox::computeForce() {
             b1 = _boxList->selected();
             l = _cursor - b->attachWorld();
             b1->addForce(l);
-            b1->addMoment(l);
+            b1->addMoment(l,b1->attachWorld());
         }
-        Vector3 frottement = b->omega()*(-1);
-
         b->addForce(b->omega());
-        b->addMoment(b->omega());
+        if (b->force().length() != Vector3(0,0,0).length())
+            b->addMoment(b->omega());
         //if(b->force().length()<5)
         //    b->resetForce();
         //cout<<b->force().length()<<endl;
