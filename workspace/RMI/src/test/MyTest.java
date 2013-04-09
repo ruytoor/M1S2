@@ -68,7 +68,7 @@ public class MyTest {
 		// |       |
 		// 4       5
 		// 1 -> coucou
-		
+
 		ArrayList<Process> list=new ArrayList<Process>();
 		Runtime runtime=Runtime.getRuntime();
 		try {
@@ -131,7 +131,7 @@ public class MyTest {
 		//  /  |  \
 		// 2   3   6
 		// |       |
-		// 4       5
+		// 4<----->5
 		// 6 -> coucou
 		ArrayList<Process> list=new ArrayList<Process>();
 		Runtime runtime=Runtime.getRuntime();
@@ -143,9 +143,9 @@ public class MyTest {
 			list.add(proc);
 			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 3");
 			list.add(proc);
-			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 4");
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 4 5");
 			list.add(proc);
-			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 5");
+			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 5 4");
 			list.add(proc);
 			proc=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 6 5");
 			list.add(proc);
@@ -179,7 +179,7 @@ public class MyTest {
 					sTmp=bufferP.readLine();
 				}
 
-				if(i==6||i==5)
+				if(i==6||i==5||i==4)
 					assertTrue(sTmp.contains("coucou"));
 
 				p.destroy();
@@ -276,15 +276,83 @@ public class MyTest {
 
 	}
 
-	/*
+
 	@Test
 	public void testGraph(){
-		try{
+		// 1 -> 2 -> 3 -> 1
+		ArrayList<Process> list=new ArrayList<Process>();
+		Runtime runtime=Runtime.getRuntime();
+		try {
+
+			Process p=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 1 2");
+			list.add(p);
+			p=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 2 3");
+			list.add(p);
+			p=runtime.exec("java -classpath bin/ node.CreateNodeInRMI 3 1");
+			list.add(p);
+			Process propage=runtime.exec("java -classpath bin/ node.PropageMessageNode 1 coucou");
+			Process propage2=runtime.exec("java -classpath bin/ node.PropageMessageNode 3 beuh");
+
+			int codeRetour;
+			try {
+				if((codeRetour=propage.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					while((tmpS=bufferRegistre.readLine())!=null)
+						System.out.println(tmpS);
+					System.out.println(codeRetour);
+					for(Process ptmp : list)
+						ptmp.destroy();
+					assertTrue(false);
+					return;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				if((codeRetour=propage2.waitFor())!=0){	// cas d'erreur	
+					String tmpS;
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					while((tmpS=bufferRegistre.readLine())!=null)
+						System.out.println(tmpS);
+					System.out.println(codeRetour);
+					for(Process ptmp : list)
+						ptmp.destroy();
+					assertTrue(false);
+					return;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 
-		}catch (Exception e){
+			int i=0;
+			for(Process ptmp:list){
+
+				String sTmp="";
+				String sTmp2="";
+				String sTmp3="";
+				
+				BufferedReader bufferP=new BufferedReader(new InputStreamReader(ptmp.getInputStream()));
+				i++;
+				
+				if(bufferP.ready()){
+					sTmp=bufferP.readLine();
+					sTmp2=bufferP.readLine();
+				}
+				//System.out.println(sTmp+"  :  "+sTmp2+"  :   "+bufferP.ready());
+				assertTrue((sTmp.contains("beuh")||sTmp.contains("coucou"))&&(sTmp2.contains("beuh")||sTmp2.contains("coucou")));
+				while(bufferP.ready())
+					System.out.println(bufferP.readLine());
+				ptmp.destroy();
+			}
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+
 	}
-	 */
 }
