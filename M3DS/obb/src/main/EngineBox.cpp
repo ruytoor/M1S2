@@ -34,12 +34,8 @@ void EngineBox::computeForce() {
             b1->addForce(l);
             b1->addMoment(l,b1->attachWorld());
         }
-        b->addForce(b->omega());
-        //if (b->force().length() != Vector3(0,0,0).length())
-        b->addMoment(-b->omega());
-        //if(b->force().length()<5)
-        //    b->resetForce();
-        //cout<<b->force().length()<<endl;
+        b->addForce(-b->velocity());
+        b->addMoment(-b->velocity());
     }
 
 
