@@ -30,13 +30,13 @@ void EngineBox::computeForce() {
         //b->addForce(g*b->mass());
         if (_cursorActive==true){
             b1 = _boxList->selected();
-            l = _cursor - b->attachWorld();
+            l = _cursor - b1->attachWorld();
             b1->addForce(l);
             b1->addMoment(l,b1->attachWorld());
         }
         b->addForce(b->omega());
-        if (b->force().length() != Vector3(0,0,0).length())
-            b->addMoment(b->omega());
+        //if (b->force().length() != Vector3(0,0,0).length())
+        b->addMoment(-b->omega());
         //if(b->force().length()<5)
         //    b->resetForce();
         //cout<<b->force().length()<<endl;
@@ -236,7 +236,6 @@ void EngineBox::update() {
     double elapsed;
     do {
         elapsed=double(clock()-_start)/CLOCKS_PER_SEC;
-      //  cout<<elapsed<<"  :  "<<_start<<"  :  "<<clock()<<"  :  "<<double(clock()-_start)<<endl;
     } while (elapsed<_dt);
     _start=clock();
 
