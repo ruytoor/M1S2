@@ -35,7 +35,7 @@ void EngineBox::computeForce() {
             b1->addMoment(l,b1->attachWorld());
         }
         b->addForce(-b->velocity());
-        b->addMoment(-b->velocity());
+        b->omega(b->omega()*0.99);
     }
 
 
@@ -113,8 +113,10 @@ void EngineBox::euler(double dt) {
         Box *b=_boxList->at(i);
         b->position(b->position()+dt*b->velocity());
         b->velocity(b->velocity()+dt*b->force()/b->mass());
-        b->omega(b->omega());
+
         b->theta(b->theta() + dt*b->omega().z());
+        b->omega(b->omega()+ dt*b->moment()/b->inertia());
+
         // à laisser en fin :
         b->resetForce();
         b->resetMoment();

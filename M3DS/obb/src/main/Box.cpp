@@ -207,6 +207,7 @@ void Box::addForce(const Vector3 &f) {
 }
 
 void Box::addMoment(const Vector3 &m) {
+    cout<<"mo :"<<m<<endl;
     _cumulMoment+=m;
 }
 
