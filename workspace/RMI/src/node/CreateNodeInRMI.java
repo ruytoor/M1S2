@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import site.SiteImpl;
 import site.SiteItf;
 
-
+/**
+ * classe qui crée les noeuds RMI du graphe ou de l'arbre
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 avril 2013
+ */
 public class CreateNodeInRMI {
 
 	/**
@@ -25,12 +29,9 @@ public class CreateNodeInRMI {
 			SiteItf site = new SiteImpl(args[0],fils);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.bind(args[0], site);
-			//System.out.println("site -> "+args[0]+" ok.");
 		} catch (RemoteException e) {
-			e.printStackTrace();
 			System.exit(2);
 		} catch (AlreadyBoundException e) {
-			e.printStackTrace();
 			System.exit(3);
 		}
 		return ;

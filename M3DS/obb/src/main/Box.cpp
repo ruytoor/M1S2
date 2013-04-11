@@ -48,7 +48,14 @@ Vector3 Box::attachWorld() {
 void Box::project(const Vector3 &axe,double *mini,double *maxi) const {
     double kmin=0.0,kmax=0.0;
     // A compléter : l'intervalle [kmin,kmax] doit correspondre à la projection de la boite sur l'axe
-
+    kmin = this->vertex(0).dot(axe);
+    kmax = this->vertex(0).dot(axe);
+    for (int i = 1; i<4;i++){
+        if (kmin>this->vertex(i).dot(axe))
+            kmin = this->vertex(i).dot(axe);
+        if (kmax<this->vertex(i).dot(axe))
+            kmax = this->vertex(i).dot(axe);
+    }
 
     *mini=kmin;
     *maxi=kmax;
@@ -74,8 +81,13 @@ void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, doubl
     // d2,f2 : intervalle de projection pour la boite b2
     // quelle est la distance de recouvrement ? (*distance = ??)
     // affecter correctement *direction (-1 ou 1 ?)
-
-
+    if((f1-d2) <(f2-d1)){
+        *direction = 1.0;
+        *distance = f1 - d2;
+    }else{
+        *direction  = -1.0;
+        *distance = f2 - d1;
+    }
 }
 
 

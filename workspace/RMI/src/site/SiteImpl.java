@@ -1,7 +1,5 @@
 package site;
 
-
-import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
  * 
  * classe qui implemente l'interface RMI SiteItf
  * @author Aurore Allart et Benjamin Ruytoor
- *
+ * @version 9 avril 2013
  */
 public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
@@ -29,10 +27,9 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 		this.lastMessage="";
 	}
 
-	//propagation synchrone faux
 	public void propage(byte[] donnees) throws RemoteException{
 		String mes=new String(donnees);
-		if(mes.compareTo(lastMessage)==0)// idnetique au dernier message
+		if(mes.compareTo(lastMessage)==0)// identique au dernier message
 			return;
 		else
 			lastMessage=mes;
