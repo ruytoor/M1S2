@@ -11,16 +11,15 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * classe Main
+ * Tests
  * @author Aurore Allart et Benjamin Ruytoor
- *
+ * @version 9 avril 2013
  */
 public class MyTest {
 
@@ -36,30 +35,31 @@ public class MyTest {
 			else
 				r=LocateRegistry.getRegistry();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			System.err.println("probleme au demarrage de l annuaire RMI");
 		}
 	}
 
 	@After
-	public void stopRmiRegistery(){
+	public void stopRmiRegistry(){
 		try {
 			r=LocateRegistry.getRegistry();
 			for (String s:r.list()){
 				r.unbind(s);
 			}
 		} catch (AccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("stopRmiRegistry : if this registry is local and it denies the caller access to perform this operation");
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("stopRmiRegistry : probleme lors de la desinscription");
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.err.println("stopRmiRegistry : if name is not currently bound");
 		}
 	}
 
+	/**
+	 * test avec un arbre
+	 * le message est d'abord envoyé à la racine de l'arbre
+	 */
 	@Test
 	public void testArbre()  {
 		//     1
@@ -67,6 +67,7 @@ public class MyTest {
 		// 2   3   6
 		// |       |
 		// 4       5
+		
 		// 1 -> coucou
 
 		ArrayList<Process> list=new ArrayList<Process>();
@@ -102,8 +103,7 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testArbre : process interrompu");
 			}
 
 			String sTmp="";
@@ -119,12 +119,16 @@ public class MyTest {
 				p.destroy();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("testArbre : lecture buffer");
 		}
 
 	}
 
 
+	/**
+	 * test avec un arbre 
+	 * le message est d'abord envoye au noeud 6
+	 */
 	@Test
 	public void testArbre2()  {
 		//     1
@@ -166,8 +170,7 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testArbre2 : process interrompu");
 			}
 
 			String sTmp="";
@@ -185,11 +188,15 @@ public class MyTest {
 				p.destroy();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("testArbre2 : lecture buffer");
 		}
 
 	}
 
+	/**
+	 * test avec un arbre 
+	 * avec 2 messages différents
+	 */
 	@Test
 	public void testArbre3()  {
 		//     1 
@@ -234,13 +241,12 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testArbre3 : process interrompu pour le message coucou");
 			}
 			try {
 				if((codeRetour=propage2.waitFor())!=0){	// cas d'erreur	
 					String tmpS;
-					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage2.getErrorStream()));
 					while((tmpS=bufferRegistre.readLine())!=null)
 						System.out.println(tmpS);
 					System.out.println(codeRetour);
@@ -251,8 +257,7 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testArbre3 : process interrompu pour le message beuh");
 			}
 
 			String sTmp="";
@@ -271,15 +276,19 @@ public class MyTest {
 				p.destroy();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("testArbre3 : lecture buffer");
 		}
 
 	}
 
 
+	/**
+	 * test avec un graphe avec 2 messages différents
+	 */
 	@Test
 	public void testGraph(){
 		// 1 -> 2 -> 3 -> 1
+		
 		ArrayList<Process> list=new ArrayList<Process>();
 		Runtime runtime=Runtime.getRuntime();
 		try {
@@ -307,13 +316,12 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testGraphe : process interrompu avec le message coucou");
 			}
 			try {
 				if((codeRetour=propage2.waitFor())!=0){	// cas d'erreur	
 					String tmpS;
-					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage.getErrorStream()));
+					BufferedReader bufferRegistre=new BufferedReader(new InputStreamReader(propage2.getErrorStream()));
 					while((tmpS=bufferRegistre.readLine())!=null)
 						System.out.println(tmpS);
 					System.out.println(codeRetour);
@@ -323,8 +331,7 @@ public class MyTest {
 					return;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("testGraphe : process interrompu avec le message beuh");
 			}
 
 
@@ -333,7 +340,6 @@ public class MyTest {
 
 				String sTmp="";
 				String sTmp2="";
-				String sTmp3="";
 				
 				BufferedReader bufferP=new BufferedReader(new InputStreamReader(ptmp.getInputStream()));
 				i++;
@@ -350,7 +356,7 @@ public class MyTest {
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("testGraphe : lecture buffer");			
 		}
 
 

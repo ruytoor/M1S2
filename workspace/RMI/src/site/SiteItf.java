@@ -3,6 +3,7 @@ package site;
 /**
  * interface RMI
  * @author Aurore Allart et Benjamin Ruytoor
+ * @version 9 avril 2013
  */
 import java.rmi.Remote;
 import java.rmi.RemoteException;

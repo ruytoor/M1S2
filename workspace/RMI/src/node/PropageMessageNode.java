@@ -1,17 +1,21 @@
 package node;
 
-import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import site.SiteItf;
 
-
+/**
+ * propage le message
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 avril 2013
+ */
 public class PropageMessageNode {
 
 	/**
-	 * demarre le client
-	 * @param args
+	 * propage le message dans les noeuds du graphe ou de l'arbre
+	 * @param args 0 = numero du noeud (nom)
+	 * 			   1 = message
 	 */
 	public static void main(String[] args) {
 		try{
@@ -25,8 +29,7 @@ public class PropageMessageNode {
 			SiteItf site = (SiteItf) registry.lookup(name);
 			site.propage(args[1].getBytes());
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(666);
+			System.exit(3);
 		}
 		return ;
 	}
