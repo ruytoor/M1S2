@@ -79,7 +79,7 @@ public class sampleCFA_ implements PlugInFilter {
 
 			con.convolve(red_ex3, MASQUE_R_and_B, 3, 3);
 			con.convolve(blue_ex3, MASQUE_R_and_B, 3, 3);
-			green_ex3=est_G_hamilton(green_ex3);
+			green_ex3=est_G_hamilton(impCFA.getProcessor());
 						
 			samples_stack_ex3.addSlice("rouge", red_ex3);	// Composante R
 			samples_stack_ex3.addSlice("vert",green_ex3 );// Composante G
@@ -102,6 +102,7 @@ public class sampleCFA_ implements PlugInFilter {
 		int startX,startY;
 		if(i==1){ // vert
 			startX=0;
+			startY=0;
 			startY=0;
 			for (int y=1; y<height; y+=2) {
 				for (int x=1; x<width; x+=2) {
@@ -217,28 +218,28 @@ public class sampleCFA_ implements PlugInFilter {
 		//les rouges
 		for (int y=0; y<height; y+=2) {
 			for (int x=1; x<width; x+=2) {
-				int delX=Math.abs(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y));
-				int delY=Math.abs(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2));
+				int delX=Math.abs(cfa_ip.getPixel(x-1, y)&0xff-cfa_ip.getPixel(x+1, y)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff);
+				int delY=Math.abs(cfa_ip.getPixel(x, y-1)&0xff-cfa_ip.getPixel(x, y+1)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff);
 				if(delX<delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/2+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y))/4);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff)/4);
 				}else if(delX>delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)/2)+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/4);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/4);
 				}else{// delX==delY
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)+cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/4+(4*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/8);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff+cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/4+(4*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/8);
 				}
 			}
 		}
 		//les bleus
 		for (int y=1; y<height; y+=2) {
 			for (int x=0; x<width; x+=2) {
-				int delX=Math.abs(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y));
-				int delY=Math.abs(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1))+Math.abs(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2));
+				int delX=Math.abs(cfa_ip.getPixel(x-1, y)&0xff-cfa_ip.getPixel(x+1, y)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff);
+				int delY=Math.abs(cfa_ip.getPixel(x, y-1)&0xff-cfa_ip.getPixel(x, y+1)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff);
 				if(delX<delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/2+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y))/4);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff)/4);
 				}else if(delX>delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)/2)+(2*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/4);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/4);
 				}else{// delX==delY
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)+cfa_ip.getPixel(x, y+1)+cfa_ip.getPixel(x-1, y)+cfa_ip.getPixel(x+1, y))/4+(4*cfa_ip.getPixel(x, y)-cfa_ip.getPixel(x-2, y)-cfa_ip.getPixel(x+2, y)-cfa_ip.getPixel(x, y-2)-cfa_ip.getPixel(x, y+2))/8);
+					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff+cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/4+(4*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/8);
 				}
 			}
 		}

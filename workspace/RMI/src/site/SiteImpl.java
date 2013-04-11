@@ -44,7 +44,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 				site.propage(donnees);
 			} catch (NotBoundException e) {
 				System.err.println("Erreur le systeme a planté");
-				System.exit(666);
+				System.exit(5);
 			}
 
 		} 
