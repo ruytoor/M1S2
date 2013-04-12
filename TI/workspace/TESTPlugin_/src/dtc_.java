@@ -6,6 +6,8 @@ import ij.process.ImageProcessor;
 
 public class dtc_ implements PlugInFilter {
 
+	
+	final static int BLOCK_SIZE = 8;
 	ImagePlus imp;
 	
 	@Override
