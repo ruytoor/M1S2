@@ -3,9 +3,9 @@ abstract public class DCT1D{
 
 	// ---------------------------------------------------------------------------------
 	/**
-	 * Transformation DCT 1D directe (m�thode de classe)
-	 * @param f(m) Signal 1D d'entr�e (double[])
-	 * @return F(u) Signal transform� (double[])
+	 * Transformation DCT 1D directe (methode de classe)
+	 * @param f(m) Signal 1D d'entree (double[])
+	 * @return F(u) Signal transforme (double[])
 	 */ 
 	public static double[] forwardDCT(double[] f) {
 		int M = f.length;	// Taille du signal
@@ -26,8 +26,8 @@ abstract public class DCT1D{
 
 	// ---------------------------------------------------------------------------------
 	/**
-	 * Transformation DCT 1D inverse (m�thode de classe)
-	 * @param F(u) Signal 1D transform� (double[])
+	 * Transformation DCT 1D inverse (methode de classe)
+	 * @param F(u) Signal 1D transforme (double[])
 	 * @return f(m) signal inverse (double[])
 	 */
 	public static double[] inverseDCT(double[] F) {
