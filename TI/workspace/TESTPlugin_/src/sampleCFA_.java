@@ -218,14 +218,14 @@ public class sampleCFA_ implements PlugInFilter {
 		//les rouges
 		for (int y=0; y<height; y+=2) {
 			for (int x=1; x<width; x+=2) {
-				int delX=Math.abs(cfa_ip.getPixel(x-1, y)&0xff-cfa_ip.getPixel(x+1, y)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff);
-				int delY=Math.abs(cfa_ip.getPixel(x, y-1)&0xff-cfa_ip.getPixel(x, y+1)&0xff)+Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff);
+				int delX=Math.abs(cfa_ip.getPixel(x-1, y)&0xff - cfa_ip.getPixel(x+1, y)&0xff) + Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff);
+				int delY=Math.abs(cfa_ip.getPixel(x, y-1)&0xff - cfa_ip.getPixel(x, y+1)&0xff) + Math.abs(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff);
 				if(delX<delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff)/4);
+					est_ip.putPixel(x,y,((cfa_ip.getPixel(x-1, y)&0xff + cfa_ip.getPixel(x+1, y)&0xff)/2 + (2*cfa_ip.getPixel(x, y)&0xff - cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff)/4));
 				}else if(delX>delY){
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff)/2+(2*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/4);
+					est_ip.putPixel(x,y,((cfa_ip.getPixel(x, y-1)&0xff + cfa_ip.getPixel(x, y+1)&0xff)/2 + (2*cfa_ip.getPixel(x, y)&0xff - cfa_ip.getPixel(x, y-2)&0xff - cfa_ip.getPixel(x, y+2)&0xff)/4));
 				}else{// delX==delY
-					est_ip.putPixel(x,y,(cfa_ip.getPixel(x, y-1)&0xff+cfa_ip.getPixel(x, y+1)&0xff+cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/4+(4*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/8);
+					est_ip.putPixel(x,y,((cfa_ip.getPixel(x, y-1)&0xff + cfa_ip.getPixel(x, y+1)&0xff+cfa_ip.getPixel(x-1, y)&0xff+cfa_ip.getPixel(x+1, y)&0xff)/4+(4*cfa_ip.getPixel(x, y)&0xff-cfa_ip.getPixel(x-2, y)&0xff-cfa_ip.getPixel(x+2, y)&0xff-cfa_ip.getPixel(x, y-2)&0xff-cfa_ip.getPixel(x, y+2)&0xff)/8));
 				}
 			}
 		}
