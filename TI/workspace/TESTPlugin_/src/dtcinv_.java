@@ -4,7 +4,7 @@ import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
 
-public class dtc_ implements PlugInFilter {
+public class dtcinv_ implements PlugInFilter {
 
 	
 	final static int BLOCK_SIZE = 8;
@@ -21,8 +21,8 @@ public class dtc_ implements PlugInFilter {
 	public void run(ImageProcessor ip) {
 		FloatProcessor fp=(FloatProcessor) ip.duplicate();
 		// TODO Auto-generated method stub
-		DCT2D.forwardDCT(fp);
-		new ImagePlus("DCT2D", fp).show();
+		DCT2D.inverseDCT(fp);
+		new ImagePlus("DCT2D inv", fp).show();
 
 	}
 }

@@ -47,12 +47,6 @@ abstract public class DCT2D {
 			}
 			
 		}
-		
-		for(int x=0;x<height;++x)
-			for(int y=0;y<width;++y){
-				System.out.print(fp.getPixelValue(x, y)+"  ");
-				System.out.println();
-			}
 	}
 
 	// ---------------------------------------------------------------------------------
@@ -62,10 +56,41 @@ abstract public class DCT2D {
 	 */
 	public static void inverseDCT(FloatProcessor fp) {
 
-		// Traiter les lignes
-		/* � compl�ter */
+		int width=fp.getWidth();
+		int height=fp.getHeight();
 
+
+		//	float data[][]=fp.getFloatArray();
+		double tmp[];
+
+		// Traiter les lignes
+		for(int i=0;i<height;++i){
+			tmp=new double[width];
+			
+			for(int d=0;d<width;++d)
+				tmp[d]=fp.getPixelValue(d, i);
+			
+			tmp=DCT1D.inverseDCT(tmp);
+			
+			for(int y=0;y<width;++y)
+				fp.putPixelValue(y, i, tmp[y]);
+			
+		}
+
+		
 		// Traiter les colonnes de l'image r�sultant du traitement des lignes
-		/* � compl�ter */
+		for(int i=0;i<width;++i){
+			tmp=new double[height];
+			
+			for(int d=0;d<height;++d)
+				tmp[d]=fp.getPixelValue(i, d);
+			
+			tmp=DCT1D.inverseDCT(tmp);
+			
+			for(int y=0;y<height;++y){
+				fp.putPixelValue(i, y, tmp[y]);
+			}
+			
+		}
 	}
 }
