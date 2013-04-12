@@ -1,5 +1,5 @@
 #ImageJ 1.46f Preferences
-#Thu Apr 11 12:57:43 CEST 2013
+#Fri Apr 12 12:06:32 CEST 2013
 fps=7.000007000007
 new.slices=1
 plugin01=h,"*Pixel Inspector[q]",ij.plugin.Hotkeys("Pixel Inspector")
@@ -29,8 +29,8 @@ mark.width=0
 raw.n=1
 raw.type=2
 .Animated_PNG_Writer.red=255
-ij.y=46
-ij.x=627
+ij.y=49
+ij.x=748
 jpeg=100
 .ISP3D.min=0
 raw.height=1536
@@ -101,8 +101,8 @@ recent05=Z\:\\bo\\public\\Images_CFA_Corrig\u00E9es\\DOR701-Corrige\\DSCF1348.pg
 recent04=Z\:\\bo\\public\\Images_CFA_Non_Corrig\u00E9s\\DOR701_PGM\\DSCF1348.pgm
 recent03=C\:\\Documents and Settings\\tous\\Perso\\Enseignement\\Traitement signal & images\\TI-IVI\\ti-semaine-09-contours1\\lighthouse_8bits.png
 recent02=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP10\\spores.png
-recent01=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP11\\lighthouse.png
-recent00=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP11\\CFA(RGB).jpg
+recent01=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP11\\CFA(RGB).jpg
+recent00=C\:\\Users\\Aurore\\Documents\\M1S2\\TI\\TP11\\lighthouse.png
 .ISP3D.light=1.0
 .pixelinspector.radius=3
 .tw.font.size=5
