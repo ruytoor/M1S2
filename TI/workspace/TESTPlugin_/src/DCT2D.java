@@ -88,7 +88,7 @@ abstract public class DCT2D {
 			tmp=DCT1D.inverseDCT(tmp);
 			
 			for(int y=0;y<height;++y){
-				fp.putPixelValue(i, y, tmp[y]);
+				fp.putPixelValue(i, y, tmp[y])+128;
 			}
 			
 		}
