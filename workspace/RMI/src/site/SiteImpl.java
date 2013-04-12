@@ -15,6 +15,10 @@ import java.util.ArrayList;
  */
 public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7632588616130667266L;
 	private ArrayList<String> fils; 
 	private String nom; // aide pour les tests
 	private String lastMessage;
@@ -38,7 +42,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf{
 		for (String f : fils){
 			try {
 				SiteItf site= (SiteItf) registry.lookup(f);
-				site.propage(donnees);
+				//site.propage(donnees);
 			} catch (NotBoundException e) {
 				System.err.println("Erreur le systeme a planté");
 				System.exit(5);

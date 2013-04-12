@@ -35,7 +35,7 @@ public class MyTest {
 			else
 				r=LocateRegistry.getRegistry();
 		} catch (RemoteException e) {
-			System.err.println("probleme au demarrage de l annuaire RMI");
+			//System.err.println("probleme au demarrage de l annuaire RMI");
 		}
 	}
 
@@ -58,7 +58,7 @@ public class MyTest {
 
 	/**
 	 * test avec un arbre
-	 * le message est d'abord envoyé à la racine de l'arbre
+	 * le message est d'abord envoyï¿½ ï¿½ la racine de l'arbre
 	 */
 	@Test
 	public void testArbre()  {
@@ -106,9 +106,9 @@ public class MyTest {
 				System.err.println("testArbre : process interrompu");
 			}
 
-			String sTmp="";
 			int i=0;
 			for(Process p:list){
+				String sTmp="";
 				BufferedReader bufferP=new BufferedReader(new InputStreamReader(p.getInputStream()));
 				i++;
 				if(bufferP.ready()){
@@ -195,7 +195,7 @@ public class MyTest {
 
 	/**
 	 * test avec un arbre 
-	 * avec 2 messages différents
+	 * avec 2 messages diffï¿½rents
 	 */
 	@Test
 	public void testArbre3()  {
@@ -283,12 +283,14 @@ public class MyTest {
 
 
 	/**
-	 * test avec un graphe avec 2 messages différents
+	 * test avec un graphe avec 2 messages diffï¿½rents
 	 */
 	@Test
 	public void testGraph(){
 		// 1 -> 2 -> 3 -> 1
 		
+		//1 -> coucou
+		//3 -> beuh
 		ArrayList<Process> list=new ArrayList<Process>();
 		Runtime runtime=Runtime.getRuntime();
 		try {

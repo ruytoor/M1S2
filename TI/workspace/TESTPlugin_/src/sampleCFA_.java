@@ -24,7 +24,7 @@ public class sampleCFA_ implements PlugInFilter {
 		height = imp.getHeight();
 
 		// Dispositions possibles pour le CFA
-		String[] orders = {"B-G-B","R-G-R","G-R-G","G-B-G"};
+		String[] orders = {"G-R-G","G-B-G","B-G-B","R-G-R"};
 
 		// Définition de l'interface
 		GenericDialog dia = new GenericDialog("Génération de l'image CFA...", IJ.getInstance());
