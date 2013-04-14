@@ -1,6 +1,5 @@
 
 import ij.process.*;	// Pour classe Float Processor
-import java.awt.Rectangle;
 
 abstract public class DCT2D {
 
