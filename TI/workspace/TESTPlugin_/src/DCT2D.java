@@ -1,4 +1,6 @@
 
+import java.awt.Rectangle;
+
 import ij.process.*;	// Pour classe Float Processor
 
 abstract public class DCT2D {
@@ -10,41 +12,46 @@ abstract public class DCT2D {
 	 */ 
 	public static void forwardDCT(FloatProcessor fp) {
 
-		int width=fp.getWidth();
-		int height=fp.getHeight();
 
+		Rectangle r=fp.getRoi();
+		if(r==null)
+			r=new Rectangle(0, 0, fp.getWidth(), fp.getHeight());
+		
+		int width=r.width;
+		int height=r.height;
 
 		//	float data[][]=fp.getFloatArray();
 		double tmp[];
-
+		
+		
 		// Traiter les lignes
 		for(int i=0;i<height;++i){
 			tmp=new double[width];
-			
+
 			for(int d=0;d<width;++d)
-				tmp[d]=fp.getPixelValue(d, i)-128;
-			
+				tmp[d]=fp.getPixelValue(d+r.x, i+r.y)-128;
+
 			tmp=DCT1D.forwardDCT(tmp);
-			
+
 			for(int y=0;y<width;++y)
-				fp.putPixelValue(y, i, tmp[y]);
-			
+				fp.putPixelValue(y+r.x, i+r.y, tmp[y]);
+
 		}
 
-		
+
 		// Traiter les colonnes de l'image r�sultant du traitement des lignes
 		for(int i=0;i<width;++i){
 			tmp=new double[height];
-			
+
 			for(int d=0;d<height;++d)
-				tmp[d]=fp.getPixelValue(i, d);
-			
+				tmp[d]=fp.getPixelValue(i+r.x, d+r.y);
+
 			tmp=DCT1D.forwardDCT(tmp);
-			
+
 			for(int y=0;y<height;++y){
-				fp.putPixelValue(i, y, tmp[y]);
+				fp.putPixelValue(i+r.x, y+r.y, tmp[y]);
 			}
-			
+
 		}
 	}
 
@@ -55,8 +62,12 @@ abstract public class DCT2D {
 	 */
 	public static void inverseDCT(FloatProcessor fp) {
 
-		int width=fp.getWidth();
-		int height=fp.getHeight();
+		Rectangle r=fp.getRoi();
+		if(r==null)
+			r=new Rectangle(0, 0, fp.getWidth(), fp.getHeight());
+		
+		int width=r.width;
+		int height=r.height;
 
 
 		//	float data[][]=fp.getFloatArray();
@@ -65,31 +76,31 @@ abstract public class DCT2D {
 		// Traiter les lignes
 		for(int i=0;i<height;++i){
 			tmp=new double[width];
-			
+
 			for(int d=0;d<width;++d)
-				tmp[d]=fp.getPixelValue(d, i);
-			
+				tmp[d]=fp.getPixelValue(d+r.x, i+r.y);
+
 			tmp=DCT1D.inverseDCT(tmp);
-			
+
 			for(int y=0;y<width;++y)
-				fp.putPixelValue(y, i, tmp[y]);
-			
+				fp.putPixelValue(y+r.x, i+r.y, tmp[y]);
+
 		}
 
-		
+
 		// Traiter les colonnes de l'image r�sultant du traitement des lignes
 		for(int i=0;i<width;++i){
 			tmp=new double[height];
-			
+
 			for(int d=0;d<height;++d)
-				tmp[d]=fp.getPixelValue(i, d);
-			
+				tmp[d]=fp.getPixelValue(i+r.x, d+r.y);
+
 			tmp=DCT1D.inverseDCT(tmp);
-			
+
 			for(int y=0;y<height;++y){
-				fp.putPixelValue(i, y, tmp[y]+128);
+				fp.putPixelValue(i+r.x, y+r.y, tmp[y]+128);
 			}
-			
+
 		}
 	}
 }
