@@ -68,9 +68,12 @@ public class dtc_ implements PlugInFilter {
 				listOfList.add(coefsBeforeEOB(imgP));
 			}
 		}
-
+		
+		int poids=0;
+		for(List l : listOfList)
+			poids+=l.size();
+		System.out.println(poids+"/"+(fp.getWidth()*fp.getHeight()));
 		new ImagePlus("DCT2D", fp).show();
-
 	}
 
 	private boolean showDialog() {
