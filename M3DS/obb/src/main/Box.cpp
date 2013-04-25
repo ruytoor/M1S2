@@ -56,7 +56,6 @@ void Box::project(const Vector3 &axe,double *mini,double *maxi) const {
         if (kmax<this->vertex(i).dot(axe))
             kmax = this->vertex(i).dot(axe);
     }
-
     *mini=kmin;
     *maxi=kmax;
 
@@ -70,9 +69,13 @@ void Box::project(const Vector3 &axe,double *mini,double *maxi) const {
 
 void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, double *direction) {
     double d1,d2,f1,f2;
-    double dist, direct;
+    double dist=1, direct=1;
+
     b1->project(axe,&d1,&f1);
     b2->project(axe,&d2,&f2);
+
+    cout<<"d1 :"<<d1<<" f1 :"<<f1<<endl;
+    cout<<"d2 :"<<d2<<" f2 :"<<f2<<endl;
 
     drawDebugProject(b1,b2,axe,d1,f1,d2,f2);
 
@@ -81,6 +84,7 @@ void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, doubl
     // d2,f2 : intervalle de projection pour la boite b2
     // quelle est la distance de recouvrement ? (*distance = ??)
     // affecter correctement *direction (-1 ou 1 ?)
+    /*
     if ((f2-d2)<(f1-d1)){
         if ((d1<d2)&&(f2<f1)){
             direct = 1.0;
@@ -108,8 +112,51 @@ void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, doubl
             }
         }
     }
+    */
+    if(d2<f1){
+        if(d1<f2){
+            // colision
+            if(d1<d2){
+                if(f2<f1){
+                    //b2 dans b1
+                    if((d2-d1)<(f1-f2)){
+                        direct=-1;
+                        dist=d1-f2;
+                    }else{
+                        direct=1;
+                        dist=d2-f1;
+                    }
+                }else{
+                    direct=1;
+                    dist=d2-f1;//neg
+                }
+            }else{//d1>d2
+                if(f1<f2){
+                    //b1 dans b2
+                    if((d1-d2)<(f2-f1)){
+                        direct=-1;
+                        dist=d2-f1;
+                    }else{
+                        direct=1;
+                        dist=d1-f2;
+                    }
+                }else{
+                    direct=-1;
+                    dist=d1-f2;//neg
+                }
+            }
+        }else{//d1>f2 rien
+            dist=d1-f2;//pos
+        }
+    }else {//d2>f1 rien
+        dist=d2-f1;//pos
+    }
+
     *direction = direct;
     *distance = dist;
+
+    cout<<*direction<<"  :  "<<*distance<<endl;
+
 }
 
 
@@ -148,9 +195,9 @@ bool Box::detectCollision(Box *b1,Box *b2,CollisionInfo *collision) {
     //   b2 par rapport à b1 (i.e. multiplier axis[i] par le signe (-1 ou 1) retourné par la méthode distance(b1,b2,...,)).
     // - assurez vous d'avoir affecté correctement detect à la fin (==true il y a collision, == false pas de collision).
     dist_min = 10000000;
-    for (int i =0; i<4;i++){
+    for (int i =0; i<2;i++){
         distance(b1,b2,axis[i],&dist,&direction);
-        if (dist<dist_min){
+        if (abs(dist)<abs(dist_min)){
             axe_min = axis[i]*direction;
             dist_min = dist;
         }
