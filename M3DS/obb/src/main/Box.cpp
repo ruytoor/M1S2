@@ -74,8 +74,8 @@ void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, doubl
     b1->project(axe,&d1,&f1);
     b2->project(axe,&d2,&f2);
 
-    cout<<"d1 :"<<d1<<" f1 :"<<f1<<endl;
-    cout<<"d2 :"<<d2<<" f2 :"<<f2<<endl;
+    //cout<<"d1 :"<<d1<<" f1 :"<<f1<<endl;
+    //cout<<"d2 :"<<d2<<" f2 :"<<f2<<endl;
 
     drawDebugProject(b1,b2,axe,d1,f1,d2,f2);
 
@@ -155,7 +155,7 @@ void Box::distance(Box *b1, Box *b2, const Vector3 &axe, double *distance, doubl
     *direction = direct;
     *distance = dist;
 
-    cout<<*direction<<"  :  "<<*distance<<endl;
+    //cout<<*direction<<"  :  "<<*distance<<endl;
 
 }
 
