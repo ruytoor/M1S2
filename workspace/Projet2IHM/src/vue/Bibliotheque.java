@@ -1,56 +1,84 @@
 package vue;
 
-import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class Bibliotheque extends JPanel {
+public class Bibliotheque {
 
-	private JTable table;
-	private String[] columnNames;
+	public static String[] columnNames= new String[]{"album","artist", "title","genre","year","duration"};
 
-	public Bibliotheque() throws SQLException{
-		ResultSet rs =connectionBase();
-	 
-		this.columnNames = new String[]{"album","artist", "title","genre","year","duration"};
-		this.table = new JTable(rs.getRow(),rs.getFetchSize());
-		System.out.println(rs.getRow()+" , "+rs.getFetchSize());
-		int i = 1;
-		while(rs.next()){
+
+	public static JTable makeMeOneBibliotheque(int numColumn, String recherche){
+		//new DefaultTableModel(); voir plus tard
+		return new JTable(Bibliotheque.returnALL(numColumn,recherche), new String[]{"album","artist", "title","genre","year","duration"}){
+			private static final long serialVersionUID = 1L;
 			
-			// read the result set
-			System.out.println(i + " " + rs.getString("album") + " " + rs.getString("artist") + " " +
-					rs.getString("title") + " " + rs.getString("genre") + " " + rs.getString("year") + " " + rs.getString("duration"));
-			i++;
-		}
-
-		this.table.setName("Bibliothèque");
-		
-
+			public boolean isCellEditable(int row, int column) { 
+				return false; 
+			}
+		};
 	}
 
-	private ResultSet connectionBase(){
+	/**
+	 * 
+	 * @param numColumn si -1 => tout, si 12 => artist et title, si 1 => artist, si 2 => title
+	 * @param recherche le mot a recherche dans la base de donnees
+	 * @return
+	 */
+	public static Object[][] returnALL(int numColumn, String recherche){
+		// load the sqlite-JDBC driver using the current class loader
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Connection connection = null;
-		try
-		{
+		try{
 			// create a database connection
-			
-			connection = DriverManager.getConnection("jdbc:sqlite:mp3database.sqlite");
+			ArrayList<Object[]> l=new ArrayList<Object[]>();
+			String s = "mp3database.sqlite";
+			File f=new File(s);
+			System.out.println(f.isFile()+"  "+f.getAbsolutePath());
+			connection = DriverManager.getConnection("jdbc:sqlite:"+f.getAbsolutePath());
 			Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-			return statement.executeQuery("select * from songs");
+			ResultSet rs;
+			switch (numColumn) {
+			case 12:
+				rs = statement.executeQuery("select * from songs where artist like '%"+recherche+"%' or title like '%"+recherche+"%'");
+				break;
+			case 1:
+				rs = statement.executeQuery("select * from songs where artist like '%"+recherche+"%'");
+				break;
+			case 2:
+				rs = statement.executeQuery("select * from songs where title like '%"+recherche+"%'");
+				break;
+			default:
+				rs = statement.executeQuery("select * from songs");
+				break;
+			}
+			while(rs.next()){
+				// read the result set
+				ArrayList<String> tmp=new ArrayList<>();
+				tmp.add(rs.getString("album"));
+				tmp.add(rs.getString("artist"));
+				tmp.add(rs.getString("title"));
+				tmp.add(rs.getString("genre"));
+				tmp.add(rs.getString("year"));
+				tmp.add(rs.getString("duration"));
+				l.add(tmp.toArray());
+			}
+			Object retour[][]=new Object[l.size()][];
+			for(int i=0;i<l.size();++i)
+				retour[i]=l.get(i);
+			return retour;
 		}catch(SQLException e){
 			// if the error message is "out of memory", 
 			// it probably means no database file is found
