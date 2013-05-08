@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import bibliotheque.Livre;
@@ -20,7 +16,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author benjamin
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 1 mai 2013
  */
 @WebServlet(name = "AllLivreServlet", urlPatterns = {"/AllLivreServlet"})
 public class AllLivreServlet extends HttpServlet {
@@ -63,7 +60,6 @@ public class AllLivreServlet extends HttpServlet {
         }
     }
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -103,5 +99,5 @@ public class AllLivreServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 }
