@@ -1,19 +1,23 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
-import structuredonne.Musique;
-import structuredonne.StructureMusique;
 
 import main.JTunes;
+import structureDeDonnees.Musique;
+import structureDeDonnees.StructureMusique;
 
+/**
+ * Classe permettant de lancer la lecture du morceau selectionne. Affectation de la touche 'p' à cette action. 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class PlayAction extends AbstractAction {
+
+	private static final long serialVersionUID = 1L;
 
 	private boolean isPlay;
 	

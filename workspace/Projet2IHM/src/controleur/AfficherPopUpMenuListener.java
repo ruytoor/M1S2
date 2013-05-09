@@ -1,25 +1,21 @@
 package controleur;
 
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
-import javax.swing.TransferHandler;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.MouseInputListener;
 
-import main.JTunes;
-
+/**
+ * Classe permettant d'afficher le pop up, par le clic droit, qui contient le menu contextuel de la table où se trouve la souris.
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class AfficherPopUpMenuListener implements MouseListener{
 
 	private JPopupMenu popUpMenu;
 	private JComponent compo;
+	
 	public AfficherPopUpMenuListener(JPopupMenu jp,JComponent c){
 		this.popUpMenu=jp;
 		this.compo=c;
@@ -27,7 +23,6 @@ public class AfficherPopUpMenuListener implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getButton()==MouseEvent.BUTTON3){
 			popUpMenu.show(compo, e.getX(), e.getY());
 		}
@@ -35,13 +30,11 @@ public class AfficherPopUpMenuListener implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -52,7 +45,6 @@ public class AfficherPopUpMenuListener implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	

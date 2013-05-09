@@ -15,8 +15,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import main.JTunes;
-import structuredonne.Musique;
-import structuredonne.StructureMusique;
+import structureDeDonnees.Musique;
+import structureDeDonnees.StructureMusique;
 import controleur.AjouterListeAction;
 
 /**
@@ -29,7 +29,15 @@ public class Bibliotheque {
 	public static String[] columnNames= new String[]{"title","album","artist","genre"};
 
 
-	public static JTable makeMeOneBibliotheque(String recherche,boolean artistCheck,boolean titleCheck){
+	/**
+	 * creer la table contenant les morceaux de musique de la base de donnees suivant les criteres de recherche. Si il y a aucune
+	 * recherche, la base retourne tout.
+	 * @param recherche le mot a rechercher dans la base de donnees
+	 * @param artistCheck si true, recherche le mot que dans les artistes
+	 * @param titleCheck si true, recherche le mot que dans les titres
+	 * @return la table des morceaux de musique
+	 */
+	public static JTable makeMeOneBibliotheque(String recherche, boolean artistCheck, boolean titleCheck){
 		//new DefaultTableModel(); voir plus tard
 		final JTable biblio= new JTable(Bibliotheque.recherche(recherche,artistCheck,titleCheck), Bibliotheque.columnNames){
 			private static final long serialVersionUID = 1L;
@@ -80,7 +88,7 @@ public class Bibliotheque {
 					rs = statement.executeQuery(requete);
 				}
 			}
-				
+
 
 			while(rs.next()){
 				ArrayList<StructureMusique> tmp=new ArrayList<StructureMusique>();

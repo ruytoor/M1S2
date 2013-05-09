@@ -9,17 +9,35 @@ import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableModel;
 
-import structuredonne.IndiceTransferable;
-import structuredonne.StructureMusique;
+import structureDeDonnees.StructureMusique;
 
 import main.JTunes;
 
+/**
+ * Classe permettant de deposer les morceaux selectionnes
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class DropTransferHandler extends TransferHandler {
 
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * retourne true si le component recevant les informations peut accepter le type d'information
+	 * @param le component recevant
+	 * @param les informations encapsulees
+	 * @return true si le component recevant est ok, false sinon
+	 */
 	public boolean canImport(JComponent c, DataFlavor[] flavors) {
 		return flavors[0].equals(DataFlavor.stringFlavor);
 	}
 
+	/**
+	 * transfert les donnees si le component recevant peut
+	 * @param le component recevant
+	 * @param les donnees a transferer
+	 * @return true
+	 */
 	public boolean importData(JComponent c, Transferable t){
 		try {
 			String tmpS=(String)t.getTransferData(DataFlavor.stringFlavor);
@@ -33,10 +51,8 @@ public class DropTransferHandler extends TransferHandler {
 				model.addRow(new Object[]{s.getMusique().getTitle(),s.getMusique().getAlbum(),s.getMusique().getArtist(),s.getMusique().getGenre(),s.getMusique().getYear(),s.getMusique().getDuration()});
 			}
 		} catch (UnsupportedFlavorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;

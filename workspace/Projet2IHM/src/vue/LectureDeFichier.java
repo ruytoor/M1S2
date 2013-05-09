@@ -2,23 +2,18 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 
-import structuredonne.Musique;
-
-import controleur.JToggleButtonAction;
+import structureDeDonnees.Musique;
 import controleur.BackAction;
+import controleur.JToggleButtonAction;
 import controleur.NextAction;
 import controleur.PlayAction;
 import controleur.StopAction;
@@ -30,6 +25,7 @@ import controleur.StopAction;
  */
 public class LectureDeFichier extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	private JSlider slider;
 	private JButton play;
 	private JButton stop;
@@ -55,36 +51,60 @@ public class LectureDeFichier extends JPanel{
 		aleatoire.setAction(new JToggleButtonAction(aleatoire));
 		south.add(aleatoire);
 		this.add(south,BorderLayout.CENTER);
-		
-		
-		
 	}
 	
 	
-	
+	/**
+	 * lance la lecture du morceau de musique
+	 * @param mus
+	 */
 	public void play(Musique mus){
-		
 	}
 	
+	/**
+	 * retourne l'action 'play'
+	 * @return play
+	 */
 	public Action getPlayAction(){
 		return play.getAction();
 	}
 	
+	/**
+	 * retourne l'action 'stop'
+	 * @return stop
+	 */
 	public Action getStopAction(){
 		return stop.getAction();
 	}
 	
+	/**
+	 * retourne l'action 'next'
+	 * @return next
+	 */
 	public Action getNextAction(){
 		return next.getAction();
 	}
 	
+	/**
+	 * retourne l'action 'back'
+	 * @return back
+	 */
 	public Action getBackAction(){
 		return back.getAction();
 	}
+	
+	/**
+	 * retourne l'action 'aleatoire'
+	 * @return aleatoire
+	 */
 	public Action getAleatoireAction(){
 		return aleatoire.getAction();
 	}
 	
+	/**
+	 * retourne la liste des actions liees a cette classe
+	 * @return liste des actions
+	 */
 	public List<Action> getLecteurAction(){
 		 ArrayList<Action> retour =new ArrayList<Action>();
 		 retour.add(play.getAction());

@@ -7,8 +7,14 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
+/**
+ * lien entre les deux boutons permettant la lecture aleatoire. Affectation de la touche 'a' a cette action. 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class JToggleButtonAction extends AbstractAction {
 
+	private static final long serialVersionUID = 1L;
 	private static final ImageIcon stopIcon=new ImageIcon("shuffle-icon.png");
 	private JToggleButton jb;
 

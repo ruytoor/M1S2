@@ -6,8 +6,13 @@ import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
 
 import main.JTunes;
-import structuredonne.StructureMusique;
+import structureDeDonnees.StructureMusique;
 
+/**
+ * Classe permettant d'ajouter des morceaux de la table Bibliotheque a la table LectureDeFichier 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class AjouterListeAction extends AbstractAction{
 
 	private static final long serialVersionUID = -8257274736048074318L;

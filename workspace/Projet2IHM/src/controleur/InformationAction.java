@@ -5,14 +5,19 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import structuredonne.Musique;
-import structuredonne.StructureMusique;
+import structureDeDonnees.Musique;
+import structureDeDonnees.StructureMusique;
 
 import main.JTunes;
 
+/**
+ * classe permettant de recuperer les informations du morceau voulu. Affectation de la touche 'i' a cette action. 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class InformationAction extends AbstractAction {
+
+	private static final long serialVersionUID = 1L;
 
 	public InformationAction(){
 		super("Information");

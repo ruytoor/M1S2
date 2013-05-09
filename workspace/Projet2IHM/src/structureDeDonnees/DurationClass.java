@@ -1,5 +1,10 @@
-package structuredonne;
+package structureDeDonnees;
 
+/**
+ * classe de la duree du morceau de la musique 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class DurationClass implements StructureMusique{
 	private Musique myMusique;
 	private String duration;

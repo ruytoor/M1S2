@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -30,13 +29,17 @@ import vue.Bibliotheque;
 import vue.LectureDeFichier;
 import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
-import controleur.JToggleButtonAction;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;
 import controleur.SupprimerAction;
 import controleur.SupprimerListeAction;
 
+/**
+ * Classe contenant le main qui lance le projet. 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class JTunes {
 
 	public static JTable bibliotheque;
@@ -67,7 +70,7 @@ public class JTunes {
 		ListeDeLecture = new JTable(new DefaultTableModel(Bibliotheque.columnNames, 0));
 		ListeDeLecture.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListeDeLecture.setAutoCreateRowSorter(true);
-		
+
 		playListAction.add(new InformationAction());
 		playListAction.add(new SupprimerAction());
 		final SupprimerListeAction suppa=new SupprimerListeAction();
@@ -86,7 +89,7 @@ public class JTunes {
 			}
 		});
 		ListeDeLecture.addMouseListener(new AfficherPopUpMenuListener(jpListLecture, ListeDeLecture));
-		
+
 		JPanel recherche=new Recherche();
 		frame.add(recherche,BorderLayout.NORTH);
 
@@ -133,7 +136,7 @@ public class JTunes {
 		menuBar.add(menuListLecture);
 		menuBar.add(menuBibli);
 		menuBar.add(menuRecherche);
-		
+
 		frame.setJMenuBar(menuBar);
 		frame.setPreferredSize(new Dimension(800,600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

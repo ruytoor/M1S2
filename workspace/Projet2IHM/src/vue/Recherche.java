@@ -3,8 +3,6 @@ package vue;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -16,9 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import controleur.CheckBoxAction;
-
 import main.JTunes;
+import controleur.CheckBoxAction;
 
 /**
  * classe permettant la recherche dans la Bibliotheque. De base, la recherche se fait dans toute la base de donn�es. Mais il est
@@ -97,6 +94,7 @@ public class Recherche extends JPanel{
 	public Action getActionTitre(){
 		return new CheckBoxAction(title);
 	}
+	
 	public Action getActionArtist(){
 		return new CheckBoxAction(artist);
 	}

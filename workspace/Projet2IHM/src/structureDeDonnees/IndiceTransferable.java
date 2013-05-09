@@ -1,12 +1,16 @@
-package structuredonne;
+package structureDeDonnees;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import main.JTunes;
-
+/**
+ * Cette classe permet de transferer de la table Bibliotheque a la table LectureDeFichier, les indices des musiques selectionnee
+ * par la drag and drop. 
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 9 mai 2013
+ */
 public class IndiceTransferable implements Transferable {
 	
 	private int debut;
