@@ -72,12 +72,13 @@ public class Recherche extends JPanel{
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
+				timer.cancel();
 				timer.purge();
 
 				if((arg0.getKeyCode()==KeyEvent.VK_ENTER))
 					tTask.run();
 				else
-					timer.schedule(tTask, 2000);
+					timer.schedule(tTask, 200);
 			}
 		});
 		this.setLayout(new FlowLayout());
