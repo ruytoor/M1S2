@@ -29,7 +29,6 @@ import vue.Bibliotheque;
 import vue.LectureDeFichier;
 import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
-import controleur.AleatoireAction;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;
@@ -89,9 +88,9 @@ public class JTunes {
 		JPanel recherche=new Recherche();
 		frame.add(recherche,BorderLayout.NORTH);
 
-		//	JMenu menuRecherche=new JMenu("Recherche");  voir pour un jcheckboxMenuItem
-		//	menuRecherche.add((((Recherche) recherche).getActionArtist()));
-		//	menuRecherche.add((((Recherche) recherche).getActionTitle()));
+		JMenu menuRecherche = new JMenu("Recherche");
+		menuRecherche.add((((Recherche) recherche).getActionArtist()));
+		menuRecherche.add((((Recherche) recherche).getActionTitre()));
 
 		final LectureDeFichier lecture=new LectureDeFichier();
 
@@ -131,7 +130,8 @@ public class JTunes {
 		menuBar.add(menuLecture);
 		menuBar.add(menuListLecture);
 		menuBar.add(menuBibli);
-		//	menuBar.add(menuRecherche);
+		menuBar.add(menuRecherche);
+		
 		frame.setJMenuBar(menuBar);
 		frame.setPreferredSize(new Dimension(800,600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

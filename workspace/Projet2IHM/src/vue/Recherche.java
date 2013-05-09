@@ -6,11 +6,14 @@ import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import controleur.CheckBoxAction;
 
 import main.JTunes;
 
@@ -34,8 +37,8 @@ public class Recherche extends JPanel{
 	public Recherche(){
 		this.timer=new Timer();
 		this.jLabel = new JLabel("Recherche :");
-		this.title = new JCheckBox("titre");
-		this.artist = new JCheckBox("artiste");
+		this.title = new JCheckBox("Titre");
+		this.artist = new JCheckBox("Artiste");
 		texte = new JTextField(12);
 		tTask=new TimerTask() {
 			public void run() {
@@ -88,5 +91,12 @@ public class Recherche extends JPanel{
 		this.add(texte,FlowLayout.CENTER);
 		this.add(artist,FlowLayout.RIGHT);
 		this.add(title,FlowLayout.RIGHT);
+	}
+	
+	public Action getActionTitre(){
+		return new CheckBoxAction(title);
+	}
+	public Action getActionArtist(){
+		return new CheckBoxAction(artist);
 	}
 }
