@@ -6,8 +6,14 @@ import javax.swing.AbstractAction;
 
 import vue.LectureDeFichier;
 
+/**
+ * change la musique suivante
+ * @author Aurore Allart et Benjamin Ruytoor
+ * @version 9 mai 2013
+ */
 public class ChangerAction extends AbstractAction {
 
+	private static final long serialVersionUID = 1L;
 	private LectureDeFichier lec;
 	
 	public ChangerAction(LectureDeFichier lec){
@@ -18,7 +24,6 @@ public class ChangerAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		lec.changerLaSuivante();
 	}
 

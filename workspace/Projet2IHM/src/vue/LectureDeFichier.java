@@ -13,8 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 
-import main.JTunes;import structureDeDonnees.Musique;
-import controleur.BackAction;import controleur.AleatoireAction;
+import main.JTunes;
+import structureDeDonnees.Musique;
+import structureDeDonnees.StructureMusique;
+import controleur.BackAction;
+import controleur.AleatoireAction;
 import controleur.ChangerAction;
 import controleur.NextAction;
 import controleur.PlayAction;

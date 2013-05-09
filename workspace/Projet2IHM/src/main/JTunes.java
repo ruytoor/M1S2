@@ -29,7 +29,6 @@ import vue.Bibliotheque;
 import vue.LectureDeFichier;
 import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
-import controleur.AleatoireAction;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;

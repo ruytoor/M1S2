@@ -14,7 +14,9 @@ import vue.LectureDeFichier;
  * @author Benjamin Ruytoor et Aurore Allart
  * @version 9 mai 2013
  */
-	private static final long serialVersionUID = 1L;	private static final ImageIcon stopIcon=new ImageIcon("shuffle-icon.png");
+public class AleatoireAction extends AbstractAction{
+	private static final long serialVersionUID = 1L;
+	private static final ImageIcon stopIcon=new ImageIcon("shuffle-icon.png");
 	private JToggleButton jb;
 	private LectureDeFichier lec;
 	

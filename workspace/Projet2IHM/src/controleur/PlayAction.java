@@ -6,12 +6,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import structuredonne.Musique;
-import structuredonne.StructureMusique;
 import vue.LectureDeFichier;
-import main.JTunes;
-import structureDeDonnees.Musique;
-import structureDeDonnees.StructureMusique;
 
 /**
  * Classe permettant de lancer la lecture du morceau selectionne. Affectation de la touche 'p' à cette action. 
