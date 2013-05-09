@@ -29,6 +29,7 @@ public class Recherche extends JPanel{
 	private JTextField texte;
 	private Timer timer;
 	private TimerTask tTask;
+	//private 
 
 	public Recherche(){
 		this.timer=new Timer();
@@ -72,6 +73,7 @@ public class Recherche extends JPanel{
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
+				if(texte.getText().length()>1)
 				timer.cancel();
 				timer.purge();
 
