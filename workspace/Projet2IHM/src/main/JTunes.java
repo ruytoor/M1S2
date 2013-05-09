@@ -29,6 +29,7 @@ import vue.Bibliotheque;
 import vue.LectureDeFichier;
 import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
+import controleur.AleatoireAction;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;
@@ -104,6 +105,7 @@ public class JTunes {
 			menuLecture.add(a);
 		ListeDeLecture.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
+				lecture.selectMusique(ListeDeLecture.getSelectedRow());
 				for(Action a:lecture.getLecteurAction()){
 					if(a.isEnabled()!=!ListeDeLecture.getSelectionModel().isSelectionEmpty())
 						a.setEnabled(!ListeDeLecture.getSelectionModel().isSelectionEmpty());
