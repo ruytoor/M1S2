@@ -3,8 +3,6 @@ package vue;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,7 +10,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import main.JTunes;
