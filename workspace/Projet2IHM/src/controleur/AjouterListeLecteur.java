@@ -1,18 +1,16 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import structuredonne.StructureMusique;
 
 import main.JTunes;
+import structuredonne.StructureMusique;
 
 public class AjouterListeLecteur extends AbstractAction{
+
+	private static final long serialVersionUID = -8257274736048074318L;
 
 	public AjouterListeLecteur(){
 		super("Ajouter");

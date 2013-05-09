@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +20,7 @@ import main.JTunes;
  */
 public class Recherche extends JPanel{
 
+	private static final long serialVersionUID = 1L;
 	private JCheckBox title;
 	private JCheckBox artist;
 	private JLabel jLabel;
