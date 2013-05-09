@@ -6,21 +6,20 @@ import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
 
 import main.JTunes;
+import structuredonne.Musique;
+import structuredonne.StructureMusique;
 
-public class SupprimerListeLecteur extends AbstractAction{
+public class SupprimerAction extends AbstractAction {
 
 
-	public SupprimerListeLecteur(){
-		super("Supprimer Tout");
+	public SupprimerAction(){
+		super("Supprimer");
 		this.setEnabled(false);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DefaultTableModel model=(DefaultTableModel) JTunes.ListeDeLecture.getModel();
-		while(model.getRowCount()!=0)
-			model.removeRow(0);
-		
+		model.removeRow(JTunes.ListeDeLecture.getSelectedRow());
 	}
-
 }

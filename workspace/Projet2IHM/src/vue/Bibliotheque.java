@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,7 +32,6 @@ public class Bibliotheque {
 
 	public static JTable makeMeOneBibliotheque(String recherche,boolean artistCheck,boolean titleCheck){
 		//new DefaultTableModel(); voir plus tard
-
 		final JTable bil= new JTable(Bibliotheque.recherche(recherche,artistCheck,titleCheck), Bibliotheque.columnNames){
 			private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class Bibliotheque {
 	 * @param titleCheck si true, recherche dans title
 	 * @return la base de donnee dans un tableau d'objet
 	 */
-	public static Object[][] recherche(String recherche, boolean artistCheck, boolean titleCheck){
+	public synchronized static Object[][] recherche(String recherche, boolean artistCheck, boolean titleCheck){
 		Connection connection =initConnection();
 		try{
 			Statement statement = connection.createStatement();

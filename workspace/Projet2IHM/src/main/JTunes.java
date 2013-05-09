@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Panel;
 import java.awt.dnd.DropTarget;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,20 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import controleur.AjouterListeLecteur;
 import controleur.AfficherPopUpMenuListener;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
+import controleur.InformationAction;
+import controleur.PlayAction;
+import controleur.SupprimerAction;
+import controleur.SupprimerListeLecteur;
 
 import vue.Bibliotheque;
 import vue.LectureDeFichier;
@@ -39,9 +49,11 @@ public class JTunes {
 	public static JTable bibliotheque;
 	public static JTable ListeDeLecture;
 	public static List<Action> listActionBibliotheque;
+	public static final JFrame frame=new JFrame("jTunes");
+	private static ArrayList<Action> playListAction;
 
 	public static void main (String[] args)  throws SQLException, ClassNotFoundException{
-		final JFrame frame = new JFrame("jTunes");
+		playListAction=new ArrayList<Action>();
 		frame.setLayout(new BorderLayout());
 		bibliotheque=Bibliotheque.makeMeOneBibliotheque("",false,false);
 		listActionBibliotheque=Bibliotheque.getActions();
@@ -56,47 +68,76 @@ public class JTunes {
 		bibliotheque.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		bibliotheque.setDragEnabled(true);
 		bibliotheque.setTransferHandler(new DragTransferHandler());
-		
+
 		ListeDeLecture = new JTable(new DefaultTableModel(Bibliotheque.columnNames, 0));
 		ListeDeLecture.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		playListAction.add(new InformationAction());
+		playListAction.add(new SupprimerAction());
+		final SupprimerListeLecteur suppa=new SupprimerListeLecteur();
+		
 		JPopupMenu jpListLecture=new JPopupMenu();
 		JMenu menuListLecture=new JMenu("Play List");
-		for(Action a:listActionBibliotheque){
+		for(Action a:playListAction){
 			jpListLecture.add(a);
 			menuListLecture.add(a);
 		}
 		
+		jpListLecture.add(suppa);
+		menuListLecture.add(suppa);
+		ListeDeLecture.getModel().addTableModelListener(new TableModelListener() {
+			public void tableChanged(TableModelEvent arg0) {
+				suppa.setEnabled((ListeDeLecture.getModel().getRowCount()!=0));
+			}
+		});
+		ListeDeLecture.addMouseListener(new AfficherPopUpMenuListener(jpListLecture, ListeDeLecture));
+		
 		JPanel recherche=new Recherche();
 		frame.add(recherche,BorderLayout.NORTH);
-		
-	//	JMenu menuRecherche=new JMenu("Recherche");  voir pour un jcheckboxMenuItem
-	//	menuRecherche.add((((Recherche) recherche).getActionArtist()));
-	//	menuRecherche.add((((Recherche) recherche).getActionTitle()));
-		
+
+		//	JMenu menuRecherche=new JMenu("Recherche");  voir pour un jcheckboxMenuItem
+		//	menuRecherche.add((((Recherche) recherche).getActionArtist()));
+		//	menuRecherche.add((((Recherche) recherche).getActionTitle()));
+
+		final LectureDeFichier lecture=new LectureDeFichier();
+
 		JMenu menuLecture=new JMenu("Lecture");
-		for(Action a:listActionBibliotheque){
+		for(Action a:lecture.getLecteurAction())
 			menuLecture.add(a);
-		}
+		ListeDeLecture.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				for(Action a:lecture.getLecteurAction()){
+					if(a.isEnabled()!=!ListeDeLecture.getSelectionModel().isSelectionEmpty())
+						a.setEnabled(!ListeDeLecture.getSelectionModel().isSelectionEmpty());
+				}
+				for(Action a:playListAction){
+					if(a.isEnabled()!=!ListeDeLecture.getSelectionModel().isSelectionEmpty())
+						a.setEnabled(!ListeDeLecture.getSelectionModel().isSelectionEmpty());
+				}
+			}
+		});
+
+
 		JScrollPane jsp=new JScrollPane(ListeDeLecture);
 		jsp.setTransferHandler(new DropTransferHandler());
 		JPanel p1=new JPanel(new BorderLayout());
 		p1.add(new JLabel("Play List"),BorderLayout.NORTH);
 		p1.add(jsp,BorderLayout.CENTER);
-		
+
 		JPanel p2=new JPanel(new BorderLayout());
 		p2.add(new JLabel("Bibliotheque"),BorderLayout.NORTH);
 		p2.add(new JScrollPane(bibliotheque),BorderLayout.CENTER);
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,p1 , p2);
 		split.setDividerLocation(300);
 		frame.add(split,BorderLayout.CENTER);
-		frame.add(new LectureDeFichier(),BorderLayout.SOUTH);
-		
-		
+		frame.add(lecture,BorderLayout.SOUTH);
+
+
 		JMenuBar menuBar=new JMenuBar();
 		menuBar.add(menuLecture);
 		menuBar.add(menuListLecture);
 		menuBar.add(menuBibli);
-	//	menuBar.add(menuRecherche);
+		//	menuBar.add(menuRecherche);
 		frame.setJMenuBar(menuBar);
 		frame.setPreferredSize(new Dimension(800,600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
