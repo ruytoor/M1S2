@@ -10,6 +10,7 @@ import javax.swing.KeyStroke;
 
 import structuredonne.Musique;
 import structuredonne.StructureMusique;
+import vue.LectureDeFichier;
 
 import main.JTunes;
 
@@ -19,9 +20,10 @@ public class PlayAction extends AbstractAction {
 	
 	private static final ImageIcon playIcon=new ImageIcon("play-icon.png");
 	private static final ImageIcon pauseIcon=new ImageIcon("pause-icon.png");
-	
-	public PlayAction(){
+	private LectureDeFichier lec;
+	public PlayAction(LectureDeFichier lec){
 		super("play",playIcon);
+		this.lec=lec;
 		isPlay=false;
 		this.setEnabled(false);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_P);
@@ -45,9 +47,7 @@ public class PlayAction extends AbstractAction {
 			this.putValue(LARGE_ICON_KEY, pauseIcon);
 			this.firePropertyChange(LARGE_ICON_KEY, playIcon, pauseIcon);
 		}
-		
-		Musique mus =((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(JTunes.ListeDeLecture.getSelectedRow(),0))).getMusique();	
-		
+		lec.play(!isPlay);
 		isPlay=!isPlay;		
 	}
 }
