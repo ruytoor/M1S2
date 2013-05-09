@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bibliotheque;
 
 import java.util.ArrayList;
@@ -14,7 +10,8 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author benjamin
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 1 mai 2013
  */
 @Entity
 public class Panier {
@@ -24,21 +21,31 @@ public class Panier {
     @OneToMany
     private Collection<Livre> panier;
     
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     
     public Panier(){
         panier=new ArrayList<Livre>();
     }
     
+    /**
+     * test si le panier est vide
+     * @return 
+     */
     public boolean isEmpty(){
         return panier.isEmpty();
     }
     
+    /**
+     * ajoute un livre au panier
+     * @param l 
+     */
     public void add(Livre l){
         panier.add(l);
     }
  
+    /**
+     * retourne la liste du panier en code HTML
+     * @return 
+     */
     public String getHtmlCode(){
         String retour ="Panier :";
         if(panier.isEmpty())
@@ -48,6 +55,9 @@ public class Panier {
         return retour;
     }
 
+    /**
+     * vide le panier
+     */
     public void reset() {
         panier.clear();
     }

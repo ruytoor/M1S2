@@ -15,7 +15,7 @@
 <br>
 <a href="auteurServlet">Liste des auteurs</a>
 <br>
-<a href="initServlet">Initialisation de la basse de donnnée</a>
+<a href="initServlet">Initialisation de la base de données</a>
 <br>
 <a href="ViewPanier">voir le panier</a>
 <br>

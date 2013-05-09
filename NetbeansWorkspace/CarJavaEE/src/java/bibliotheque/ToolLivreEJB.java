@@ -1,22 +1,16 @@
 package bibliotheque;
 
 import java.util.List;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Init;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
-import javax.ejb.Singleton;
-import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,23 +31,32 @@ public class ToolLivreEJB {
     private EntityManager  em;
     private EntityTransaction transac ;
     
+    /**
+     * initialisation des attributs
+     */
     @PostActivate
     @PostConstruct
     public void toolInit(){
         emf = Persistence.createEntityManagerFactory("CarJavaEEPU");
         em=emf.createEntityManager();
-         transac = em.getTransaction();
+        transac = em.getTransaction();
     }
     
+    /**
+     * destruction des attributs
+     */
     @PrePassivate
     @PreDestroy
     public void toolDestroy(){
-       em.close();
-       emf.close();
+        em.close();
+        emf.close();
     }
     
+    /**
+     * initialise la base de données par une liste de livre
+     */
     public void init(){
-
+        
         transac.begin();
         Livre l=new Livre("Rhapsody - La symphonie des siecles","Elizabeth Haydon","1999");
         em.persist(l);
@@ -66,23 +69,36 @@ public class ToolLivreEJB {
         transac.commit();
     }
     
+    /**
+     * ajoute un livre dans la base de donnees
+     * @param l le livre à ajouter
+     */
     public void ajouter(Livre l){
-
+        
         transac.begin();
         em.persist(l);
         transac.commit();
         
     }
-
+    
+    /**
+     * ajoute un panier dans la base de base de donnees
+     * @param p le panier à ajouter
+     */
     public void ajouter(Panier p){
-
+        
         transac.begin();
         em.persist(p);
         transac.commit();
         
     }
+    
+    /**
+     * retourne tous les livres de la base de donnees
+     * @return les livres de base de donnees
+     */
     public List<Livre> getAll(){
-
+        
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Livre> cq=cb.createQuery(Livre.class);
         
@@ -94,8 +110,13 @@ public class ToolLivreEJB {
         return allLivre;
     }
     
+    /**
+     * retourne le livre dont le titre est donne
+     * @param titre du livre a trouver dans la base de donnees.
+     * @return le livre
+     */
     public Livre getLivre(String titre){
-
+        
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Livre> cq=cb.createQuery(Livre.class);
         
@@ -107,8 +128,12 @@ public class ToolLivreEJB {
         return q.getSingleResult();
     }
     
+    /**
+     * retourne la liste des Auteurs des livres de la base de donnees
+     * @return la liste des Auteurs
+     */
     public List<String> getAllAuteur(){
-
+        
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<String> cq=cb.createQuery(String.class);
         
@@ -116,13 +141,16 @@ public class ToolLivreEJB {
         cq.groupBy(l.get(Livre_.auteur));
         cq.select(l.get(Livre_.auteur));
         TypedQuery<String> q = em.createQuery(cq);
-        List<String> Livre = q.getResultList();
+        List<String> allAuteur = q.getResultList();
         
-        return Livre;
+        return allAuteur;
     }
     
+    /**
+     * retire tous les livres de la base de donnees
+     */
     public void clear(){
-
+        
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Livre> cq=cb.createQuery(Livre.class);
         
@@ -136,7 +164,11 @@ public class ToolLivreEJB {
             em.remove(livre);
         transac.commit();
     }
-        public void clearPanier(){
+    
+    /**
+     * retire les paniers de la base de donnees
+     */
+    public void clearPanier(){
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Panier> cq=cb.createQuery(Panier.class);
         
@@ -150,9 +182,13 @@ public class ToolLivreEJB {
             em.remove(ptmp);
         transac.commit();
     }
-
+    
+    /**
+     * retourne tous les paniers de la base de donnees
+     * @return tous les paniers
+     */
     public List<Panier> getAllPanier() {
-       
+        
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Panier> cq=cb.createQuery(Panier.class);
         

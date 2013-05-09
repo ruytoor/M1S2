@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bibliotheque;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
- *
- * @author benjamin
+ *v
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 1 mai 2013
  */
 @Entity
 public class Livre implements Serializable {
@@ -36,40 +32,66 @@ public class Livre implements Serializable {
             this.auteur=auteur;
     }
     
-    @Id
     public String getTitre() {
         return titre;
     }
     
+    /**
+     * modifie le titre du livre
+     * @param titre
+     */
     public void setTitre(String titre) {
         this.titre = titre;
     }
     
+    /**
+     * retourne le nom de l'auteur du livre
+     * @return 
+     */
     public String getAuteur() {
         return auteur;
     }
     
+    /**
+     * modifie le nom de l'auteur
+     * @param auteur 
+     */
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
     
-    
+    /**
+     * retourne l'annee du livre
+     * @return l'annee
+     */
     public int getAnnee() {
         return annee;
     }
     
+    /**
+     * modifie l'annee du livre
+     * @param annee 
+     */
     public void setAnnee(int annee) {
         this.annee = annee;
     }
     
+    /**
+     * retourne le hashcode du livre
+     * @return int
+     */
     public int hashCode() {
         int hash = 0;
         hash += (titre != null ? titre.hashCode() : 0);
         return hash;
     }
     
+    /**
+     * test l'equalite entre 2 livres
+     * @param object
+     * @return true si les 2 livres sont identiques
+     */
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Livre)) {
             return false;
         }
@@ -80,6 +102,10 @@ public class Livre implements Serializable {
         return true;
     }
     
+    /**
+     * retourne les informations du livre
+     * @return 
+     */
     public String toString() {
         return titre + (auteur==null||auteur.isEmpty()?"":" écrit par "+auteur) + (annee<0?"":" en "+annee) + ".";
     }

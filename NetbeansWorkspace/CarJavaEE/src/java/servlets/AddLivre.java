@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import bibliotheque.Livre;
@@ -17,15 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author benjamin
+ * @author Benjamin Ruytoor et Aurore Allart
+ * @version 1 mai 2013
  */
 @WebServlet(name = "ddLivre", urlPatterns = {"/addLivre"})
 public class AddLivre extends HttpServlet {
-
-        @EJB
-    ToolLivreEJB tool;
-        
-    /** 
+    
+    @EJB
+            ToolLivreEJB tool;
+    
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -40,7 +37,7 @@ public class AddLivre extends HttpServlet {
         try {
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Livre ajouté</title>");  
+            out.println("<title>Livre ajouté</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Livre ajouté</h1>");
@@ -48,14 +45,13 @@ public class AddLivre extends HttpServlet {
             out.println("<a href=\"index.jsp\">accueil</a>");
             out.println("</body>");
             out.println("</html>");
-             
-        } finally {            
+            
+        } finally {
             out.close();
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    
+    /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -67,8 +63,8 @@ public class AddLivre extends HttpServlet {
             throws ServletException, IOException {
         response.sendRedirect("index.jsp");
     }
-
-    /** 
+    
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -80,13 +76,13 @@ public class AddLivre extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /** 
+    
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 }

@@ -1,7 +1,7 @@
 <%-- 
     Document   : ajouter
     Created on : 30 avr. 2013, 17:43:07
-    Author     : benjamin
+    Author     : Benjamin Ruytoor et Aurore Allart
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,6 +42,7 @@
 </TR>
 </TABLE>
 </FORM>
+<!-- récapitulatif -->
 <%= ((request.getParameter("titre")==null||request.getParameter("titre").isEmpty())&&(request.getParameter("auteur")==null||request.getParameter("auteur").isEmpty())&&(request.getParameter("annee")==null||request.getParameter("annee").isEmpty())?"":"<h2> Récapitulatif </h2>") %>
 <%= (request.getParameter("titre")==null||request.getParameter("titre").isEmpty()?"":"Titre : "+request.getParameter("titre")+"<br>") %>
 <%= (request.getParameter("auteur")==null||request.getParameter("auteur").isEmpty()?"":"Auteur : "+request.getParameter("auteur")+"<br>") %>
