@@ -11,14 +11,13 @@ import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import main.JTunes;
 import structuredonne.Musique;
 import structuredonne.StructureMusique;
-import controleur.AjouterListeLecteur;
+import controleur.AjouterListeAction;
 
 /**
  * gestion de la bibliotheque de musique
@@ -27,27 +26,27 @@ import controleur.AjouterListeLecteur;
  */
 public class Bibliotheque {
 
-	public static String[] columnNames= new String[]{"title","album","artist","genre","year","duration"};
+	public static String[] columnNames= new String[]{"title","album","artist","genre"};
 
 
 	public static JTable makeMeOneBibliotheque(String recherche,boolean artistCheck,boolean titleCheck){
 		//new DefaultTableModel(); voir plus tard
-		final JTable bil= new JTable(Bibliotheque.recherche(recherche,artistCheck,titleCheck), Bibliotheque.columnNames){
+		final JTable biblio= new JTable(Bibliotheque.recherche(recherche,artistCheck,titleCheck), Bibliotheque.columnNames){
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) { 
 				return false; 
 			}
 		};
-		bil.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		biblio.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				for(Action a:JTunes.listActionBibliotheque){
-					if(a.isEnabled()!=!bil.getSelectionModel().isSelectionEmpty())
-						a.setEnabled(!bil.getSelectionModel().isSelectionEmpty());
+					if(a.isEnabled()!=!biblio.getSelectionModel().isSelectionEmpty())
+						a.setEnabled(!biblio.getSelectionModel().isSelectionEmpty());
 				}
 			}
 		});
-		return bil;
+		return biblio;
 	}
 
 	/**
@@ -90,8 +89,8 @@ public class Bibliotheque {
 				tmp.add(mus.getAlbum());
 				tmp.add(mus.getArtist());
 				tmp.add(mus.getGenre());
-				tmp.add(mus.getYear());
-				tmp.add(mus.getDuration());
+				//tmp.add(mus.getYear());
+				//tmp.add(mus.getDuration());
 				l.add(tmp.toArray());
 			}
 			Object retour[][]=new Object[l.size()][];
@@ -137,7 +136,7 @@ public class Bibliotheque {
 	 */
 	public static List<javax.swing.Action> getActions() {
 		ArrayList<Action> retour=new ArrayList<Action>();
-		retour.add(new AjouterListeLecteur());
+		retour.add(new AjouterListeAction());
 		return retour;
 	}
 }

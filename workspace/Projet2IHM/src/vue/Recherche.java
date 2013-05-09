@@ -41,7 +41,6 @@ public class Recherche extends JPanel{
 		texte = new JTextField(12);
 		tTask=new TimerTask() {
 			public void run() {
-				// TODO Auto-generated method stub
 				if (texte.getText().length() > 0) {
 					if(title.isSelected()){
 						if(artist.isSelected()){

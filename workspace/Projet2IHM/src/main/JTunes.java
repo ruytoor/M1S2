@@ -3,21 +3,15 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Panel;
-import java.awt.dnd.DropTarget;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -31,25 +25,22 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import controleur.AjouterListeLecteur;
+import vue.Bibliotheque;
+import vue.LectureDeFichier;
+import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;
-import controleur.PlayAction;
 import controleur.SupprimerAction;
-import controleur.SupprimerListeLecteur;
-
-import vue.Bibliotheque;
-import vue.LectureDeFichier;
-import vue.Recherche;
+import controleur.SupprimerListeAction;
 
 public class JTunes {
 
 	public static JTable bibliotheque;
 	public static JTable ListeDeLecture;
 	public static List<Action> listActionBibliotheque;
-	public static final JFrame frame=new JFrame("jTunes");
+	public static final JFrame frame=new JFrame("JTunes");
 	private static ArrayList<Action> playListAction;
 
 	public static void main (String[] args)  throws SQLException, ClassNotFoundException{
@@ -74,7 +65,7 @@ public class JTunes {
 
 		playListAction.add(new InformationAction());
 		playListAction.add(new SupprimerAction());
-		final SupprimerListeLecteur suppa=new SupprimerListeLecteur();
+		final SupprimerListeAction suppa=new SupprimerListeAction();
 		
 		JPopupMenu jpListLecture=new JPopupMenu();
 		JMenu menuListLecture=new JMenu("Play List");
