@@ -1,6 +1,11 @@
 package structuredonne;
 
-public class Musique {
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
+public class Musique{
 	/*
 	 * Musique est une classe pour sturcture les données.
 	 * Dans une Jtable on lui passe un tableau d'objet une ligne est une instance de Musique
@@ -49,4 +54,5 @@ public class Musique {
 	public DurationClass getDuration() {
 		return duration;
 	}
+
 }

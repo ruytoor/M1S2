@@ -8,7 +8,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import controleur.AjouterListeLecteur;
-import controleur.JTableListener;
+import controleur.AfficherPopUpMenuListener;
 
 import structuredonne.Musique;
 import structuredonne.StructureMusique;
@@ -119,7 +119,6 @@ public class Bibliotheque {
 		// create a database connection
 		String s = "mp3database.sqlite";
 		File f=new File(s);
-		System.out.println(f.isFile()+"  "+f.getAbsolutePath());
 		try {
 			return DriverManager.getConnection("jdbc:sqlite:"+f.getAbsolutePath());
 		} catch (SQLException e) {

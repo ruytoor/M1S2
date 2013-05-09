@@ -5,7 +5,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+import javax.swing.TransferHandler;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
@@ -14,20 +16,20 @@ import javax.swing.event.MouseInputListener;
 
 import main.JTunes;
 
-public class JTableListener implements MouseListener{
+public class AfficherPopUpMenuListener implements MouseListener{
 
 	private JPopupMenu popUpMenu;
-	
-	public JTableListener(JPopupMenu jp){
+	private JComponent compo;
+	public AfficherPopUpMenuListener(JPopupMenu jp,JComponent c){
 		this.popUpMenu=jp;
+		this.compo=c;
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getButton()==MouseEvent.BUTTON3){
-			
-			popUpMenu.show(JTunes.bibliotheque, e.getX(), e.getY());
+			popUpMenu.show(compo, e.getX(), e.getY());
 		}
 	}
 
@@ -45,8 +47,7 @@ public class JTableListener implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

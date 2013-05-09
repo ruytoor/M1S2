@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -72,7 +73,5 @@ public class Recherche extends JPanel{
 		this.add(texte,FlowLayout.CENTER);
 		this.add(artist,FlowLayout.RIGHT);
 		this.add(title,FlowLayout.RIGHT);
-
 	}
-
 }
