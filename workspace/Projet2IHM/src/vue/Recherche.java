@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Action;
 import javax.swing.JCheckBox;
@@ -30,19 +33,19 @@ public class Recherche extends JPanel{
 	private JCheckBox artist;
 	private JLabel jLabel;
 	private JTextField texte;
-	private Timer timer;
-	private TimerTask tTask;
-	//private 
+	private ScheduledThreadPoolExecutor timer;
+	private Runnable tTask;
+	private ScheduledFuture proc;
 
 	public Recherche(){
-		this.timer=new Timer();
+		this.proc= null;
+		this.timer=new ScheduledThreadPoolExecutor(2);
 		this.jLabel = new JLabel("Recherche :");
 		this.title = new JCheckBox("Titre");
 		this.artist = new JCheckBox("Artiste");
 		texte = new JTextField(12);
-		tTask=new TimerTask() {
+		tTask=new Runnable() {
 			public void run() {
-				if (texte.getText().length() > 0) {
 					if(title.isSelected()){
 						if(artist.isSelected()){
 							//recherche dans artist et title
@@ -60,7 +63,6 @@ public class Recherche extends JPanel{
 							JTunes.bibliotheque.setModel(new DefaultTableModel(Bibliotheque.recherche(texte.getText(), false, false), Bibliotheque.columnNames));
 						}
 					}
-				}
 			}
 		};
 		texte.addKeyListener(new KeyListener() {
@@ -76,14 +78,13 @@ public class Recherche extends JPanel{
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				if(texte.getText().length()>1)
-				timer.cancel();
-				timer.purge();
-
-				if((arg0.getKeyCode()==KeyEvent.VK_ENTER))
+				if(proc!=null)
+					proc.cancel(true);			
+				if((arg0.getKeyCode()==KeyEvent.VK_ENTER)){
 					tTask.run();
-				else
-					timer.schedule(tTask, 200);
+					proc=null;
+				}else
+					proc=timer.schedule(tTask, 1000,TimeUnit.MILLISECONDS);
 			}
 		});
 		this.setLayout(new FlowLayout());

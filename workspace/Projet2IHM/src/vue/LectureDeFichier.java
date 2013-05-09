@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 
-import controleur.AleatoireAction;
+import structuredonne.Musique;
+
+import controleur.JToggleButtonAction;
 import controleur.BackAction;
 import controleur.NextAction;
 import controleur.PlayAction;
@@ -49,11 +51,20 @@ public class LectureDeFichier extends JPanel{
 		south.add(stop);
 		next=new JButton(new NextAction());
 		south.add(next);
-		aleatoire=new JToggleButton(new AleatoireAction());
+		aleatoire=new JToggleButton();
+		aleatoire.setAction(new JToggleButtonAction(aleatoire));
 		south.add(aleatoire);
-		this.add(south,BorderLayout.SOUTH);
+		this.add(south,BorderLayout.CENTER);
+		
+		
+		
 	}
 	
+	
+	
+	public void play(Musique mus){
+		
+	}
 	
 	public Action getPlayAction(){
 		return play.getAction();
@@ -82,4 +93,5 @@ public class LectureDeFichier extends JPanel{
 		 retour.add(back.getAction());
 		 return retour;
 	}
+
 }

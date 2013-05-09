@@ -8,6 +8,11 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
+import structuredonne.Musique;
+import structuredonne.StructureMusique;
+
+import main.JTunes;
+
 public class PlayAction extends AbstractAction {
 
 	private boolean isPlay;
@@ -41,8 +46,7 @@ public class PlayAction extends AbstractAction {
 			this.firePropertyChange(LARGE_ICON_KEY, playIcon, pauseIcon);
 		}
 		
-		
-		
+		Musique mus =((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(JTunes.ListeDeLecture.getSelectedRow(),0))).getMusique();	
 		
 		isPlay=!isPlay;		
 	}
