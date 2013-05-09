@@ -73,10 +73,14 @@ public class JTunes {
 	//	menuRecherche.add((((Recherche) recherche).getActionArtist()));
 	//	menuRecherche.add((((Recherche) recherche).getActionTitle()));
 		
+		LectureDeFichier lecture=new LectureDeFichier();
+		
 		JMenu menuLecture=new JMenu("Lecture");
-		for(Action a:listActionBibliotheque){
-			menuLecture.add(a);
-		}
+		menuLecture.add(lecture.getPlayAction());
+		menuLecture.add(lecture.getStopAction());
+		menuLecture.add(lecture.getBackAction());
+		menuLecture.add(lecture.getNextAction());
+		
 		JScrollPane jsp=new JScrollPane(ListeDeLecture);
 		jsp.setTransferHandler(new DropTransferHandler());
 		JPanel p1=new JPanel(new BorderLayout());
@@ -89,7 +93,7 @@ public class JTunes {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,p1 , p2);
 		split.setDividerLocation(300);
 		frame.add(split,BorderLayout.CENTER);
-		frame.add(new LectureDeFichier(),BorderLayout.SOUTH);
+		frame.add(lecture,BorderLayout.SOUTH);
 		
 		
 		JMenuBar menuBar=new JMenuBar();
