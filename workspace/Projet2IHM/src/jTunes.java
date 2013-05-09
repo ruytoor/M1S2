@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import vue.Bibliotheque;
 import vue.LectureDeFichier;
 
-public class jTunes {
+public class JTunes {
 	
 	public static void main (String[] args)  throws SQLException, ClassNotFoundException{
 		JFrame frame = new JFrame("jTunes");
