@@ -1,9 +1,12 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 public class PlayAction extends AbstractAction {
 
@@ -15,6 +18,8 @@ public class PlayAction extends AbstractAction {
 	public PlayAction(){
 		super("play",playIcon);
 		isPlay=false;
+		this.setEnabled(false);
+		this.putValue(MNEMONIC_KEY, KeyEvent.VK_P);
 	}
 	
 	@Override

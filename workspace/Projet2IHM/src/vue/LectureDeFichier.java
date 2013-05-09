@@ -3,6 +3,8 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -63,5 +65,14 @@ public class LectureDeFichier extends JPanel{
 	
 	public Action getBackAction(){
 		return back.getAction();
+	}
+	
+	public List<Action> getLecteurAction(){
+		 ArrayList<Action> retour =new ArrayList<Action>();
+		 retour.add(play.getAction());
+		 retour.add(stop.getAction());
+		 retour.add(next.getAction());
+		 retour.add(back.getAction());
+		 return retour;
 	}
 }
