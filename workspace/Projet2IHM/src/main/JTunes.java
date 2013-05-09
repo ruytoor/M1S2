@@ -47,7 +47,9 @@ public class JTunes {
 		playListAction=new ArrayList<Action>();
 		frame.setLayout(new BorderLayout());
 		bibliotheque=Bibliotheque.makeMeOneBibliotheque("",false,false);
+		bibliotheque.setAutoCreateRowSorter(true);
 		listActionBibliotheque=Bibliotheque.getActions();
+
 		JPopupMenu jpBibli=new JPopupMenu();
 		JMenu menuBibli=new JMenu("Bibliotheque");
 		for(Action a:listActionBibliotheque){
@@ -62,7 +64,8 @@ public class JTunes {
 
 		ListeDeLecture = new JTable(new DefaultTableModel(Bibliotheque.columnNames, 0));
 		ListeDeLecture.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+		ListeDeLecture.setAutoCreateRowSorter(true);
+		
 		playListAction.add(new InformationAction());
 		playListAction.add(new SupprimerAction());
 		final SupprimerListeAction suppa=new SupprimerListeAction();
