@@ -13,7 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JToggleButton;
 
+import controleur.AleatoireAction;
 import controleur.BackAction;
 import controleur.NextAction;
 import controleur.PlayAction;
@@ -31,23 +33,25 @@ public class LectureDeFichier extends JPanel{
 	private JButton stop;
 	private JButton next;
 	private JButton back;
+	private JToggleButton aleatoire;
 	
 	public LectureDeFichier(){
 		slider=new JSlider(JSlider.HORIZONTAL);
 		this.setLayout(new BorderLayout());
 		this.add(slider,BorderLayout.NORTH);
-		JPanel South= new JPanel();
-		South.setLayout(new FlowLayout(FlowLayout.CENTER));
-
+		JPanel south= new JPanel();
+		south.setLayout(new FlowLayout(FlowLayout.CENTER));
 		back=new JButton(new BackAction());
-		South.add(back);
+		south.add(back);
 		play=new JButton(new PlayAction());
-		South.add(play);
+		south.add(play);
 		stop=new JButton(new StopAction());
-		South.add(stop);
+		south.add(stop);
 		next=new JButton(new NextAction());
-		South.add(next);
-		this.add(South,BorderLayout.SOUTH);
+		south.add(next);
+		aleatoire=new JToggleButton(new AleatoireAction());
+		south.add(aleatoire);
+		this.add(south,BorderLayout.SOUTH);
 	}
 	
 	
@@ -65,6 +69,9 @@ public class LectureDeFichier extends JPanel{
 	
 	public Action getBackAction(){
 		return back.getAction();
+	}
+	public Action getAleatoireAction(){
+		return aleatoire.getAction();
 	}
 	
 	public List<Action> getLecteurAction(){

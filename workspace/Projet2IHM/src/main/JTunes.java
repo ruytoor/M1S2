@@ -29,6 +29,7 @@ import vue.Bibliotheque;
 import vue.LectureDeFichier;
 import vue.Recherche;
 import controleur.AfficherPopUpMenuListener;
+import controleur.AleatoireAction;
 import controleur.DragTransferHandler;
 import controleur.DropTransferHandler;
 import controleur.InformationAction;
@@ -66,14 +67,13 @@ public class JTunes {
 		playListAction.add(new InformationAction());
 		playListAction.add(new SupprimerAction());
 		final SupprimerListeAction suppa=new SupprimerListeAction();
-		
+
 		JPopupMenu jpListLecture=new JPopupMenu();
 		JMenu menuListLecture=new JMenu("Play List");
 		for(Action a:playListAction){
 			jpListLecture.add(a);
 			menuListLecture.add(a);
 		}
-		
 		jpListLecture.add(suppa);
 		menuListLecture.add(suppa);
 		ListeDeLecture.getModel().addTableModelListener(new TableModelListener() {
@@ -107,7 +107,7 @@ public class JTunes {
 				}
 			}
 		});
-
+		menuLecture.add(lecture.getAleatoireAction());
 
 		JScrollPane jsp=new JScrollPane(ListeDeLecture);
 		jsp.setTransferHandler(new DropTransferHandler());
