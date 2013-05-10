@@ -22,8 +22,9 @@ public class PlayAction extends AbstractAction {
 	private static final ImageIcon playIcon=new ImageIcon("play-icon.png");
 	private static final ImageIcon pauseIcon=new ImageIcon("pause-icon.png");
 	private LectureDeFichier lec;
+	
 	public PlayAction(LectureDeFichier lec){
-		super("play",playIcon);
+		super("Play",playIcon);
 		this.lec=lec;
 		isPlay=false;
 		this.setEnabled(false);

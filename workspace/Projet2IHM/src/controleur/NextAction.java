@@ -17,14 +17,13 @@ import vue.LectureDeFichier;
 	private static final ImageIcon nextIcon=new ImageIcon("next-icon.png");
 	private LectureDeFichier lec;
 	public NextAction(LectureDeFichier lec){
-		super("next",nextIcon);
+		super("Next",nextIcon);
 		this.setEnabled(false);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_N);
 		this.lec=lec;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		lec.next();
 	}
 

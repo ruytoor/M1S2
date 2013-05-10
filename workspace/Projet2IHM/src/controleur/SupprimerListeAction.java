@@ -1,6 +1,7 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ public class SupprimerListeAction extends AbstractAction{
 	public SupprimerListeAction(){
 		super("Supprimer Tout");
 		this.setEnabled(false);
+		this.putValue(MNEMONIC_KEY, KeyEvent.VK_T);
 	}
 
 	@Override

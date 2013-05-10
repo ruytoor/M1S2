@@ -16,15 +16,15 @@ import vue.LectureDeFichier;
 	private static final long serialVersionUID = 1L;
 	private static final ImageIcon backIcon=new ImageIcon("back-icon.png");
 	private LectureDeFichier lec;
+	
 	public BackAction(LectureDeFichier lec){
-		super("back",backIcon);
+		super("Back",backIcon);
 		this.setEnabled(false);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_B);
 		this.lec=lec;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		lec.back();
 	}
 
