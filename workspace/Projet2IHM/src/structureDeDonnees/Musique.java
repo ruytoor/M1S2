@@ -20,6 +20,7 @@ public class Musique{
 	private YearClass year;
 	private DurationClass duration;
 	
+	
 	public Musique(String title, String album, String artist, String genre, String year, String duration){
 		this.title=new TitleClass(title, this);
 		this.album=new AlbumClass(album, this);
@@ -76,4 +77,6 @@ public class Musique{
 	public DurationClass getDuration() {
 		return duration;
 	}
+	
+	
 }

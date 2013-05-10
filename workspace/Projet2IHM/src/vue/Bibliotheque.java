@@ -139,6 +139,27 @@ public class Bibliotheque {
 	}
 
 	/**
+	 * ajoute 1 au nombre de fois que la musique a été lu
+	 */
+	public synchronized static void addLecture(Musique musique){
+		Connection connection=initConnection();
+		try{
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate("Update songs set nblecture = nblecture + 1 where title like "+musique.getTitle().toString()+" and album like "+musique.getAlbum().toString()+" and artiste like "+musique.getArtist().toString());
+		}catch(SQLException e){
+			System.err.println(e.getMessage());
+		}finally{
+			try{
+				if(connection != null)
+					connection.close();
+			}catch(SQLException e){
+				System.err.println(e);
+			}
+		}
+	}
+	
+	/**
 	 * liste des actions que l'on peut effectuer sur la bibliotheque
 	 * @return la liste des actions
 	 */

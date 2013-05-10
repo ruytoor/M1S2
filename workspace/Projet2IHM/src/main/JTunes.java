@@ -56,7 +56,7 @@ public class JTunes {
 		listActionBibliotheque=Bibliotheque.getActions();
 
 		JPopupMenu jpBibli=new JPopupMenu();
-		JMenu menuBibli=new JMenu("Bibliotheque");
+		JMenu menuBibli=new JMenu("Biblioth\u00e8que");
 		for(Action a:listActionBibliotheque){
 			jpBibli.add(a);
 			menuBibli.add(a);
@@ -120,11 +120,11 @@ public class JTunes {
 		JScrollPane jsp=new JScrollPane(ListeDeLecture);
 		jsp.setTransferHandler(new DropTransferHandler());
 		JPanel p1=new JPanel(new BorderLayout());
-		p1.add(new JLabel("Play List"),BorderLayout.NORTH);
+		p1.add(new JLabel("Liste de musique"),BorderLayout.NORTH);
 		p1.add(jsp,BorderLayout.CENTER);
 
 		JPanel p2=new JPanel(new BorderLayout());
-		p2.add(new JLabel("Bibliotheque"),BorderLayout.NORTH);
+		p2.add(new JLabel("Biblioth\u00e8que"),BorderLayout.NORTH);
 		p2.add(new JScrollPane(bibliotheque),BorderLayout.CENTER);
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,p1 , p2);
 		split.setDividerLocation(300);
