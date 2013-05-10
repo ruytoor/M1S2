@@ -14,10 +14,13 @@ import vue.LectureDeFichier;
  */public class NextAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	private static final ImageIcon nextIcon=new ImageIcon("next-icon.png");
+	private ImageIcon nextIcon;//=new ImageIcon("next-icon.png");
 	private LectureDeFichier lec;
 	public NextAction(LectureDeFichier lec){
-		super("next",nextIcon);
+		super("next");
+		nextIcon=new ImageIcon(getClass().getClassLoader().getResource("next-icon.png"));
+		this.putValue(SMALL_ICON, nextIcon);
+		this.putValue(LARGE_ICON_KEY, nextIcon);
 		this.setEnabled(false);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_N);
 		this.lec=lec;

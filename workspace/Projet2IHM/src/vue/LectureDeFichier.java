@@ -62,11 +62,11 @@ public class LectureDeFichier extends JPanel{
 	private Runnable thread;
 	private Thread tempoLecteure;
 	private volatile boolean threadSuspended;
-	
+
 	private boolean nonLu; //pour savoir si le morceau est en cours de lecture ou non
 
 	public LectureDeFichier(){
-		
+
 		player=new MyPlayer();
 		JPanel pvolume=new JPanel();
 		pvolume.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Volume"));
@@ -190,13 +190,15 @@ public class LectureDeFichier extends JPanel{
 	}
 
 	public void play(boolean isPlay){
-		player.PlayPause();if (nonLu ==false){
+		player.PlayPause();
+		if (nonLu ==false){
 			this.nonLu =true;
 			Bibliotheque.addLecture(currentMusique);
-		}		if(isPlay)
+		}
+		/*if(isPlay)
 			System.out.println("dans ma t\u00eate j'entends "+currentMusique.getTitle());
 		else
-			System.out.println("dans ma t\u00eate je n'entends plus "+currentMusique.getTitle());
+			System.out.println("dans ma t\u00eate je n'entends plus "+currentMusique.getTitle());*/
 		if(isPlay){
 			threadSuspended=!isPlay;
 			synchronized(thread){
@@ -207,6 +209,10 @@ public class LectureDeFichier extends JPanel{
 		}
 	}
 
+	/*
+	 * Pour Stop on a pris l'action du player à savoir de mettre la musique à zero seconde
+	 * sans pour cela l'arreter (on ne peut pas savoir si le player est en play au en pause).
+	 */
 	public void stop(){
 		player.Stop();
 		if(!threadSuspended){

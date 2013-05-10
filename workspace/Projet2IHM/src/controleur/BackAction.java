@@ -14,10 +14,13 @@ import vue.LectureDeFichier;
  */public class BackAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	private static final ImageIcon backIcon=new ImageIcon("back-icon.png");
+	private ImageIcon backIcon;//=new ImageIcon("back-icon.png");
 	private LectureDeFichier lec;
 	public BackAction(LectureDeFichier lec){
-		super("back",backIcon);
+		super("back");
+		backIcon=new ImageIcon(getClass().getClassLoader().getResource("back-icon.png"));
+		this.putValue(SMALL_ICON, backIcon);
+		this.putValue(LARGE_ICON_KEY, backIcon);
 		this.setEnabled(false);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_B);
 		this.lec=lec;

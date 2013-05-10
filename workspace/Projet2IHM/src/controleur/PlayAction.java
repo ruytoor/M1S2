@@ -19,11 +19,15 @@ public class PlayAction extends AbstractAction {
 
 	private boolean isPlay;
 	
-	private static final ImageIcon playIcon=new ImageIcon("play-icon.png");
-	private static final ImageIcon pauseIcon=new ImageIcon("pause-icon.png");
+	private ImageIcon playIcon;//=new ImageIcon("play-icon.png");
+	private ImageIcon pauseIcon;//=new ImageIcon("pause-icon.png");
 	private LectureDeFichier lec;
 	public PlayAction(LectureDeFichier lec){
-		super("play",playIcon);
+		super("play");
+		playIcon=new ImageIcon(getClass().getClassLoader().getResource("play-icon.png"));
+		pauseIcon=new ImageIcon(getClass().getClassLoader().getResource("pause-icon.png"));
+		this.putValue(SMALL_ICON, playIcon);
+		this.putValue(LARGE_ICON_KEY, playIcon);
 		this.lec=lec;
 		isPlay=false;
 		this.setEnabled(false);

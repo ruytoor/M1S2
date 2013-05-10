@@ -128,10 +128,8 @@ public class Bibliotheque {
 			System.err.println("Install lib sqlite jar");
 			System.exit(1);
 		}
-		String s = "mp3database.sqlite";
-		File f=new File(s);
 		try {
-			return DriverManager.getConnection("jdbc:sqlite:"+f.getAbsolutePath());
+			return DriverManager.getConnection("jdbc:sqlite:mp3database.sqlite");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -139,7 +137,7 @@ public class Bibliotheque {
 	}
 
 	/**
-	 * ajoute 1 au nombre de fois que la musique a été lu
+	 * ajoute 1 au nombre de fois que la musique a ï¿½tï¿½ lu
 	 */
 	public synchronized static void addLecture(Musique musique){
 		Connection connection=initConnection();

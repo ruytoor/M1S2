@@ -18,12 +18,15 @@ import vue.LectureDeFichier;
  */
 public class AleatoireAction extends AbstractAction{
 	private static final long serialVersionUID = 1L;
-	private static final ImageIcon stopIcon=new ImageIcon("shuffle-icon.png");
+	private ImageIcon aleaIcon;//=new ImageIcon("images/shuffle-icon.png");
 	private JToggleButton jb;
 	private LectureDeFichier lec;
 	
 	public AleatoireAction(JToggleButton jb,LectureDeFichier lec){
-		super("Al\u00e9atoire",stopIcon);
+		super("Al\u00e9atoire");
+		aleaIcon=new ImageIcon(getClass().getClassLoader().getResource("shuffle-icon.png"));
+		this.putValue(SMALL_ICON, aleaIcon);
+		this.putValue(LARGE_ICON_KEY, aleaIcon);
 		this.putValue(MNEMONIC_KEY, KeyEvent.VK_A);
 		this.jb=jb;
 		this.lec=lec;
