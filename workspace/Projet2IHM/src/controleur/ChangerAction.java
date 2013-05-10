@@ -1,6 +1,7 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 
@@ -17,9 +18,10 @@ public class ChangerAction extends AbstractAction {
 	private LectureDeFichier lec;
 	
 	public ChangerAction(LectureDeFichier lec){
-		super("changer la suivante");
+		super("Changer la suivante");
 		this.setEnabled(false);
 		this.lec=lec;
+		this.putValue(MNEMONIC_KEY, KeyEvent.VK_C);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +21,7 @@ public class AjouterListeAction extends AbstractAction{
 	public AjouterListeAction(){
 		super("Ajouter");
 		this.setEnabled(false);
+		this.putValue(MNEMONIC_KEY, KeyEvent.VK_J);
 	}
 	
 	@Override

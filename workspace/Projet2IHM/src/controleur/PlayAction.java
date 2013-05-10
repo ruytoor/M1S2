@@ -22,8 +22,9 @@ public class PlayAction extends AbstractAction {
 	private ImageIcon playIcon;//=new ImageIcon("play-icon.png");
 	private ImageIcon pauseIcon;//=new ImageIcon("pause-icon.png");
 	private LectureDeFichier lec;
+	
 	public PlayAction(LectureDeFichier lec){
-		super("play");
+		super("Play");
 		playIcon=new ImageIcon(getClass().getClassLoader().getResource("play-icon.png"));
 		pauseIcon=new ImageIcon(getClass().getClassLoader().getResource("pause-icon.png"));
 		this.putValue(SMALL_ICON, playIcon);

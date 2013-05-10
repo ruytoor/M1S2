@@ -17,7 +17,7 @@ import vue.LectureDeFichier;
 	private ImageIcon nextIcon;//=new ImageIcon("next-icon.png");
 	private LectureDeFichier lec;
 	public NextAction(LectureDeFichier lec){
-		super("next");
+		super("Next");
 		nextIcon=new ImageIcon(getClass().getClassLoader().getResource("next-icon.png"));
 		this.putValue(SMALL_ICON, nextIcon);
 		this.putValue(LARGE_ICON_KEY, nextIcon);
@@ -27,7 +27,6 @@ import vue.LectureDeFichier;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		lec.next();
 	}
 

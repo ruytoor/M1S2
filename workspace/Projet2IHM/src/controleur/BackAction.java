@@ -16,8 +16,9 @@ import vue.LectureDeFichier;
 	private static final long serialVersionUID = 1L;
 	private ImageIcon backIcon;//=new ImageIcon("back-icon.png");
 	private LectureDeFichier lec;
+	
 	public BackAction(LectureDeFichier lec){
-		super("back");
+		super("Back");
 		backIcon=new ImageIcon(getClass().getClassLoader().getResource("back-icon.png"));
 		this.putValue(SMALL_ICON, backIcon);
 		this.putValue(LARGE_ICON_KEY, backIcon);
@@ -27,7 +28,6 @@ import vue.LectureDeFichier;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		lec.back();
 	}
 
