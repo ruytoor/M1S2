@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import main.JTunes;
 import structureDeDonnees.Musique;
@@ -31,7 +33,7 @@ import controleur.StopAction;
 public class LectureDeFichier extends JPanel{
 
 	private static final Random random=new Random();
-	
+
 	private static final long serialVersionUID = 1L;
 	private JSlider slider;
 	private JButton play;
@@ -47,14 +49,27 @@ public class LectureDeFichier extends JPanel{
 	private Musique nextMusique;
 	private int nextMusiqueIndex;
 
+	private JLabel temps;
+	private JLabel tempsRestant;
 	
-	
-	
+	private Runnable thread;
+	private Thread tempoLecteure;
+	private volatile boolean threadSuspended;
+
 	public LectureDeFichier(){
-		slider=new JSlider(JSlider.HORIZONTAL);
-		slider.setValue(0);
+		JPanel tmp=new JPanel(new BorderLayout());
+		slider=new JSlider(JSlider.HORIZONTAL,0,1,0);
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				temps.setText(slider.getValue()/60+":"+slider.getValue()%60);
+				tempsRestant.setText(slider.getMaximum()/60+":"+slider.getMaximum()%60);
+			}
+		});
 		this.setLayout(new BorderLayout());
-		this.add(slider,BorderLayout.NORTH);
+		tmp.add(slider,BorderLayout.NORTH);
+		tmp.add(temps=new JLabel("0"),BorderLayout.WEST);
+		tmp.add(tempsRestant=new JLabel("0"),BorderLayout.EAST);
+		this.add(tmp,BorderLayout.NORTH);
 		JPanel centre= new JPanel();
 		centre.setLayout(new FlowLayout(FlowLayout.CENTER));
 		back=new JButton(new BackAction(this));
@@ -72,18 +87,41 @@ public class LectureDeFichier extends JPanel{
 		JPanel south=new JPanel(new BorderLayout());
 		titleMusique=new JLabel(" ");
 		south.add(titleMusique,BorderLayout.WEST);
-		JPanel tmp=new JPanel(new BorderLayout());
+		tmp=new JPanel(new BorderLayout());
 		nextTitleMusique=new JLabel(" ");
 		tmp.add(nextTitleMusique,BorderLayout.NORTH);
 		changer=new JButton(new ChangerAction(this));
 		tmp.add(changer,BorderLayout.SOUTH);
 		south.add(tmp,BorderLayout.EAST);
 		this.add(south,BorderLayout.SOUTH);
+		tempoLecteure=new Thread(new Runnable() {	
+			public synchronized void run() {
+				try {
+					thread=this;
+					while(true){
+						while (threadSuspended){
+							this.wait();
+						}
+						Thread.sleep(1000);
+						slider.setValue(slider.getValue()+1);
+					}
+
+				} catch (InterruptedException e) {
+					System.err.println("erreur dans le tempo");
+				}
+			}
+		});
+		threadSuspended=true;
+		tempoLecteure.start();
 	}
 
 
 	public void selectMusique(int index){
+		boolean needNotify=!threadSuspended;
+		threadSuspended=true;
 		currentMusique=((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(index, 0))).getMusique();
+		slider.setValue(0);
+		slider.setMaximum(currentMusique.getDuration().getSeconde());
 		if(!aleatoire.isSelected()){
 			if(JTunes.ListeDeLecture.getModel().getRowCount()-1==index)
 				nextMusiqueIndex=0;
@@ -95,22 +133,48 @@ public class LectureDeFichier extends JPanel{
 		nextMusique=((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(nextMusiqueIndex, 0))).getMusique();
 		titleMusique.setText("en cours :"+currentMusique.getTitle());
 		nextTitleMusique.setText("suivante :"+nextMusique.getTitle());
+		if(needNotify){
+			threadSuspended=false;
+			synchronized(thread){
+				thread.notify();
+			}
+		}
 	}
 
 	public void changerButtomActive(boolean active){
+		if(active)
+			this.changerLaSuivante();
+		else{
+			int index=JTunes.ListeDeLecture.getSelectedRow();
+			if(JTunes.ListeDeLecture.getModel().getRowCount()-1==index)
+				nextMusiqueIndex=0;
+			else
+				nextMusiqueIndex=++index;
+			nextMusique=((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(nextMusiqueIndex, 0))).getMusique();
+			nextTitleMusique.setText("suivante :"+nextMusique.getTitle());
+		}
+
 		changer.getAction().setEnabled(active);
 	}
 
 	public void play(boolean isPlay){
 		if(isPlay)
-			System.out.println("dans ma tête j'entends "+currentMusique.getTitle());
+			System.out.println("dans ma tï¿½te j'entends "+currentMusique.getTitle());
 		else
-			System.out.println("dans ma tête je n'entends plus "+currentMusique.getTitle());
+			System.out.println("dans ma tï¿½te je n'entends plus "+currentMusique.getTitle());
+		if(threadSuspended){
+			threadSuspended=!threadSuspended;
+			synchronized(thread){
+				thread.notify();
+			}
+		}else{
+			threadSuspended=!threadSuspended;
+		}
 	}
 
 	public void stop(){
-		slider.setValue(0);
 		this.play(false);
+		slider.setValue(0);
 	}
 
 	public void next(){
@@ -125,7 +189,7 @@ public class LectureDeFichier extends JPanel{
 			JTunes.ListeDeLecture.getSelectionModel().addSelectionInterval(0, 0);
 
 	}
-	
+
 	/**
 	 * retourne l'action 'play'
 	 * @return play
@@ -157,7 +221,15 @@ public class LectureDeFichier extends JPanel{
 	public Action getBackAction(){
 		return back.getAction();
 	}
-	
+
+	/**
+	 * retourne l'action 'changer'
+	 * @return back
+	 */
+	public Action getChangerAction(){
+		return changer.getAction();
+	}
+
 	/**
 	 * retourne l'action 'aleatoire'
 	 * @return aleatoire
@@ -176,7 +248,6 @@ public class LectureDeFichier extends JPanel{
 		retour.add(stop.getAction());
 		retour.add(next.getAction());
 		retour.add(back.getAction());
-		retour.add(changer.getAction());
 		return retour;
 	}
 
