@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import main.JTunes;
+import main.MyPlayer;
 import structureDeDonnees.Musique;
 import structureDeDonnees.StructureMusique;
 import controleur.BackAction;
@@ -44,6 +45,7 @@ public class LectureDeFichier extends JPanel{
 	private JLabel titleMusique;
 	private JLabel nextTitleMusique;
 	private JButton changer;
+	private MyPlayer player;
 
 	private Musique currentMusique;
 	private Musique nextMusique;
@@ -51,7 +53,7 @@ public class LectureDeFichier extends JPanel{
 
 	private JLabel temps;
 	private JLabel tempsRestant;
-	
+
 	private Runnable thread;
 	private Thread tempoLecteure;
 	private volatile boolean threadSuspended;
@@ -59,12 +61,16 @@ public class LectureDeFichier extends JPanel{
 	private boolean nonLu; //pour savoir si le morceau est en cours de lecture ou non
 
 	public LectureDeFichier(){
+		player=new MyPlayer();
 		JPanel tmp=new JPanel(new BorderLayout());
 		slider=new JSlider(JSlider.HORIZONTAL,0,1,0);
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				temps.setText(slider.getValue()/60+":"+slider.getValue()%60);
-				tempsRestant.setText(slider.getMaximum()/60+":"+slider.getMaximum()%60);
+				if(slider.getValue()==slider.getMaximum()){
+					next();
+				}
+				temps.setText(slider.getValue()/60+":"+(slider.getValue()%60<10?"0":"")+slider.getValue()%60);
+				tempsRestant.setText(slider.getMaximum()/60+":"+(slider.getMaximum()%60<10?"0":"")+slider.getMaximum()%60);
 			}
 		});
 		this.setLayout(new BorderLayout());
@@ -97,15 +103,17 @@ public class LectureDeFichier extends JPanel{
 		south.add(tmp,BorderLayout.EAST);
 		this.add(south,BorderLayout.SOUTH);
 		tempoLecteure=new Thread(new Runnable() {	
-			public synchronized void run() {
+			public void run() {
 				try {
 					thread=this;
 					while(true){
-						while (threadSuspended){
-							this.wait();
+						synchronized(this){
+							while (threadSuspended){
+								this.wait();
+							}
 						}
-						Thread.sleep(1000);
 						slider.setValue(slider.getValue()+1);
+						Thread.sleep(1000);
 					}
 
 				} catch (InterruptedException e) {
@@ -122,6 +130,7 @@ public class LectureDeFichier extends JPanel{
 		boolean needNotify=!threadSuspended;
 		this.nonLu = false;
 		threadSuspended=true;
+		player.Load(-1);
 		currentMusique=((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(index, 0))).getMusique();
 		slider.setValue(0);
 		slider.setMaximum(currentMusique.getDuration().getSeconde());
@@ -161,40 +170,44 @@ public class LectureDeFichier extends JPanel{
 	}
 
 	public void play(boolean isPlay){
-		if (nonLu ==false){
+		player.PlayPause();if (nonLu ==false){
 			this.nonLu =true;
 			Bibliotheque.addLecture(currentMusique);
-		}
-		if(isPlay)
-			System.out.println("dans ma t�te j'entends "+currentMusique.getTitle());
+		}		if(isPlay)
+			System.out.println("dans ma t\u00eate j'entends "+currentMusique.getTitle());
 		else
-			System.out.println("dans ma t�te je n'entends plus "+currentMusique.getTitle());
-		if(threadSuspended){
-			threadSuspended=!threadSuspended;
+			System.out.println("dans ma t\u00eate je n'entends plus "+currentMusique.getTitle());
+		if(isPlay){
+			threadSuspended=!isPlay;
 			synchronized(thread){
 				thread.notify();
 			}
 		}else{
-			threadSuspended=!threadSuspended;
+			threadSuspended=isPlay;
 		}
 	}
 
 	public void stop(){
-		this.play(false);
+		player.Stop();
+		if(!threadSuspended){
+			this.play(false);
+		}
 		slider.setValue(0);
 	}
 
 	public void next(){
+		this.play(false);
 		JTunes.ListeDeLecture.getSelectionModel().addSelectionInterval(nextMusiqueIndex, nextMusiqueIndex);
+		this.play(true);
 	}
 
 	public void back() {
-		// TODO Auto-generated method stub
+		this.play(false);
 		if(nextMusiqueIndex>2)
 			JTunes.ListeDeLecture.getSelectionModel().addSelectionInterval(nextMusiqueIndex-2, nextMusiqueIndex-2);
 		else
 			JTunes.ListeDeLecture.getSelectionModel().addSelectionInterval(0, 0);
-
+		this.play(true);
 	}
 
 	/**
