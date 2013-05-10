@@ -2,11 +2,15 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +41,7 @@ public class LectureDeFichier extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JSlider slider;
+	private JSlider volume;
 	private JButton play;
 	private JButton stop;
 	private JButton next;
@@ -61,16 +66,30 @@ public class LectureDeFichier extends JPanel{
 	private boolean nonLu; //pour savoir si le morceau est en cours de lecture ou non
 
 	public LectureDeFichier(){
+		
 		player=new MyPlayer();
+		JPanel pvolume=new JPanel();
+		pvolume.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Volume"));
+		volume=new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+		volume.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				player.setVolume(volume.getValue()/100.0f);
+			}
+		});
+		pvolume.add(volume);
 		JPanel tmp=new JPanel(new BorderLayout());
 		slider=new JSlider(JSlider.HORIZONTAL,0,1,0);
 		slider.addChangeListener(new ChangeListener() {
+			int lastValue=0;
 			public void stateChanged(ChangeEvent arg0) {
+				if(lastValue!=slider.getValue()-1&&slider.getValue()>0)
+					player.setPosition(slider.getValue());
 				if(slider.getValue()==slider.getMaximum()){
 					next();
 				}
 				temps.setText(slider.getValue()/60+":"+(slider.getValue()%60<10?"0":"")+slider.getValue()%60);
 				tempsRestant.setText(slider.getMaximum()/60+":"+(slider.getMaximum()%60<10?"0":"")+slider.getMaximum()%60);
+				lastValue=slider.getValue();
 			}
 		});
 		this.setLayout(new BorderLayout());
@@ -80,6 +99,7 @@ public class LectureDeFichier extends JPanel{
 		this.add(tmp,BorderLayout.NORTH);
 		JPanel centre= new JPanel();
 		centre.setLayout(new FlowLayout(FlowLayout.CENTER));
+		centre.add(pvolume);
 		back=new JButton(new BackAction(this));
 		centre.add(back);
 		play=new JButton(new PlayAction(this));

@@ -9,11 +9,11 @@ import javazoom.jl.player.LillePlayer;
 public class MyPlayer {
 
 	private LillePlayer player;
-	private static final String listMusique[]={"Aerodynamic.mp3"}; 
+	private static final String listMusique[]={"Wana.mp3","Garymedband.mp3","Impro-Anne-Allez.mp3"}; 
 
 	private int currentLecture=0;
 	private int state;  //0:stop, 1:load, 2:play
-	private float volume = 100;
+	private float volume = 0.5f;
 	private int position = 0;
 
 	public MyPlayer(){
