@@ -28,7 +28,7 @@ public class InformationAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Musique mus=((StructureMusique)JTunes.ListeDeLecture.getModel().getValueAt(JTunes.ListeDeLecture.getSelectedRow(), 0)).getMusique();
-		JOptionPane.showMessageDialog(JTunes.frame, "Information :\t\n Titre : "+mus.getTitle()+"\n Album : "+mus.getAlbum()+"\n Artiste : "+mus.getArtist()+"\n Genre : "+mus.getGenre()+"\n Ann\u00e9e : "+mus.getYear()+"\n Dur\u00e9e : "+mus.getDuration());
+		JOptionPane.showMessageDialog(JTunes.frame, "Information :\t\n Titre : "+mus.getTitle()+"\n Album : "+mus.getAlbum()+"\n Artiste : "+mus.getArtist()+"\n Genre : "+mus.getGenre()+"\n Ann\u00e9e : "+mus.getYear()+"\n Dur\u00e9e : "+mus.getDuration()+"\n Nombre de lecture : "+mus.getNbLecture());
 	}
 
 }

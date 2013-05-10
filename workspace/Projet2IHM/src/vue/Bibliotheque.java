@@ -92,7 +92,7 @@ public class Bibliotheque {
 
 			while(rs.next()){
 				ArrayList<StructureMusique> tmp=new ArrayList<StructureMusique>();
-				Musique mus=new Musique(rs.getString("title"), rs.getString("album"), rs.getString("artist"), rs.getString("genre"), rs.getString("year"), rs.getString("duration"));
+				Musique mus=new Musique(rs.getString("title"), rs.getString("album"), rs.getString("artist"), rs.getString("genre"), rs.getString("year"), rs.getString("duration"), Integer.parseInt(rs.getString("nblecture")));
 				tmp.add(mus.getTitle());
 				tmp.add(mus.getAlbum());
 				tmp.add(mus.getArtist());
@@ -146,7 +146,8 @@ public class Bibliotheque {
 		try{
 			Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-			statement.executeUpdate("Update songs set nblecture = nblecture + 1 where title like "+musique.getTitle().toString()+" and album like "+musique.getAlbum().toString()+" and artiste like "+musique.getArtist().toString());
+			statement.executeUpdate("Update songs set nblecture = nblecture + 1 where title like '"+musique.getTitle()+"' and album like '"+musique.getAlbum()+"' and artist like '"+musique.getArtist()+"'");
+			musique.getNbLecture().setNbLecture();
 		}catch(SQLException e){
 			System.err.println(e.getMessage());
 		}finally{

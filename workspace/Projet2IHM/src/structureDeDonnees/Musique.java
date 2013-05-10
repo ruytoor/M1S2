@@ -19,15 +19,17 @@ public class Musique{
 	private GenreClass genre;
 	private YearClass year;
 	private DurationClass duration;
+	private NbLectureClass nbLecture;
 	
 	
-	public Musique(String title, String album, String artist, String genre, String year, String duration){
+	public Musique(String title, String album, String artist, String genre, String year, String duration, int nbLecture){
 		this.title=new TitleClass(title, this);
 		this.album=new AlbumClass(album, this);
 		this.artist=new ArtistClass(artist, this);
 		this.genre=new GenreClass(genre, this);
 		this.year=new YearClass(year, this);
 		this.duration=new DurationClass(duration, this);
+		this.nbLecture = new NbLectureClass(nbLecture, this);
 	}
 	
 	/**
@@ -76,6 +78,14 @@ public class Musique{
 	 */
 	public DurationClass getDuration() {
 		return duration;
+	}
+	
+	/**
+	 * retourne le nombre de fois que le morceau a ete lu
+	 * @return le nombre de lecture
+	 */
+	public NbLectureClass getNbLecture(){
+		return nbLecture;
 	}
 	
 	

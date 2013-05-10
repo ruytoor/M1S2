@@ -55,6 +55,8 @@ public class LectureDeFichier extends JPanel{
 	private Runnable thread;
 	private Thread tempoLecteure;
 	private volatile boolean threadSuspended;
+	
+	private boolean nonLu; //pour savoir si le morceau est en cours de lecture ou non
 
 	public LectureDeFichier(){
 		JPanel tmp=new JPanel(new BorderLayout());
@@ -118,6 +120,7 @@ public class LectureDeFichier extends JPanel{
 
 	public void selectMusique(int index){
 		boolean needNotify=!threadSuspended;
+		this.nonLu = false;
 		threadSuspended=true;
 		currentMusique=((StructureMusique)(JTunes.ListeDeLecture.getModel().getValueAt(index, 0))).getMusique();
 		slider.setValue(0);
@@ -158,6 +161,10 @@ public class LectureDeFichier extends JPanel{
 	}
 
 	public void play(boolean isPlay){
+		if (nonLu ==false){
+			this.nonLu =true;
+			Bibliotheque.addLecture(currentMusique);
+		}
 		if(isPlay)
 			System.out.println("dans ma t�te j'entends "+currentMusique.getTitle());
 		else
