@@ -116,6 +116,7 @@ public class JTunes {
 			}
 		});
 		menuLecture.add(lecture.getAleatoireAction());
+		menuLecture.add(lecture.getChangerAction());
 
 		JScrollPane jsp=new JScrollPane(ListeDeLecture);
 		jsp.setTransferHandler(new DropTransferHandler());
